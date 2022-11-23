@@ -39,7 +39,7 @@ public class EditorPainter : MonoBehaviour
     }
 
 
-    null attributeValues(List<string[]>)
+    void attributeValues(List<string[]> data)
     {
 
     }
