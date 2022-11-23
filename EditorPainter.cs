@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Microsoft.VisualBasic.FileIO;
+using System.Globalization;
 
 
 public class EditorPainter : MonoBehaviour
@@ -24,8 +25,7 @@ public class EditorPainter : MonoBehaviour
             csvParser.ReadLine();
 
             while (!csvParser.EndOfData)
-            {
-             
+            {             
                 string[] fields = csvParser.ReadFields();
                 res.Add(fields);
             }
@@ -41,7 +41,13 @@ public class EditorPainter : MonoBehaviour
 
     void attributeValues(List<string[]> data)
     {
-
+        foreach (string[] line in data)
+        {
+            int x;
+            int y;
+            int z;
+            (x, y, z) = convCoords(float.Parse(line[0], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat));
+        }
     }
 
 
