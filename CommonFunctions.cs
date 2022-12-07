@@ -7,13 +7,13 @@ namespace Common
 {
     public class GridCoordinates
     {
-        int row;
-        int column;
+        public int x;
+        public int y;
 
         public GridCoordinates(int row, int column)
         {
-            this.row = row;
-            this.column = column;
+            this.x = row;
+            this.y = column;
         }
 
         public static GridCoordinates WorldToHexa(Vector3 coordinates)
@@ -68,9 +68,24 @@ namespace Common
             return new GridCoordinates(row, column);
         }
 
+        public Vector3Int V3I()
+        {
+            return new Vector3Int(x, y, 0);
+        }
+
+        public static Vector3Int MouseAtTile(GameObject camera)
+        {
+            var screenPoint = (Input.mousePosition);
+            screenPoint.z = (-1) * camera.GetComponent<Transform>().position.z ; //distance of the plane from the camera
+            Vector3 mouseCoordinates = Camera.main.ScreenToWorldPoint(screenPoint);
+            GridCoordinates gridCoord = GridCoordinates.WorldToHexa(mouseCoordinates);
+            return gridCoord.V3I();
+        }
+
+        override
         public String ToString()
         {
-            return ("(" + this.column.ToString() + "," + this.row.ToString() + ")");
+            return ("(" + this.x.ToString() + "," + this.y.ToString() + ")");
         }
     }
 }

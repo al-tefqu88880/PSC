@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Microsoft.VisualBasic.FileIO;
+//using Microsoft.VisualBasic.FileIO;
 using System.Globalization;
+using BackEnd;
 
 
 public class EditorPainter : MonoBehaviour
 {
     public Tilemap terrain;
-    public  Tile desert;
-    public  Tile grass;
-    public  Tile water;
 
+    /*
     List<string[]> readData()
     {
         List<string[]> res = new List<string[]>();
@@ -32,6 +31,7 @@ public class EditorPainter : MonoBehaviour
         }
         return res;
     }
+    */
 
     (int, int, int) convCoords(float x,float y)
     {
@@ -55,6 +55,11 @@ public class EditorPainter : MonoBehaviour
 [ContextMenu("Paint")]
     void Paint()
     {
+        Tile error = (Tile)Resources.Load("error");
+        Tile water = (Tile)Resources.Load("water");
+        Tile desert = (Tile)Resources.Load("desert");
+        Tile plain = (Tile)Resources.Load("plain");
+
         for (int x = 0; x < 10; x++)
         {
             for (int y = 0; y < 10; y++)
@@ -69,7 +74,7 @@ public class EditorPainter : MonoBehaviour
                 {
                     if (index == 1)
                     {
-                        terrain.SetTile(p, grass);
+                        terrain.SetTile(p, plain);
                     }
                     else
                     {
@@ -80,5 +85,35 @@ public class EditorPainter : MonoBehaviour
             }
         }
         
+    }
+    [ContextMenu("Paint from BackEnd")]
+    void PaintFromBackEnd()
+    {
+        Tile error = (Tile)Resources.Load("error");
+        Tile water = (Tile)Resources.Load("water");
+        Tile desert = (Tile)Resources.Load("desert");
+        Tile plain = (Tile)Resources.Load("plain");
+
+        TilemapData tilemap = RunningBackEnd.GetTilemap();
+        for (int x = 0; x < tilemap.GetWidth(); x++)
+        {
+            for(int y=0; y < tilemap.GetHeight(); y++)
+            {
+                Vector3Int p = new Vector3Int(x, y, 0);
+                Tile displayTile = tilemap.GetTile(p) switch
+            {
+                0 => water,
+                1 => desert,
+                2 => plain,
+                _ => error,
+            };
+            terrain.SetTile(p, displayTile);
+            }
+        }
+    }
+    [ContextMenu("Clear All")]
+    void ClearAll()
+    {
+        terrain.ClearAllTiles();
     }
 }
