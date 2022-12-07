@@ -29,7 +29,7 @@ public class DataRead : MonoBehaviour
 
     Vector3Int convCoords(float x, float y)
     {
-        return new Vector3Int((int)(1.0 * x), (int)(1.0 * y), 0);
+        return new Vector3Int((int)(1.0 * x), (int)(1.0 * y)+20, 0);
     }
 
 
@@ -38,10 +38,17 @@ public class DataRead : MonoBehaviour
         foreach (string[] line in data)
         {
             Vector3Int position = convCoords(float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[2], CultureInfo.InvariantCulture.NumberFormat));
-            RunningBackEnd.tilemap.SetHumidity(position, float.Parse(line[14]));
+            //RunningBackEnd.tilemap.SetHumidity(position, float.Parse(line[14]));
+            RunningBackEnd.tilemap.SetTile(position, 2);
         }
     }
 
+    [ContextMenu("applyData")]
+
+    void applyData()
+    {
+        attributeValues(readData());
+    }
 
     // Start is called before the first frame update
     void Start()

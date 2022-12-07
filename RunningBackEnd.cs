@@ -7,8 +7,8 @@ using UnityEngine.Tilemaps;
 public class RunningBackEnd : MonoBehaviour
 {
     public static TilemapData tilemap;
-    public int width;
-    public int height;
+    public int width = 200;
+    public int height = 200;
     public Tilemap terrain;
 
     public static TilemapData GetTilemap()
