@@ -72,9 +72,30 @@ public class ChangeDataMenu : MonoBehaviour
         }        
     }
 
+    public void ToggleMenu()
+    {
+        canvas.enabled = true;
+        position = GridCoordinates.MouseAtTile(mainCamera);
+        int tile = RunningBackEnd.tilemap.GetTile(position);
+        Button button = tile switch
+        {
+            0 => waterButton,
+            1 => desertButton,
+            _ => plainButton,
+        };
+        button.GetComponent<Image>().color = buttonColor;
+        selectedButton = tile;
+        bearQuestion.SetText("Bears : " + RunningBackEnd.tilemap.GetBear(position).ToString());
+        lynxQuestion.SetText("Lynx : " + RunningBackEnd.tilemap.GetLynx(position).ToString());
+        voleQuestion.SetText("Voles : " + RunningBackEnd.tilemap.GetVole(position).ToString());
+        biomassQuestion.SetText("Biomass : " + RunningBackEnd.tilemap.GetBiomass(position).ToString());
+        humidityQuestion.SetText("Humidity : " + RunningBackEnd.tilemap.GetHumidity(position).ToString());
+        sunlightQuestion.SetText("Sunlight : " + RunningBackEnd.tilemap.GetSunlight(position).ToString());
+    }
+
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) & !canvas.enabled)
+        if (Input.GetMouseButtonDown(0) & !canvas.enabled & false)
         {
             canvas.enabled = true;
             position = GridCoordinates.MouseAtTile(mainCamera);
