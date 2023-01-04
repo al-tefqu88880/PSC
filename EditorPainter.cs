@@ -11,45 +11,6 @@ public class EditorPainter : MonoBehaviour
 {
     public Tilemap terrain;
 
-    /*
-    List<string[]> readData()
-    {
-        List<string[]> res = new List<string[]>();
-        var path = @"C:\Users\alexa\Jeu PSC\CSV données environnementales réduit.csv"; 
-        using (TextFieldParser csvParser = new TextFieldParser(path))
-        {
-            csvParser.SetDelimiters(new string[] { "," });
-
-            // Skip the row with the column names
-            csvParser.ReadLine();
-
-            while (!csvParser.EndOfData)
-            {             
-                string[] fields = csvParser.ReadFields();
-                res.Add(fields);
-            }
-        }
-        return res;
-    }
-    */
-
-    (int, int, int) convCoords(float x,float y)
-    {
-        return (0,0,0);
-    }
-
-
-    void attributeValues(List<string[]> data)
-    {
-        foreach (string[] line in data)
-        {
-            int x;
-            int y;
-            int z;
-            (x, y, z) = convCoords(float.Parse(line[0], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat));
-        }
-    }
-
 
 
 [ContextMenu("Paint")]
