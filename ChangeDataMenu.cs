@@ -29,6 +29,7 @@ public class ChangeDataMenu : MonoBehaviour
     public Button waterButton;
     public Button desertButton;
     public Button plainButton;
+    public string test;
 
     private void ClearAnswers()
     {
@@ -72,10 +73,10 @@ public class ChangeDataMenu : MonoBehaviour
         }        
     }
 
-    public void ToggleMenu()
+    public void ToggleMenu(Vector3Int pos)
     {
+        position = pos;
         canvas.enabled = true;
-        position = GridCoordinates.MouseAtTile(mainCamera);
         int tile = RunningBackEnd.tilemap.GetTile(position);
         Button button = tile switch
         {
@@ -93,87 +94,64 @@ public class ChangeDataMenu : MonoBehaviour
         sunlightQuestion.SetText("Sunlight : " + RunningBackEnd.tilemap.GetSunlight(position).ToString());
     }
 
-    void Update()
+    public void CloseMenu()
     {
-        if (Input.GetMouseButtonDown(0) & !canvas.enabled & false)
+        ClearAnswers();
+        Button button = selectedButton switch
         {
-            canvas.enabled = true;
-            position = GridCoordinates.MouseAtTile(mainCamera);
-            int tile = RunningBackEnd.tilemap.GetTile(position);
-            Button button = tile switch
-            {
-                0 => waterButton,
-                1 => desertButton,
-                _ => plainButton,
-            };
-            button.GetComponent<Image>().color = buttonColor;
-            selectedButton = tile;
-            bearQuestion.SetText("Bears : " + RunningBackEnd.tilemap.GetBear(position).ToString());
-            lynxQuestion.SetText("Lynx : " + RunningBackEnd.tilemap.GetLynx(position).ToString());
-            voleQuestion.SetText("Voles : " + RunningBackEnd.tilemap.GetVole(position).ToString());
-            biomassQuestion.SetText("Biomass : " + RunningBackEnd.tilemap.GetBiomass(position).ToString());
-            humidityQuestion.SetText("Humidity : " + RunningBackEnd.tilemap.GetHumidity(position).ToString());
-            sunlightQuestion.SetText("Sunlight : " + RunningBackEnd.tilemap.GetSunlight(position).ToString());
-        }
+            0 => waterButton,
+            1 => desertButton,
+            _ => plainButton,
+        };
+        button.GetComponent<Image>().color = Color.white;
+        canvas.enabled = false;
+    }
 
-        if (Input.GetKeyDown(KeyCode.Escape) & canvas.enabled)
+    public void SubmitAnswers()
+    {
+        string getBear = bearAnswer.text;
+        string getLynx = lynxAnswer.text;
+        string getVole = voleAnswer.text;
+        string getBiomass = biomassAnswer.text;
+        string getHumidity = humidityAnswer.text;
+        string getSunlight = sunlightAnswer.text;
+        ClearAnswers();
+        if (getBear != "")
         {
-            ClearAnswers();
-            Button button = selectedButton switch
-            {
-                0 => waterButton,
-                1 => desertButton,
-                _ => plainButton,
-            };
-            button.GetComponent<Image>().color = Color.white;
-            canvas.enabled = false;
+            int bear = int.Parse(getBear);
+            bearQuestion.SetText("Bears : " + bear.ToString());
+            RunningBackEnd.tilemap.SetBear(position, bear);
         }
-
-        if (Input.GetKeyDown(KeyCode.Return) & canvas.enabled)
+        if (getLynx != "")
         {
-            string getBear = bearAnswer.text;
-            string getLynx = lynxAnswer.text;
-            string getVole = voleAnswer.text;
-            string getBiomass = biomassAnswer.text;
-            string getHumidity = humidityAnswer.text;
-            string getSunlight = sunlightAnswer.text;
-            ClearAnswers();
-            if (getBear != "")
-            {
-                int bear = int.Parse(getBear);
-                bearQuestion.SetText("Bears : " + bear.ToString());
-                RunningBackEnd.tilemap.SetBear(position, bear);
-            }
-            if (getLynx != "")
-            {
-                int lynx = int.Parse(getLynx);
-                lynxQuestion.SetText("Lynx : " + lynx.ToString());
-                RunningBackEnd.tilemap.SetLynx(position, lynx);
-            }
-            if (getVole != "")
-            {
-                int vole = int.Parse(getVole);
-                voleQuestion.SetText("Voles : " + vole.ToString());
-                RunningBackEnd.tilemap.SetVole(position, vole);
-            }
-            if (getBiomass != "")
-            {
-                float biomass=float.Parse(getBiomass);
-                biomassQuestion.SetText("Biomass : " + biomass.ToString());
-                RunningBackEnd.tilemap.SetBiomass(position, biomass);
-            }
-            if (getHumidity != "")
-            {
-                float humidity = float.Parse(getHumidity);
-                humidityQuestion.SetText("Humidity : " + humidity.ToString());
-                RunningBackEnd.tilemap.SetHumidity(position, humidity);
-            }
-            if (getSunlight!= "")
-            {
-                float sunlight = float.Parse(getSunlight);
-                sunlightQuestion.SetText("Sunlight : " + sunlight.ToString());
-                RunningBackEnd.tilemap.SetSunlight(position, sunlight);
-            }
+            int lynx = int.Parse(getLynx);
+            lynxQuestion.SetText("Lynx : " + lynx.ToString());
+            RunningBackEnd.tilemap.SetLynx(position, lynx);
+        }
+        if (getVole != "")
+        {
+            int vole = int.Parse(getVole);
+            voleQuestion.SetText("Voles : " + vole.ToString());
+            RunningBackEnd.tilemap.SetVole(position, vole);
+        }
+        if (getBiomass != "")
+        {
+            float biomass = float.Parse(getBiomass);
+            biomassQuestion.SetText("Biomass : " + biomass.ToString());
+            RunningBackEnd.tilemap.SetBiomass(position, biomass);
+        }
+        if (getHumidity != "")
+        {
+            float humidity = float.Parse(getHumidity);
+            humidityQuestion.SetText("Humidity : " + humidity.ToString());
+            RunningBackEnd.tilemap.SetHumidity(position, humidity);
+        }
+        if (getSunlight != "")
+        {
+            float sunlight = float.Parse(getSunlight);
+            sunlightQuestion.SetText("Sunlight : " + sunlight.ToString());
+            RunningBackEnd.tilemap.SetSunlight(position, sunlight);
         }
     }
+
 }

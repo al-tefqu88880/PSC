@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    int maxLeft = -10;
-    int maxRight = 10;
-    int maxUp = 10;
-    int maxDown = -10;
-    int maxIn = 3;
-    int maxOut = -5;
+    public int maxLeft = -10;
+    public int maxRight = 10;
+    public int maxUp = 10;
+    public int maxDown = -10;
+    public int maxIn = 3;
+    public int maxOut = -5;
+
     int x_move = 0;
     int y_move = 0;
     int z_move = 0;

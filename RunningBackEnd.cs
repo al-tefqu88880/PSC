@@ -20,7 +20,7 @@ public class RunningBackEnd : MonoBehaviour
     void InitiateTilemap()
     {
         tilemap = new TilemapData(width, height, terrain);
-        Debug.Log("Tilemap initiated");
+        //Debug.Log("Tilemap initiated");
     }
 
     void Start()

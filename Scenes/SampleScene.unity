@@ -644,6 +644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cdm: {fileID: 2126902539}
+  mainCamera: {fileID: 519420028}
 --- !u!1 &233221062
 GameObject:
   m_ObjectHideFlags: 0
@@ -5859,6 +5860,7 @@ MonoBehaviour:
   waterButton: {fileID: 207650353}
   desertButton: {fileID: 1875660831}
   plainButton: {fileID: 1634859215}
+  test: 
 --- !u!1 &2144439969
 GameObject:
   m_ObjectHideFlags: 0

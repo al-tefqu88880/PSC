@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Common;
 
 public class InputManager : MonoBehaviour
 {
     private string context;
     public ChangeDataMenu cdm;
+    public GameObject mainCamera;
 
     void Start()
     {
@@ -21,10 +23,36 @@ public class InputManager : MonoBehaviour
             switch (context)
             {
                 case "map":
-                    cdm.ToggleMenu();
+                    Vector3Int position = GridCoordinates.MouseAtTile(mainCamera);
+                    cdm.ToggleMenu(position);
+                    context = "dataMenu";
                     break;
                 default:
-                    DoNothing();
+                    break;
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            switch (context)
+            {
+                case "dataMenu":
+                    cdm.CloseMenu();
+                    context = "map";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            switch (context)
+            {
+                case "dataMenu":
+                    cdm.SubmitAnswers();
+                    break;
+                default:
                     break;
             }
         }
