@@ -72,6 +72,26 @@ public class EditorPainter : MonoBehaviour
             }
         }
     }
+
+
+    [ContextMenu("Paint with water")]
+    void PaintWater()
+    {
+
+        Tile water = (Tile)Resources.Load("water");
+
+        TilemapData tilemap = RunningBackEnd.GetTilemap();
+        for (int x = 0; x < 100; x++)
+        {
+            for (int y = 0; y < 100; y++)
+            {
+                Vector3Int p = new Vector3Int(x, y, 0);
+                terrain.SetTile(p, water);
+            }
+        }
+    }
+
+
     [ContextMenu("Clear All")]
     void ClearAll()
     {
