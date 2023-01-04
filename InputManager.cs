@@ -7,7 +7,9 @@ public class InputManager : MonoBehaviour
 {
     private string context;
     public ChangeDataMenu cdm;
+    public ActionMenu am;
     public GameObject mainCamera;
+    public Transform hoverTile;
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class InputManager : MonoBehaviour
             switch (context)
             {
                 case "map":
+                    //add a condition of "not on a menu"
                     Vector3Int position = GridCoordinates.MouseAtTile(mainCamera);
                     cdm.ToggleMenu(position);
                     context = "dataMenu";
@@ -55,6 +58,17 @@ public class InputManager : MonoBehaviour
                 default:
                     break;
             }
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("clic");
+            Vector3 hoverScale = new Vector3((float)1.2, (float)1.2, (float)1.2);
+            hoverTile.localScale = hoverScale;
+            Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            hoverTile.rotation = rotation;
+            cdm.CloseMenu();
+            am.closeAll();
+            context = "map";
         }
     }
 }

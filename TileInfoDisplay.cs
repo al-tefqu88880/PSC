@@ -17,7 +17,8 @@ public class TileInfoDisplay : MonoBehaviour
     int height;
     bool firstUpdate = true;
 
-    public Transform HoverTile;
+    public Transform hoverTile;
+    Vector3 hoverPos = new Vector3();
 
     void Start()
     {
@@ -60,6 +61,16 @@ public class TileInfoDisplay : MonoBehaviour
                 string sunlight = "Sunlight : " + RunningBackEnd.tilemap.GetSunlight(position);
                 string newLine = System.Environment.NewLine;
                 text.SetText(coord + newLine + tile + newLine + bear + newLine + lynx + newLine + vole + newLine + biomass + newLine + humidity + newLine + sunlight);
+                hoverPos.y = (float)(gridCoord.x * 0.75 + 0.35);
+                if (gridCoord.x % 2 == 1)
+                {
+                    hoverPos.x = (float) (gridCoord.y + 1.01);
+                }
+                else
+                {
+                    hoverPos.x = (float) (gridCoord.y + 0.51);
+                }
+                hoverTile.position = hoverPos;
             }
         }
     }
