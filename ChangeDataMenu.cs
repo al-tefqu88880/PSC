@@ -29,7 +29,6 @@ public class ChangeDataMenu : MonoBehaviour
     public Button waterButton;
     public Button desertButton;
     public Button plainButton;
-    public string test;
 
     private void ClearAnswers()
     {

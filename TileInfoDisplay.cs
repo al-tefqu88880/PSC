@@ -17,6 +17,8 @@ public class TileInfoDisplay : MonoBehaviour
     int height;
     bool firstUpdate = true;
 
+    public Transform HoverTile;
+
     void Start()
     {
         text = GetComponent<TextMeshProUGUI>();
