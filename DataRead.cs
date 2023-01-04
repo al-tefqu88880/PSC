@@ -44,8 +44,9 @@ public class DataRead : MonoBehaviour
             {
                 RunningBackEnd.tilemap.SetHumidity(position, (float)number);
                 RunningBackEnd.tilemap.SetTile(position, 2);
+                Debug.Log(number);
             }
-            //Debug.Log("."+line[14]+".");
+            
             
         }
     }
