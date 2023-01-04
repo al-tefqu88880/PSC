@@ -38,12 +38,20 @@ public class DataRead : MonoBehaviour
         foreach (string[] line in data)
         {
             Vector3Int position = convCoords(float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[2], CultureInfo.InvariantCulture.NumberFormat));
-            //RunningBackEnd.tilemap.SetHumidity(position, float.Parse(line[14]));
-            RunningBackEnd.tilemap.SetTile(position, 2);
+            int number;
+            bool success = int.TryParse(line[14], out number);
+            if (success)
+            {
+                RunningBackEnd.tilemap.SetHumidity(position, (float)number);
+                RunningBackEnd.tilemap.SetTile(position, 2);
+                Debug.Log(number);
+            }
+            
+            
         }
     }
 
-    [ContextMenu("applyData")]
+    [ContextMenu("Apply Data")]
 
     void applyData()
     {
