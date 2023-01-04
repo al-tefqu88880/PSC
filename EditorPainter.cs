@@ -21,9 +21,10 @@ public class EditorPainter : MonoBehaviour
         Tile desert = (Tile)Resources.Load("desert");
         Tile plain = (Tile)Resources.Load("plain");
 
-        for (int x = 0; x < 10; x++)
+        TilemapData tilemap = RunningBackEnd.GetTilemap();
+        for (int x = 0; x < tilemap.GetWidth(); x++)
         {
-            for (int y = 0; y < 10; y++)
+            for (int y = 0; y < tilemap.GetWidth(); y++)
             {
                 Vector3Int p = new Vector3Int(x, y, 0);
                 int index = Random.Range(0, 3);
@@ -81,9 +82,9 @@ public class EditorPainter : MonoBehaviour
         Tile water = (Tile)Resources.Load("water");
 
         TilemapData tilemap = RunningBackEnd.GetTilemap();
-        for (int x = 0; x < 100; x++)
+        for (int x = 0; x < tilemap.GetWidth(); x++)
         {
-            for (int y = 0; y < 100; y++)
+            for (int y = 0; y < tilemap.GetWidth(); y++)
             {
                 Vector3Int p = new Vector3Int(x, y, 0);
                 terrain.SetTile(p, water);
