@@ -17,7 +17,7 @@ public class RunningBackEnd : MonoBehaviour
     }
 
     [ContextMenu("Initiate Tilemap")]
-    void InitiateTilemap()
+    public void InitiateTilemap()
     {
         tilemap = new TilemapData(width, height, terrain);
         //Debug.Log("Tilemap initiated");

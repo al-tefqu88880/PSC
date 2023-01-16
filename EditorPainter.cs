@@ -13,7 +13,7 @@ public class EditorPainter : MonoBehaviour
 
 
 
-[ContextMenu("Paint")]
+    [ContextMenu("Paint")]
     void Paint()
     {
         Tile error = (Tile)Resources.Load("error");
@@ -76,7 +76,7 @@ public class EditorPainter : MonoBehaviour
 
 
     [ContextMenu("Paint with water")]
-    void PaintWater()
+    public void PaintWater()
     {
 
         Tile water = (Tile)Resources.Load("water");

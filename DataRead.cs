@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Globalization;
 using Microsoft.VisualBasic.FileIO;
+using System;
+
 
 public class DataRead : MonoBehaviour
 {
@@ -29,7 +31,7 @@ public class DataRead : MonoBehaviour
 
     Vector3Int convCoords(float x, float y)
     {
-        return new Vector3Int((int)(10.0 * x)-300, (int)(10.0 * y)+100, 0);
+        return new Vector3Int((int)(12.0 * (x-30.0)), (int)((6.0 * (y+10.0))*(2.0-Math.Sqrt(3.0)/2.0)) , 0);
     }
 
 
@@ -56,6 +58,15 @@ public class DataRead : MonoBehaviour
     {
         attributeValues(readData());
     }
+
+    /*[ContextMenu("Test Data")]
+    
+    void testData()
+    {
+        RunningBackEnd.InitiateTilemap();
+        EditorPainter.PaintWater();
+        applyData();
+    }*/
 
     // Start is called before the first frame update
     void Start()
