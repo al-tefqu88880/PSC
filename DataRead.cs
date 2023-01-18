@@ -8,6 +8,11 @@ using System;
 
 public class DataRead : MonoBehaviour
 {
+    public DataRead()
+    {
+
+    }
+
 
     List<string[]> readData()
     {
@@ -44,8 +49,8 @@ public class DataRead : MonoBehaviour
             bool success = int.TryParse(line[14], out number);
             if (success)
             {
-                Debug.Log(position[0]);
-                Debug.Log(position[1]);
+                //Debug.Log(position[0]);
+                //Debug.Log(position[1]);
                 RunningBackEnd.tilemap.SetHumidity(position, (float)number);
                 RunningBackEnd.tilemap.SetTile(position, 2);
             }
@@ -54,7 +59,7 @@ public class DataRead : MonoBehaviour
 
     [ContextMenu("Apply Data")]
 
-    void applyData()
+    public void applyData()
     {
         attributeValues(readData());
     }

@@ -23,32 +23,32 @@ public class CameraMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow)& (x_move > maxLeft)) 
         {
-            transform.Translate(-1, 0, 0);
+            transform.Translate(-10, 0, 0);
             x_move--;
         }
         if (Input.GetKeyDown(KeyCode.RightArrow) & x_move < maxRight) 
         {
-            transform.Translate(1, 0, 0);
+            transform.Translate(10, 0, 0);
             x_move++;
         }
         if (Input.GetKeyDown(KeyCode.UpArrow) & y_move < maxUp) 
         {
-            transform.Translate(0, 1, 0);
+            transform.Translate(0, 10, 0);
             y_move++;
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)& y_move > maxDown) 
         {
-            transform.Translate(0, -1, 0);
+            transform.Translate(0, -10, 0);
             y_move--;
         }
         if (Input.mouseScrollDelta.y > 0 & z_move < maxIn) 
         {
-            transform.Translate(0, 0, 1);
+            transform.Translate(0, 0, 10);
             z_move++;
         }
         if(Input.mouseScrollDelta.y < 0 & z_move > maxOut) 
         {
-            transform.Translate(0, 0, -1);
+            transform.Translate(0, 0, -10);
             z_move--;
         }
     }

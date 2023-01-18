@@ -26,6 +26,8 @@ public class RunningBackEnd : MonoBehaviour
     void Start()
     {
         InitiateTilemap();
+        DataRead dr = new DataRead();
+        dr.applyData();
     }
 
     void Update()

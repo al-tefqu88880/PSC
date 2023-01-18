@@ -27,7 +27,7 @@ public class TileInfoDisplay : MonoBehaviour
     void Update()
     {
         if (firstUpdate){
-            width = RunningBackEnd.tilemap.GetWidth();
+            width = RunningBackEnd.GetTilemap().GetWidth();
             height = RunningBackEnd.tilemap.GetHeight();
             firstUpdate = false;
         }
