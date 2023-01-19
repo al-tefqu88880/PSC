@@ -15,10 +15,7 @@ public class CameraMovement : MonoBehaviour
     int y_move = 0;
     int z_move = 0;
 
-    void Start()
-    {
-        
-    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow)& (x_move > maxLeft)) 

@@ -26,12 +26,14 @@ public class RunningBackEnd : MonoBehaviour
     void Start()
     {
         InitiateTilemap();
-        DataRead dr = new DataRead();
-        dr.applyData();
+        DataRead dr = gameObject.AddComponent<DataRead>();
+        EditorPainter ep = gameObject.AddComponent<EditorPainter>();
+        ep.PaintWater();
+        dr.ApplyData();
     }
 
     void Update()
     {
-        
+        // to be completed
     }
 }

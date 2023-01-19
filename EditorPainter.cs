@@ -11,7 +11,7 @@ public class EditorPainter : MonoBehaviour
 {
     public Tilemap terrain;
 
-
+    public EditorPainter() { }
 
     [ContextMenu("Paint")]
     void Paint()
@@ -87,7 +87,7 @@ public class EditorPainter : MonoBehaviour
             for (int y = 0; y < tilemap.GetWidth(); y++)
             {
                 Vector3Int p = new Vector3Int(x, y, 0);
-                terrain.SetTile(p, water);
+                RunningBackEnd.tilemap.SetTile(p, 0);
             }
         }
     }
