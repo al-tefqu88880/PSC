@@ -24,7 +24,7 @@ public class EditorPainter : MonoBehaviour
         TilemapData tilemap = RunningBackEnd.GetTilemap();
         for (int x = 0; x < tilemap.GetWidth(); x++)
         {
-            for (int y = 0; y < tilemap.GetWidth(); y++)
+            for (int y = 0; y < tilemap.GetHeight(); y++)
             {
                 Vector3Int p = new Vector3Int(x, y, 0);
                 int index = Random.Range(0, 3);
@@ -84,7 +84,7 @@ public class EditorPainter : MonoBehaviour
         TilemapData tilemap = RunningBackEnd.GetTilemap();
         for (int x = 0; x < tilemap.GetWidth(); x++)
         {
-            for (int y = 0; y < tilemap.GetWidth(); y++)
+            for (int y = 0; y < tilemap.GetHeight(); y++)
             {
                 Vector3Int p = new Vector3Int(x, y, 0);
                 RunningBackEnd.tilemap.SetTile(p, 0);
