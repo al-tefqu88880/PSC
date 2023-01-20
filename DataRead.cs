@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Globalization;
 using Microsoft.VisualBasic.FileIO;
 using System;
+using Common;
 
 
 public class DataRead : MonoBehaviour
@@ -17,7 +18,7 @@ public class DataRead : MonoBehaviour
     List<string[]> ReadDataClimate()
     {
         List<string[]> res = new();
-        var path = @"C:\Users\alexa\Jeu PSC\CSV données environnementales reduit(1).csv";
+        var path = @"C:\Users\alexa\Jeu PSC\base_environnement.csv";
         using (TextFieldParser csvParser = new(path))
         {
             csvParser.SetDelimiters(new string[] { "," });
@@ -56,7 +57,8 @@ public class DataRead : MonoBehaviour
 
     Vector3Int ConvCoords(float x, float y)
     {
-        return new Vector3Int((int)(3.0 * (x-30.0))+1, (int)((1.5 * (y+10.0))*(2.0-Math.Sqrt(3.0)/2.0))+1 , 0);
+        GridCoordinates c = GridCoordinates.WorldToHexa(new Vector3((float)(3.0 * (x + 10.0)), (float)(3 * (y + -30.0)), 0));
+        return new Vector3Int(c.x+1, c.y+1 , 0);
     }
 
 
@@ -65,7 +67,7 @@ public class DataRead : MonoBehaviour
         List<string[]> data = ReadDataClimate();
         foreach (string[] line in data)
         {
-            Vector3Int position = ConvCoords(float.Parse(line[2], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat));
+            Vector3Int position = ConvCoords(float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[2], CultureInfo.InvariantCulture.NumberFormat));
             bool success = int.TryParse(line[14], out int number);
             if (success)
             {
@@ -80,7 +82,7 @@ public class DataRead : MonoBehaviour
         foreach (string[] line in data)
         {
             //Debug.Log(line[0]);
-            Vector3Int position = ConvCoords(float.Parse(line[0], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat));
+            Vector3Int position = ConvCoords(float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[0], CultureInfo.InvariantCulture.NumberFormat));
             //Debug.Log(position[0]);
             //Debug.Log(position[1]);
             RunningBackEnd.tilemap.SetBear(position, RunningBackEnd.tilemap.GetBear(position)+1);
