@@ -11,9 +11,9 @@ public class EditorPainter : MonoBehaviour
 {
     public Tilemap terrain;
 
+    public EditorPainter() { }
 
-
-[ContextMenu("Paint")]
+    [ContextMenu("Paint")]
     void Paint()
     {
         Tile error = (Tile)Resources.Load("error");
@@ -76,7 +76,7 @@ public class EditorPainter : MonoBehaviour
 
 
     [ContextMenu("Paint with water")]
-    void PaintWater()
+    public void PaintWater()
     {
 
         Tile water = (Tile)Resources.Load("water");
@@ -87,7 +87,7 @@ public class EditorPainter : MonoBehaviour
             for (int y = 0; y < tilemap.GetWidth(); y++)
             {
                 Vector3Int p = new Vector3Int(x, y, 0);
-                terrain.SetTile(p, water);
+                RunningBackEnd.tilemap.SetTile(p, 0);
             }
         }
     }

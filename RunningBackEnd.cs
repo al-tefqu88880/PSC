@@ -7,8 +7,8 @@ using UnityEngine.Tilemaps;
 public class RunningBackEnd : MonoBehaviour
 {
     public static TilemapData tilemap;
-    public int width = 100;
-    public int height = 100;
+    public int width = 500;
+    public int height = 500;
     public Tilemap terrain;
 
     public static TilemapData GetTilemap()
@@ -17,7 +17,7 @@ public class RunningBackEnd : MonoBehaviour
     }
 
     [ContextMenu("Initiate Tilemap")]
-    void InitiateTilemap()
+    public void InitiateTilemap()
     {
         tilemap = new TilemapData(width, height, terrain);
         //Debug.Log("Tilemap initiated");
@@ -26,10 +26,14 @@ public class RunningBackEnd : MonoBehaviour
     void Start()
     {
         InitiateTilemap();
+        DataRead dr = gameObject.AddComponent<DataRead>();
+        EditorPainter ep = gameObject.AddComponent<EditorPainter>();
+        ep.PaintWater();
+        dr.ApplyData();
     }
 
     void Update()
     {
-        
+        // to be completed
     }
 }

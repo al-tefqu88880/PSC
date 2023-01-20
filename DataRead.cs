@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Globalization;
 using Microsoft.VisualBasic.FileIO;
+using System;
+
 
 public class DataRead : MonoBehaviour
 {
-
-    List<string[]> readData()
+    public DataRead()
     {
-        List<string[]> res = new List<string[]>();
-        var path = @"C:\Users\alexa\Jeu PSC\CSV données environnementales réduit.csv";
-        using (TextFieldParser csvParser = new TextFieldParser(path))
+
+    }
+
+
+    List<string[]> ReadDataClimate()
+    {
+        List<string[]> res = new();
+        var path = @"C:\Users\alexa\Jeu PSC\CSV données environnementales reduit(1).csv";
+        using (TextFieldParser csvParser = new(path))
         {
             csvParser.SetDelimiters(new string[] { "," });
 
@@ -27,47 +34,76 @@ public class DataRead : MonoBehaviour
         return res;
     }
 
-    Vector3Int convCoords(float x, float y)
+    List<string[]> ReadDataRabbit()
     {
-        return new Vector3Int((int)(1.0 * x), (int)(1.0 * y)+20, 0);
+        List<string[]> res = new List<string[]>();
+        var path = @"C:\Users\alexa\Jeu PSC\occurrenceslapin reduit.csv";
+        using (TextFieldParser csvParser = new(path))
+        {
+            csvParser.SetDelimiters(new string[] { "	" });
+
+            // Skip the row with the column names
+            csvParser.ReadLine();
+
+            while (!csvParser.EndOfData)
+            {
+                string[] fields = csvParser.ReadFields();
+                res.Add(fields);
+            }
+        }
+        return res;
+    }
+
+    Vector3Int ConvCoords(float x, float y)
+    {
+        return new Vector3Int((int)(3.0 * (x-30.0))+1, (int)((1.5 * (y+10.0))*(2.0-Math.Sqrt(3.0)/2.0))+1 , 0);
     }
 
 
-    void attributeValues(List<string[]> data)
+    void AttributeValues()
     {
+        List<string[]> data = ReadDataClimate();
         foreach (string[] line in data)
         {
-            Vector3Int position = convCoords(float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[2], CultureInfo.InvariantCulture.NumberFormat));
-            int number;
-            bool success = int.TryParse(line[14], out number);
+            Vector3Int position = ConvCoords(float.Parse(line[2], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat));
+            bool success = int.TryParse(line[14], out int number);
             if (success)
             {
+                //Debug.Log(position[0]);
+                //Debug.Log(position[1]);
                 RunningBackEnd.tilemap.SetHumidity(position, (float)number);
                 RunningBackEnd.tilemap.SetTile(position, 2);
-                Debug.Log(number);
             }
-            
-            
+        }
+
+        data = ReadDataRabbit();
+        foreach (string[] line in data)
+        {
+            //Debug.Log(line[0]);
+            Vector3Int position = ConvCoords(float.Parse(line[0], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat));
+            //Debug.Log(position[0]);
+            //Debug.Log(position[1]);
+            RunningBackEnd.tilemap.SetBear(position, RunningBackEnd.tilemap.GetBear(position)+1);
+            RunningBackEnd.tilemap.SetTile(position, 1);
         }
     }
 
     [ContextMenu("Apply Data")]
 
-    void applyData()
+    public void ApplyData()
     {
-        attributeValues(readData());
+        AttributeValues();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    /*[ContextMenu("Test Data")]
+    
+    void testData()
     {
+        RunningBackEnd.InitiateTilemap();
+        EditorPainter.PaintWater();
+        applyData();
+    }*/
 
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
 
