@@ -85,8 +85,8 @@ public class DataRead : MonoBehaviour
             Vector3Int position = ConvCoords(float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[0], CultureInfo.InvariantCulture.NumberFormat));
             //Debug.Log(position[0]);
             //Debug.Log(position[1]);
-            RunningBackEnd.tilemap.SetValue(position,"bear", RunningBackEnd.tilemap.GetValue(position,"bear")+1);
-            RunningBackEnd.tilemap.SetTile(position, 1);
+            RunningBackEnd.tilemap.SetValue(position,"rabbit", RunningBackEnd.tilemap.GetValue(position,"rabbit")+1); 
+            //RunningBackEnd.tilemap.SetTile(position, 1);
         }
     }
 

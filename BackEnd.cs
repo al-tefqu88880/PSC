@@ -18,7 +18,7 @@ namespace BackEnd
         {
             switch (name)
             {
-                case "bear":
+                case "rabbit":
                     return 0;
                 case "lynx":
                     return 1;
@@ -69,18 +69,27 @@ namespace BackEnd
         public static Tile water = (Tile)Resources.Load("water");
         public static Tile desert = (Tile)Resources.Load("desert");
         public static Tile plain = (Tile)Resources.Load("plain");
+        public static Tile rabbit100 = (Tile)Resources.Load("rabbit100");
+        public static Tile rabbit090 = (Tile)Resources.Load("rabbit090");
+        public static Tile rabbit080 = (Tile)Resources.Load("rabbit080");
+        public static Tile rabbit070 = (Tile)Resources.Load("rabbit070");
+        public static Tile rabbit060 = (Tile)Resources.Load("rabbit060");
+        public static Tile rabbit050 = (Tile)Resources.Load("rabbit050");
+
 
         private TileData[,] tileMatrix;
         private int width;
         private int height;
         private Tilemap terrain;
+        private Tilemap rabbit;
 
-        public TilemapData(int x_width,int y_width, Tilemap terrain)
+        public TilemapData(int x_width,int y_width, Tilemap terrain, Tilemap rabbit)
         {
             this.tileMatrix = new TileData[x_width, y_width];
             this.width = x_width;
             this.height = y_width;
             this.terrain = terrain;
+            this.rabbit = rabbit;
             for (int x=0; x< x_width; x++)
             {
                 for (int y = 0; y< y_width; y++)
@@ -109,7 +118,7 @@ namespace BackEnd
                 2 => plain,
                 _ => error,
             };
-            int temp = position.x;
+            int temp = position.x;                      //inversion entre x/y backend et x/y affiché
             position.x = position.y;
             position.y = temp;
             terrain.SetTile(position, displayTile);
@@ -118,6 +127,38 @@ namespace BackEnd
         public void SetValue(Vector3Int position, string name, float value)
         {
             tileMatrix[position.x,position.y].SetValue(name,value);
+            switch (name)
+            {
+                case "rabbit":
+                    Vector3Int invertedP = new Vector3Int(position.y, position.x, 0);
+                    switch (value)
+                    {
+                        case float n when n > 1000:
+                            rabbit.SetTile(invertedP, rabbit100);
+                            break;
+                        case float n when n > 500:
+                            rabbit.SetTile(invertedP, rabbit090);
+                            break;
+                        case float n when n > 200:
+                            rabbit.SetTile(invertedP, rabbit080);
+                            break;
+                        case float n when n > 100:
+                            rabbit.SetTile(invertedP, rabbit070);
+                            break;
+                        case float n when n > 20:
+                            rabbit.SetTile(invertedP, rabbit060);
+                            break;
+                        case float n when n > 0:
+                            rabbit.SetTile(invertedP, rabbit050);
+                            break;
+                        default:
+                            rabbit.SetTile(invertedP, null);
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
         
         public int GetTile(Vector3Int position)

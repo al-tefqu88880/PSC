@@ -14,8 +14,8 @@ public class ChangeDataMenu : MonoBehaviour
     Color buttonColor = new Color(0.56f, 0.93f, 0.56f, 0.5f);
     int selectedButton = -1;
     public GameObject mainCamera;
-    public TMP_Text bearQuestion;
-    public TMP_InputField bearAnswer;
+    public TMP_Text rabbitQuestion;
+    public TMP_InputField rabbitAnswer;
     public TMP_Text lynxQuestion;
     public TMP_InputField lynxAnswer;
     public TMP_Text voleQuestion;
@@ -32,7 +32,7 @@ public class ChangeDataMenu : MonoBehaviour
 
     private void ClearAnswers()
     {
-        bearAnswer.text = "";
+        rabbitAnswer.text = "";
         lynxAnswer.text = "";
         voleAnswer.text = "";
         biomassAnswer.text = "";
@@ -85,7 +85,7 @@ public class ChangeDataMenu : MonoBehaviour
         };
         button.GetComponent<Image>().color = buttonColor;
         selectedButton = tile;
-        bearQuestion.SetText("Bears : " + RunningBackEnd.tilemap.GetValue(position, "bear").ToString());
+        rabbitQuestion.SetText("Rabbits : " + RunningBackEnd.tilemap.GetValue(position, "rabbit").ToString());
         lynxQuestion.SetText("Lynx : " + RunningBackEnd.tilemap.GetValue(position, "lynx").ToString());
         voleQuestion.SetText("Voles : " + RunningBackEnd.tilemap.GetValue(position, "vole").ToString());
         biomassQuestion.SetText("Biomass : " + RunningBackEnd.tilemap.GetValue(position,"biomass").ToString());
@@ -108,18 +108,18 @@ public class ChangeDataMenu : MonoBehaviour
 
     public void SubmitAnswers()
     {
-        string getBear = bearAnswer.text;
+        string getRabbit = rabbitAnswer.text;
         string getLynx = lynxAnswer.text;
         string getVole = voleAnswer.text;
         string getBiomass = biomassAnswer.text;
         string getHumidity = humidityAnswer.text;
         string getSunlight = sunlightAnswer.text;
         ClearAnswers();
-        if (getBear != "")
+        if (getRabbit != "")
         {
-            int bear = int.Parse(getBear);
-            bearQuestion.SetText("Bears : " + bear.ToString());
-            RunningBackEnd.tilemap.SetValue(position,"bear", bear);
+            int rabbit = int.Parse(getRabbit);
+            rabbitQuestion.SetText("Rabbits : " + rabbit.ToString());
+            RunningBackEnd.tilemap.SetValue(position,"rabbit", rabbit);
         }
         if (getLynx != "")
         {

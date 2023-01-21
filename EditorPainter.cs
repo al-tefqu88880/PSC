@@ -10,6 +10,7 @@ using BackEnd;
 public class EditorPainter : MonoBehaviour
 {
     public Tilemap terrain;
+    public Tilemap rabbit;
 
     public EditorPainter() { }
 
@@ -20,6 +21,13 @@ public class EditorPainter : MonoBehaviour
         Tile water = (Tile)Resources.Load("water");
         Tile desert = (Tile)Resources.Load("desert");
         Tile plain = (Tile)Resources.Load("plain");
+        Tile rabbit100 = (Tile)Resources.Load("rabbit100");
+        Tile rabbit090 = (Tile)Resources.Load("rabbit090");
+        Tile rabbit080 = (Tile)Resources.Load("rabbit080");
+        Tile rabbit070 = (Tile)Resources.Load("rabbit070");
+        Tile rabbit060 = (Tile)Resources.Load("rabbit060");
+        Tile rabbit050 = (Tile)Resources.Load("rabbit050");
+
 
         TilemapData tilemap = RunningBackEnd.GetTilemap();
         for (int x = 0; x < tilemap.GetWidth(); x++)
@@ -31,16 +39,19 @@ public class EditorPainter : MonoBehaviour
                 if (index == 0)
                 {
                     terrain.SetTile(p, desert);
+                    rabbit.SetTile(p, rabbit050);
                 }
                 else
                 {
                     if (index == 1)
                     {
                         terrain.SetTile(p, plain);
+                        rabbit.SetTile(p, rabbit080);
                     }
                     else
                     {
                         terrain.SetTile(p, water);
+                        rabbit.SetTile(p, rabbit100);
                     }
                 }
                 
@@ -94,8 +105,9 @@ public class EditorPainter : MonoBehaviour
 
 
     [ContextMenu("Clear All")]
-    void ClearAll()
+    public void ClearAll()
     {
         terrain.ClearAllTiles();
+        rabbit.ClearAllTiles();
     }
 }
