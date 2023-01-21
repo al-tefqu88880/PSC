@@ -85,12 +85,12 @@ public class ChangeDataMenu : MonoBehaviour
         };
         button.GetComponent<Image>().color = buttonColor;
         selectedButton = tile;
-        bearQuestion.SetText("Bears : " + RunningBackEnd.tilemap.GetBear(position).ToString());
-        lynxQuestion.SetText("Lynx : " + RunningBackEnd.tilemap.GetLynx(position).ToString());
-        voleQuestion.SetText("Voles : " + RunningBackEnd.tilemap.GetVole(position).ToString());
-        biomassQuestion.SetText("Biomass : " + RunningBackEnd.tilemap.GetBiomass(position).ToString());
-        humidityQuestion.SetText("Humidity : " + RunningBackEnd.tilemap.GetHumidity(position).ToString());
-        sunlightQuestion.SetText("Sunlight : " + RunningBackEnd.tilemap.GetSunlight(position).ToString());
+        bearQuestion.SetText("Bears : " + RunningBackEnd.tilemap.GetValue(position, "bear").ToString());
+        lynxQuestion.SetText("Lynx : " + RunningBackEnd.tilemap.GetValue(position, "lynx").ToString());
+        voleQuestion.SetText("Voles : " + RunningBackEnd.tilemap.GetValue(position, "vole").ToString());
+        biomassQuestion.SetText("Biomass : " + RunningBackEnd.tilemap.GetValue(position,"biomass").ToString());
+        humidityQuestion.SetText("Humidity : " + RunningBackEnd.tilemap.GetValue(position,"humidity").ToString());
+        sunlightQuestion.SetText("Sunlight : " + RunningBackEnd.tilemap.GetValue(position,"sunlight").ToString());
     }
 
     public void CloseMenu()
@@ -119,37 +119,37 @@ public class ChangeDataMenu : MonoBehaviour
         {
             int bear = int.Parse(getBear);
             bearQuestion.SetText("Bears : " + bear.ToString());
-            RunningBackEnd.tilemap.SetBear(position, bear);
+            RunningBackEnd.tilemap.SetValue(position,"bear", bear);
         }
         if (getLynx != "")
         {
             int lynx = int.Parse(getLynx);
             lynxQuestion.SetText("Lynx : " + lynx.ToString());
-            RunningBackEnd.tilemap.SetLynx(position, lynx);
+            RunningBackEnd.tilemap.SetValue(position,"lynx", lynx);
         }
         if (getVole != "")
         {
             int vole = int.Parse(getVole);
             voleQuestion.SetText("Voles : " + vole.ToString());
-            RunningBackEnd.tilemap.SetVole(position, vole);
+            RunningBackEnd.tilemap.SetValue(position,"vole", vole);
         }
         if (getBiomass != "")
         {
             float biomass = float.Parse(getBiomass);
             biomassQuestion.SetText("Biomass : " + biomass.ToString());
-            RunningBackEnd.tilemap.SetBiomass(position, biomass);
+            RunningBackEnd.tilemap.SetValue(position,"biomass", biomass);
         }
         if (getHumidity != "")
         {
             float humidity = float.Parse(getHumidity);
             humidityQuestion.SetText("Humidity : " + humidity.ToString());
-            RunningBackEnd.tilemap.SetHumidity(position, humidity);
+            RunningBackEnd.tilemap.SetValue(position,"humidity", humidity);
         }
         if (getSunlight != "")
         {
             float sunlight = float.Parse(getSunlight);
             sunlightQuestion.SetText("Sunlight : " + sunlight.ToString());
-            RunningBackEnd.tilemap.SetSunlight(position, sunlight);
+            RunningBackEnd.tilemap.SetValue(position,"sunlight", sunlight);
         }
     }
 

@@ -12,83 +12,54 @@ namespace BackEnd
     public class TileData
     {
         private int tile;  //the displayed tile in the game will be selected depending on this int (0=water, 1=desert...)
+        private float[] characteristics;
 
-        //different local characteristics 
-        private float bear;
-        private float lynx;
-        private float vole;
-        private float humidity;
-        private float sunlight;
-        private float biomass;
+        private static int StringToIndex(string name)
+        {
+            switch (name)
+            {
+                case "bear":
+                    return 0;
+                case "lynx":
+                    return 1;
+                case "vole":
+                    return 2;
+                case "biomass":
+                    return 3;
+                case "humidity":
+                    return 4;
+                case "sunlight":
+                    return 5;
+                default:
+                    Debug.Log("Invalid characteristic name");
+                    return -1;
+            }
+        }
 
         public TileData()
         {
             this.tile = 0;
-            this.bear = 0;
-            this.lynx = 0;
-            this.vole = 0;
-            this.humidity = 0;
-            this.sunlight = 0;
-            this.biomass = 0;
-            
+            this.characteristics = new float[6];
         }
 
         public void SetTile(int value)
         {
             this.tile = value;
         }
-        public void SetBear(float value)
+        
+        public void SetValue(string name, float value)
         {
-            this.bear = value;
-        }
-        public void SetLynx(float value)
-        {
-            this.lynx = value;
-        }
-        public void SetVole(float value)
-        {
-            this.vole = value;
-        }
-        public void SetHumidity(float value)
-        {
-            this.humidity = value;
-        }
-        public void SetSunlight(float value)
-        {
-            this.sunlight = value;
-        }
-        public void SetBiomass(float value)
-        {
-            this.biomass = value;
+            this.characteristics[StringToIndex(name)] = value;
         }
 
         public int GetTile()
         {
             return this.tile;
         }
-        public float GetHumidity()
+        
+        public float GetValue(string name)
         {
-            return this.humidity;
-        }
-        public float GetBear()
-        {
-            return this.bear;
-        }
-        public float GetLynx()
-        {
-            return this.lynx;
-        }
-        public float GetVole()
-        {
-            return this.vole;
-        }
-        public float GetSunlight()
-        {
-            return this.sunlight;
-        }
-        public float GetBiomass()
-        {
-            return this.biomass;
+            return this.characteristics[StringToIndex(name)];
         }
 
     }
@@ -143,57 +114,20 @@ namespace BackEnd
             position.y = temp;
             terrain.SetTile(position, displayTile);
         }
-        public void SetBear(Vector3Int position, float value)
+
+        public void SetValue(Vector3Int position, string name, float value)
         {
-            tileMatrix[position.x, position.y].SetBear(value);
+            tileMatrix[position.x,position.y].SetValue(name,value);
         }
-        public void SetLynx(Vector3Int position, float value)
-        {
-            tileMatrix[position.x, position.y].SetLynx(value);
-        }
-        public void SetVole(Vector3Int position, float value)
-        {
-            tileMatrix[position.x, position.y].SetVole(value);
-        }
-        public void SetHumidity(Vector3Int position, float value)
-        {
-            tileMatrix[position.x, position.y].SetHumidity(value);
-        }
-        public void SetBiomass(Vector3Int position, float value)
-        {
-            tileMatrix[position.x, position.y].SetBiomass(value);
-        }
-        public void SetSunlight(Vector3Int position, float value)
-        {
-            tileMatrix[position.x, position.y].SetSunlight(value);
-        }
+        
         public int GetTile(Vector3Int position)
         {
             return tileMatrix[position.x, position.y].GetTile();
         }
-        public float GetBear(Vector3Int position)
+        
+        public float GetValue(Vector3Int position, string name)
         {
-            return tileMatrix[position.x, position.y].GetBear();
-        }
-        public float GetLynx(Vector3Int position)
-        {
-            return tileMatrix[position.x, position.y].GetLynx();
-        }
-        public float GetVole(Vector3Int position)
-        {
-            return tileMatrix[position.x, position.y].GetVole();
-        }
-        public float GetHumidity(Vector3Int position)
-        {
-            return tileMatrix[position.x, position.y].GetHumidity();
-        }
-        public float GetBiomass(Vector3Int position)
-        {
-            return tileMatrix[position.x, position.y].GetBiomass();
-        }
-        public float GetSunlight(Vector3Int position)
-        {
-            return tileMatrix[position.x, position.y].GetSunlight();
+            return tileMatrix[position.x, position.y].GetValue(name);
         }
     }
 }

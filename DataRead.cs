@@ -18,7 +18,7 @@ public class DataRead : MonoBehaviour
     List<string[]> ReadDataClimate()
     {
         List<string[]> res = new();
-        var path = @"C:\Users\alexa\Jeu PSC\base_environnement.csv";
+        var path = @"Assets\base_environnement.csv";
         using (TextFieldParser csvParser = new(path))
         {
             csvParser.SetDelimiters(new string[] { "," });
@@ -38,7 +38,7 @@ public class DataRead : MonoBehaviour
     List<string[]> ReadDataRabbit()
     {
         List<string[]> res = new List<string[]>();
-        var path = @"C:\Users\alexa\Jeu PSC\occurrenceslapin reduit.csv";
+        var path = @"Assets\occurrenceslapin reduit.csv";
         using (TextFieldParser csvParser = new(path))
         {
             csvParser.SetDelimiters(new string[] { "	" });
@@ -73,7 +73,7 @@ public class DataRead : MonoBehaviour
             {
                 //Debug.Log(position[0]);
                 //Debug.Log(position[1]);
-                RunningBackEnd.tilemap.SetHumidity(position, (float)number);
+                RunningBackEnd.tilemap.SetValue(position,"humidity", (float)number);
                 RunningBackEnd.tilemap.SetTile(position, 2);
             }
         }
@@ -85,7 +85,7 @@ public class DataRead : MonoBehaviour
             Vector3Int position = ConvCoords(float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[0], CultureInfo.InvariantCulture.NumberFormat));
             //Debug.Log(position[0]);
             //Debug.Log(position[1]);
-            RunningBackEnd.tilemap.SetBear(position, RunningBackEnd.tilemap.GetBear(position)+1);
+            RunningBackEnd.tilemap.SetValue(position,"bear", RunningBackEnd.tilemap.GetValue(position,"bear")+1);
             RunningBackEnd.tilemap.SetTile(position, 1);
         }
     }
