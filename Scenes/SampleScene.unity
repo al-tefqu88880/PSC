@@ -656,6 +656,7 @@ GameObject:
   - component: {fileID: 222144902}
   - component: {fileID: 222144901}
   - component: {fileID: 222144904}
+  - component: {fileID: 222144905}
   m_Layer: 0
   m_Name: BackEnd Simulation support
   m_TagString: Untagged
@@ -732,6 +733,18 @@ MonoBehaviour:
   am: {fileID: 1866069913}
   mainCamera: {fileID: 519420028}
   hoverTile: {fileID: 702693479}
+--- !u!114 &222144905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222144899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c3ddcc5cafbcc42bbad75b8d2f9f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &233221062
 GameObject:
   m_ObjectHideFlags: 0
@@ -5806,6 +5819,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 222144904}
   cdm: {fileID: 2126902539}
+  brushes: {fileID: 222144905}
   hoverTile: {fileID: 702693479}
   weatherToggle: {fileID: 1634194045}
   overlayToggle: {fileID: 1769560171}
@@ -5815,6 +5829,8 @@ MonoBehaviour:
   weatherCanvas: {fileID: 986422156}
   overlayCanvas: {fileID: 517404472}
   rabbitRenderer: {fileID: 2096795550}
+  position: {x: 10, y: 10, z: 0}
+  radius: 1
 --- !u!1 &1875660829
 GameObject:
   m_ObjectHideFlags: 0

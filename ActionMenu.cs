@@ -8,6 +8,7 @@ public class ActionMenu : MonoBehaviour
 {
     public InputManager inputManager;
     public ChangeDataMenu cdm;
+    public Brushes brushes;
 
     public Transform hoverTile;
     Vector3 hoverScale = new Vector3((float)1.2, (float)1.2, (float)1.2);
@@ -30,6 +31,9 @@ public class ActionMenu : MonoBehaviour
 
     public TilemapRenderer rabbitRenderer;
 
+    public Vector3Int position;
+    public int radius;
+
 
 
     void randomActionButton()
@@ -39,6 +43,7 @@ public class ActionMenu : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, 0, 90);
         hoverTile.localScale = hoverScale;
         hoverTile.rotation = rotation;
+        brushes.ChangeBrush(position, radius, "rabbit", 10);
         
     }
 
