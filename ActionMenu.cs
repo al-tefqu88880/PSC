@@ -31,9 +31,6 @@ public class ActionMenu : MonoBehaviour
 
     public TilemapRenderer rabbitRenderer;
 
-    public Vector3Int position;
-    public int radius;
-
 
 
     void randomActionButton()
@@ -43,7 +40,6 @@ public class ActionMenu : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, 0, 90);
         hoverTile.localScale = hoverScale;
         hoverTile.rotation = rotation;
-        brushes.ChangeBrush(position, radius, "rabbit", 10);
         
     }
 

@@ -5829,8 +5829,6 @@ MonoBehaviour:
   weatherCanvas: {fileID: 986422156}
   overlayCanvas: {fileID: 517404472}
   rabbitRenderer: {fileID: 2096795550}
-  position: {x: 10, y: 10, z: 0}
-  radius: 1
 --- !u!1 &1875660829
 GameObject:
   m_ObjectHideFlags: 0
