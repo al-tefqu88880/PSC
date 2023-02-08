@@ -18,7 +18,7 @@ public class DataRead : MonoBehaviour
     List<string[]> ReadDataClimate()
     {
         List<string[]> res = new();
-        var path = @"C:\Users\alexa\Jeu PSC\base_environnement.csv";
+        var path = @"Assets\base_environnement.csv";
         using (TextFieldParser csvParser = new(path))
         {
             csvParser.SetDelimiters(new string[] { "," });
@@ -38,7 +38,7 @@ public class DataRead : MonoBehaviour
     List<string[]> ReadDataRabbit()
     {
         List<string[]> res = new List<string[]>();
-        var path = @"C:\Users\alexa\Jeu PSC\occurrenceslapin reduit.csv";
+        var path = @"Assets\occurrenceslapin reduit.csv";
         using (TextFieldParser csvParser = new(path))
         {
             csvParser.SetDelimiters(new string[] { "	" });
