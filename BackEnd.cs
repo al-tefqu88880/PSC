@@ -22,7 +22,7 @@ namespace BackEnd
                     return 0;
                 case "lynx":
                     return 1;
-                case "vole":
+                case "fox":
                     return 2;
                 case "biomass":
                     return 3;

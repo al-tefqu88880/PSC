@@ -18,8 +18,8 @@ public class ChangeDataMenu : MonoBehaviour
     public TMP_InputField rabbitAnswer;
     public TMP_Text lynxQuestion;
     public TMP_InputField lynxAnswer;
-    public TMP_Text voleQuestion;
-    public TMP_InputField voleAnswer;
+    public TMP_Text foxQuestion;
+    public TMP_InputField foxAnswer;
     public TMP_Text biomassQuestion;
     public TMP_InputField biomassAnswer;
     public TMP_Text humidityQuestion;
@@ -34,7 +34,7 @@ public class ChangeDataMenu : MonoBehaviour
     {
         rabbitAnswer.text = "";
         lynxAnswer.text = "";
-        voleAnswer.text = "";
+        foxAnswer.text = "";
         biomassAnswer.text = "";
         humidityAnswer.text = "";
         sunlightAnswer.text = "";
@@ -87,7 +87,7 @@ public class ChangeDataMenu : MonoBehaviour
         selectedButton = tile;
         rabbitQuestion.SetText("Rabbits : " + RunningBackEnd.tilemap.GetValue(position, "rabbit").ToString());
         lynxQuestion.SetText("Lynx : " + RunningBackEnd.tilemap.GetValue(position, "lynx").ToString());
-        voleQuestion.SetText("Voles : " + RunningBackEnd.tilemap.GetValue(position, "vole").ToString());
+        foxQuestion.SetText("Foxes : " + RunningBackEnd.tilemap.GetValue(position, "fox").ToString());
         biomassQuestion.SetText("Biomass : " + RunningBackEnd.tilemap.GetValue(position,"biomass").ToString());
         humidityQuestion.SetText("Humidity : " + RunningBackEnd.tilemap.GetValue(position,"humidity").ToString());
         sunlightQuestion.SetText("Sunlight : " + RunningBackEnd.tilemap.GetValue(position,"sunlight").ToString());
@@ -110,7 +110,7 @@ public class ChangeDataMenu : MonoBehaviour
     {
         string getRabbit = rabbitAnswer.text;
         string getLynx = lynxAnswer.text;
-        string getVole = voleAnswer.text;
+        string getFox = foxAnswer.text;
         string getBiomass = biomassAnswer.text;
         string getHumidity = humidityAnswer.text;
         string getSunlight = sunlightAnswer.text;
@@ -127,11 +127,11 @@ public class ChangeDataMenu : MonoBehaviour
             lynxQuestion.SetText("Lynx : " + lynx.ToString());
             RunningBackEnd.tilemap.SetValue(position,"lynx", lynx);
         }
-        if (getVole != "")
+        if (getFox != "")
         {
-            int vole = int.Parse(getVole);
-            voleQuestion.SetText("Voles : " + vole.ToString());
-            RunningBackEnd.tilemap.SetValue(position,"vole", vole);
+            int fox = int.Parse(getFox);
+            foxQuestion.SetText("Foxes : " + fox.ToString());
+            RunningBackEnd.tilemap.SetValue(position,"fox", fox);
         }
         if (getBiomass != "")
         {

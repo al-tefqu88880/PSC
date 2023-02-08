@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ep: {fileID: 471626534}
-  width: 136
+  width: 120
   height: 121
   terrain: {fileID: 1725120416}
   rabbit: {fileID: 2096795551}
