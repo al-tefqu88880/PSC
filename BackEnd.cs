@@ -12,83 +12,59 @@ namespace BackEnd
     public class TileData
     {
         private int tile;  //the displayed tile in the game will be selected depending on this int (0=water, 1=desert...)
+        private float[] characteristics;
 
-        //different local characteristics 
-        private float bear;
-        private float lynx;
-        private float vole;
-        private float humidity;
-        private float sunlight;
-        private float biomass;
+        private static int StringToIndex(string name)
+        {
+            switch (name)
+            {
+                case "rabbit":
+                    return 0;
+                case "lynx":
+                    return 1;
+                case "vole":
+                    return 2;
+                case "biomass":
+                    return 3;
+                case "humidity":
+                    return 4;
+                case "sunlight":
+                    return 5;
+                default:
+                    Debug.Log("Invalid characteristic name");
+                    return -1;
+            }
+        }
 
         public TileData()
         {
             this.tile = 0;
-            this.bear = 0;
-            this.lynx = 0;
-            this.vole = 0;
-            this.humidity = 0;
-            this.sunlight = 0;
-            this.biomass = 0;
-            
+            this.characteristics = new float[6];
         }
 
         public void SetTile(int value)
         {
             this.tile = value;
         }
-        public void SetBear(float value)
+        
+        public void SetValue(string name, float value)      //set the "name" characteristics to value
         {
-            this.bear = value;
+            this.characteristics[StringToIndex(name)] = value;
         }
-        public void SetLynx(float value)
+
+        public void ChangeValue(string name, float change)      //does +change on the "name" characteristics
         {
-            this.lynx = value;
-        }
-        public void SetVole(float value)
-        {
-            this.vole = value;
-        }
-        public void SetHumidity(float value)
-        {
-            this.humidity = value;
-        }
-        public void SetSunlight(float value)
-        {
-            this.sunlight = value;
-        }
-        public void SetBiomass(float value)
-        {
-            this.biomass = value;
+            this.characteristics[StringToIndex(name)] += change;
         }
 
         public int GetTile()
         {
             return this.tile;
         }
-        public float GetHumidity()
+        
+        public float GetValue(string name)
         {
-            return this.humidity;
-        }
-        public float GetBear()
-        {
-            return this.bear;
-        }
-        public float GetLynx()
-        {
-            return this.lynx;
-        }
-        public float GetVole()
-        {
-            return this.vole;
-        }
-        public float GetSunlight()
-        {
-            return this.sunlight;
-        }
-        public float GetBiomass()
-        {
-            return this.biomass;
+            return this.characteristics[StringToIndex(name)];
         }
 
     }
@@ -98,18 +74,27 @@ namespace BackEnd
         public static Tile water = (Tile)Resources.Load("water");
         public static Tile desert = (Tile)Resources.Load("desert");
         public static Tile plain = (Tile)Resources.Load("plain");
+        public static Tile rabbit100 = (Tile)Resources.Load("rabbit100");
+        public static Tile rabbit090 = (Tile)Resources.Load("rabbit090");
+        public static Tile rabbit080 = (Tile)Resources.Load("rabbit080");
+        public static Tile rabbit070 = (Tile)Resources.Load("rabbit070");
+        public static Tile rabbit060 = (Tile)Resources.Load("rabbit060");
+        public static Tile rabbit050 = (Tile)Resources.Load("rabbit050");
+
 
         private TileData[,] tileMatrix;
         private int width;
         private int height;
         private Tilemap terrain;
+        private Tilemap rabbit;
 
-        public TilemapData(int x_width,int y_width, Tilemap terrain)
+        public TilemapData(int x_width,int y_width, Tilemap terrain, Tilemap rabbit)
         {
             this.tileMatrix = new TileData[x_width, y_width];
             this.width = x_width;
             this.height = y_width;
             this.terrain = terrain;
+            this.rabbit = rabbit;
             for (int x=0; x< x_width; x++)
             {
                 for (int y = 0; y< y_width; y++)
@@ -138,62 +123,93 @@ namespace BackEnd
                 2 => plain,
                 _ => error,
             };
-            int temp = position.x;
+            int temp = position.x;                      //inversion entre x/y backend et x/y affiché
             position.x = position.y;
             position.y = temp;
             terrain.SetTile(position, displayTile);
         }
-        public void SetBear(Vector3Int position, float value)
+
+        public void SetValue(Vector3Int position, string name, float value)
         {
-            tileMatrix[position.x, position.y].SetBear(value);
+            tileMatrix[position.x,position.y].SetValue(name,value);
+            switch (name)
+            {
+                case "rabbit":
+                    Vector3Int invertedP = new Vector3Int(position.y, position.x, 0);
+                    switch (value)      //updates the rabbit map display
+                    {
+                        case float n when n > 1000:
+                            rabbit.SetTile(invertedP, rabbit100);
+                            break;
+                        case float n when n > 500:
+                            rabbit.SetTile(invertedP, rabbit090);
+                            break;
+                        case float n when n > 200:
+                            rabbit.SetTile(invertedP, rabbit080);
+                            break;
+                        case float n when n > 100:
+                            rabbit.SetTile(invertedP, rabbit070);
+                            break;
+                        case float n when n > 20:
+                            rabbit.SetTile(invertedP, rabbit060);
+                            break;
+                        case float n when n > 0:
+                            rabbit.SetTile(invertedP, rabbit050);
+                            break;
+                        default:
+                            rabbit.SetTile(invertedP, null);
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-        public void SetLynx(Vector3Int position, float value)
+        public void ChangeValue(Vector3Int position, string name, float change)
         {
-            tileMatrix[position.x, position.y].SetLynx(value);
+            tileMatrix[position.x, position.y].ChangeValue(name, change);
+            switch (name)
+            {
+                case "rabbit":
+                    Vector3Int invertedP = new Vector3Int(position.y, position.x, 0);
+                    switch (tileMatrix[position.x, position.y].GetValue(name))      //updates the rabbit map display
+                    {
+                        case float n when n > 1000:
+                            rabbit.SetTile(invertedP, rabbit100);
+                            break;
+                        case float n when n > 500:
+                            rabbit.SetTile(invertedP, rabbit090);
+                            break;
+                        case float n when n > 200:
+                            rabbit.SetTile(invertedP, rabbit080);
+                            break;
+                        case float n when n > 100:
+                            rabbit.SetTile(invertedP, rabbit070);
+                            break;
+                        case float n when n > 20:
+                            rabbit.SetTile(invertedP, rabbit060);
+                            break;
+                        case float n when n > 0:
+                            rabbit.SetTile(invertedP, rabbit050);
+                            break;
+                        default:
+                            rabbit.SetTile(invertedP, null);
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-        public void SetVole(Vector3Int position, float value)
-        {
-            tileMatrix[position.x, position.y].SetVole(value);
-        }
-        public void SetHumidity(Vector3Int position, float value)
-        {
-            tileMatrix[position.x, position.y].SetHumidity(value);
-        }
-        public void SetBiomass(Vector3Int position, float value)
-        {
-            tileMatrix[position.x, position.y].SetBiomass(value);
-        }
-        public void SetSunlight(Vector3Int position, float value)
-        {
-            tileMatrix[position.x, position.y].SetSunlight(value);
-        }
+
         public int GetTile(Vector3Int position)
         {
             return tileMatrix[position.x, position.y].GetTile();
         }
-        public float GetBear(Vector3Int position)
+        
+        public float GetValue(Vector3Int position, string name)
         {
-            return tileMatrix[position.x, position.y].GetBear();
-        }
-        public float GetLynx(Vector3Int position)
-        {
-            return tileMatrix[position.x, position.y].GetLynx();
-        }
-        public float GetVole(Vector3Int position)
-        {
-            return tileMatrix[position.x, position.y].GetVole();
-        }
-        public float GetHumidity(Vector3Int position)
-        {
-            return tileMatrix[position.x, position.y].GetHumidity();
-        }
-        public float GetBiomass(Vector3Int position)
-        {
-            return tileMatrix[position.x, position.y].GetBiomass();
-        }
-        public float GetSunlight(Vector3Int position)
-        {
-            return tileMatrix[position.x, position.y].GetSunlight();
+            return tileMatrix[position.x, position.y].GetValue(name);
         }
     }
 }

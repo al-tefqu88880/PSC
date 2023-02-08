@@ -73,7 +73,7 @@ public class DataRead : MonoBehaviour
             {
                 //Debug.Log(position[0]);
                 //Debug.Log(position[1]);
-                RunningBackEnd.tilemap.SetHumidity(position, (float)number);
+                RunningBackEnd.tilemap.SetValue(position,"humidity", (float)number);
                 RunningBackEnd.tilemap.SetTile(position, 2);
             }
         }
@@ -85,8 +85,8 @@ public class DataRead : MonoBehaviour
             Vector3Int position = ConvCoords(float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[0], CultureInfo.InvariantCulture.NumberFormat));
             //Debug.Log(position[0]);
             //Debug.Log(position[1]);
-            RunningBackEnd.tilemap.SetBear(position, RunningBackEnd.tilemap.GetBear(position)+1);
-            RunningBackEnd.tilemap.SetTile(position, 1);
+            RunningBackEnd.tilemap.SetValue(position,"rabbit", RunningBackEnd.tilemap.GetValue(position,"rabbit")+1); 
+            //RunningBackEnd.tilemap.SetTile(position, 1);
         }
     }
 

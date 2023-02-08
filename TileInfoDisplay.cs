@@ -53,14 +53,14 @@ public class TileInfoDisplay : MonoBehaviour
                     1 => "Desert",
                     _ => "Plain",
                 };
-                string bear = "Bears : " + RunningBackEnd.tilemap.GetBear(position);
-                string lynx = "Lynx : " + RunningBackEnd.tilemap.GetLynx(position);
-                string vole = "Voles : " + RunningBackEnd.tilemap.GetVole(position);
-                string biomass = "Biomass : " + RunningBackEnd.tilemap.GetBiomass(position);
-                string humidity = "Humidity : " + RunningBackEnd.tilemap.GetHumidity(position);
-                string sunlight = "Sunlight : " + RunningBackEnd.tilemap.GetSunlight(position);
+                string rabbit = "Rabbits : " + RunningBackEnd.tilemap.GetValue(position,"rabbit");
+                string lynx = "Lynx : " + RunningBackEnd.tilemap.GetValue(position,"lynx");
+                string vole = "Voles : " + RunningBackEnd.tilemap.GetValue(position,"vole");
+                string biomass = "Biomass : " + RunningBackEnd.tilemap.GetValue(position,"biomass");
+                string humidity = "Humidity : " + RunningBackEnd.tilemap.GetValue(position,"humidity");
+                string sunlight = "Sunlight : " + RunningBackEnd.tilemap.GetValue(position,"sunlight");
                 string newLine = System.Environment.NewLine;
-                text.SetText(coord + newLine + tile + newLine + bear + newLine + lynx + newLine + vole + newLine + biomass + newLine + humidity + newLine + sunlight);
+                text.SetText(coord + newLine + tile + newLine + rabbit + newLine + lynx + newLine + vole + newLine + biomass + newLine + humidity + newLine + sunlight);
                 hoverPos.y = (float)(gridCoord.x * 0.75 + 0.35);
                 if (gridCoord.x % 2 == 1)
                 {

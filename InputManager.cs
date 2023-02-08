@@ -16,7 +16,10 @@ public class InputManager : MonoBehaviour
         context = "map";
     }
 
-    void DoNothing() { }
+    public void SetContext(string txt)
+    {
+        context = txt;
+    }
 
     void Update()
     {
@@ -24,8 +27,8 @@ public class InputManager : MonoBehaviour
         {
             switch (context)
             {
-                case "map":
-                    //add a condition of "not on a menu"
+                case "cheater":
+                    //add a condition of "not on a menu" to get a clean interface
                     Vector3Int position = GridCoordinates.MouseAtTile(mainCamera);
                     cdm.ToggleMenu(position);
                     context = "dataMenu";
@@ -35,18 +38,7 @@ public class InputManager : MonoBehaviour
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            switch (context)
-            {
-                case "dataMenu":
-                    cdm.CloseMenu();
-                    context = "map";
-                    break;
-                default:
-                    break;
-            }
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -61,14 +53,23 @@ public class InputManager : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("clic");
             Vector3 hoverScale = new Vector3((float)1.2, (float)1.2, (float)1.2);
             hoverTile.localScale = hoverScale;
             Quaternion rotation = Quaternion.Euler(0, 0, 0);
             hoverTile.rotation = rotation;
             cdm.CloseMenu();
             am.closeAll();
-            context = "map";
+            switch (context)
+            {
+                case "dataMenu":
+                    context = "cheater";
+                    break;
+                case "cheater":
+                    break;
+                default:
+                    context = "map";
+                    break;
+            }
         }
     }
 }

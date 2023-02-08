@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: HexTile_Sheet_1A_43
+  m_Name: Rabbit080
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300086, guid: ac1645b9b895a8c4a9f8d5b744dcf28b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300098, guid: ac1645b9b895a8c4a9f8d5b744dcf28b, type: 3}
+  m_Color: {r: 0.9622642, g: 0.86694556, b: 0.86694556, a: 0.8039216}
   m_Transform:
     e00: 1
     e01: 0
