@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ep: {fileID: 471626534}
-  width: 120
+  width: 121
   height: 121
   terrain: {fileID: 1725120416}
   rabbit: {fileID: 2096795551}
@@ -6854,7 +6854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 85, y: -77}
+  m_AnchoredPosition: {x: 85, y: -110}
   m_SizeDelta: {x: 609, y: 510}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2126902536
@@ -6935,8 +6935,8 @@ MonoBehaviour:
   rabbitAnswer: {fileID: 1051347702}
   lynxQuestion: {fileID: 2144439972}
   lynxAnswer: {fileID: 1449878645}
-  voleQuestion: {fileID: 767694413}
-  voleAnswer: {fileID: 449723904}
+  foxQuestion: {fileID: 0}
+  foxAnswer: {fileID: 0}
   biomassQuestion: {fileID: 643153955}
   biomassAnswer: {fileID: 960835040}
   humidityQuestion: {fileID: 1298584983}
