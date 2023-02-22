@@ -24,12 +24,18 @@ namespace BackEnd
                     return 1;
                 case "fox":
                     return 2;
-                case "biomass":
+                case "temperature":
                     return 3;
-                case "humidity":
+                case "isothermality":
                     return 4;
-                case "sunlight":
+                case "summerTemperature":
                     return 5;
+                case "rain":
+                    return 6;
+                case "rainVariation":
+                    return 7;
+                case "summerRain":
+                    return 8;
                 default:
                     Debug.Log("Invalid characteristic name");
                     return -1;
@@ -39,7 +45,7 @@ namespace BackEnd
         public TileData()
         {
             this.tile = 0;
-            this.characteristics = new float[6];
+            this.characteristics = new float[9];
         }
 
         public void SetTile(int value)

@@ -56,11 +56,10 @@ public class TileInfoDisplay : MonoBehaviour
                 string rabbit = "Rabbits : " + RunningBackEnd.tilemap.GetValue(position,"rabbit");
                 string lynx = "Lynx : " + RunningBackEnd.tilemap.GetValue(position,"lynx");
                 string fox = "Foxes : " + RunningBackEnd.tilemap.GetValue(position,"fox");
-                string biomass = "Biomass : " + RunningBackEnd.tilemap.GetValue(position,"biomass");
-                string humidity = "Humidity : " + RunningBackEnd.tilemap.GetValue(position,"humidity");
-                string sunlight = "Sunlight : " + RunningBackEnd.tilemap.GetValue(position,"sunlight");
+                string temperature = "Temperature : " + RunningBackEnd.tilemap.GetValue(position,"temperature");
+                string rain = "Precipitation : " + RunningBackEnd.tilemap.GetValue(position,"rain");
                 string newLine = System.Environment.NewLine;
-                text.SetText(coord + newLine + tile + newLine + rabbit + newLine + lynx + newLine + fox + newLine + biomass + newLine + humidity + newLine + sunlight);
+                text.SetText(coord + newLine + tile + newLine + rabbit + newLine + lynx + newLine + fox + newLine + temperature + newLine + rain);
                 hoverPos.y = (float)(gridCoord.x * 0.75 + 0.35);
                 if (gridCoord.x % 2 == 1)
                 {

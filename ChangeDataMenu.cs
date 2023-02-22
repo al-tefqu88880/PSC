@@ -20,12 +20,18 @@ public class ChangeDataMenu : MonoBehaviour
     public TMP_InputField lynxAnswer;
     public TMP_Text foxQuestion;
     public TMP_InputField foxAnswer;
-    public TMP_Text biomassQuestion;
-    public TMP_InputField biomassAnswer;
-    public TMP_Text humidityQuestion;
-    public TMP_InputField humidityAnswer;
-    public TMP_Text sunlightQuestion;
-    public TMP_InputField sunlightAnswer;
+    public TMP_Text temperatureQuestion;
+    public TMP_InputField temperatureAnswer;
+    public TMP_Text isothermalityQuestion;
+    public TMP_InputField isothermalityAnswer;
+    public TMP_Text summerTemperatureQuestion;
+    public TMP_InputField summerTemperatureAnswer;
+    public TMP_Text rainQuestion;
+    public TMP_InputField rainAnswer;
+    public TMP_Text rainVariationQuestion;
+    public TMP_InputField rainVariationAnswer;
+    public TMP_Text summerRainQuestion;
+    public TMP_InputField summerRainAnswer;
     public Button waterButton;
     public Button desertButton;
     public Button plainButton;
@@ -35,9 +41,12 @@ public class ChangeDataMenu : MonoBehaviour
         rabbitAnswer.text = "";
         lynxAnswer.text = "";
         foxAnswer.text = "";
-        biomassAnswer.text = "";
-        humidityAnswer.text = "";
-        sunlightAnswer.text = "";
+        temperatureAnswer.text = "";
+        isothermalityAnswer.text = "";
+        summerTemperatureAnswer.text = "";
+        rainAnswer.text = "";
+        rainVariationAnswer.text = "";
+        summerRainAnswer.text = "";
     }
 
     void Start()
@@ -88,9 +97,12 @@ public class ChangeDataMenu : MonoBehaviour
         rabbitQuestion.SetText("Rabbits : " + RunningBackEnd.tilemap.GetValue(position, "rabbit").ToString());
         lynxQuestion.SetText("Lynx : " + RunningBackEnd.tilemap.GetValue(position, "lynx").ToString());
         foxQuestion.SetText("Foxes : " + RunningBackEnd.tilemap.GetValue(position, "fox").ToString());
-        biomassQuestion.SetText("Biomass : " + RunningBackEnd.tilemap.GetValue(position,"biomass").ToString());
-        humidityQuestion.SetText("Humidity : " + RunningBackEnd.tilemap.GetValue(position,"humidity").ToString());
-        sunlightQuestion.SetText("Sunlight : " + RunningBackEnd.tilemap.GetValue(position,"sunlight").ToString());
+        temperatureQuestion.SetText("Temperature : " + RunningBackEnd.tilemap.GetValue(position, "temperature").ToString());
+        isothermalityQuestion.SetText("Isothermality : " + RunningBackEnd.tilemap.GetValue(position, "isothermality").ToString());
+        summerTemperatureQuestion.SetText("Warmest quarter temperature : " + RunningBackEnd.tilemap.GetValue(position, "summerTemperature").ToString());
+        rainQuestion.SetText("Precipitation : " + RunningBackEnd.tilemap.GetValue(position, "rain").ToString());
+        rainVariationQuestion.SetText("Precipitation variation : " + RunningBackEnd.tilemap.GetValue(position,"rainVariation").ToString());
+        summerRainQuestion.SetText("Warmest quarter precipitation : " + RunningBackEnd.tilemap.GetValue(position,"summerRain").ToString());
     }
 
     public void CloseMenu()
@@ -111,9 +123,12 @@ public class ChangeDataMenu : MonoBehaviour
         string getRabbit = rabbitAnswer.text;
         string getLynx = lynxAnswer.text;
         string getFox = foxAnswer.text;
-        string getBiomass = biomassAnswer.text;
-        string getHumidity = humidityAnswer.text;
-        string getSunlight = sunlightAnswer.text;
+        string getTemperature = temperatureAnswer.text;
+        string getIsothermality = isothermalityAnswer.text;
+        string getSummerTemperature = summerTemperatureAnswer.text;
+        string getRain = rainAnswer.text;
+        string getRainVariation = rainVariationAnswer.text;
+        string getSummerRain = summerRainAnswer.text;
         ClearAnswers();
         if (getRabbit != "")
         {
@@ -133,23 +148,41 @@ public class ChangeDataMenu : MonoBehaviour
             foxQuestion.SetText("Foxes : " + fox.ToString());
             RunningBackEnd.tilemap.SetValue(position,"fox", fox);
         }
-        if (getBiomass != "")
+        if (getTemperature != "")
         {
-            float biomass = float.Parse(getBiomass);
-            biomassQuestion.SetText("Biomass : " + biomass.ToString());
-            RunningBackEnd.tilemap.SetValue(position,"biomass", biomass);
+            float temperature = float.Parse(getTemperature);
+            temperatureQuestion.SetText("Temperature : " + temperature.ToString());
+            RunningBackEnd.tilemap.SetValue(position, "temperature", temperature);
         }
-        if (getHumidity != "")
+        if (getIsothermality != "")
         {
-            float humidity = float.Parse(getHumidity);
-            humidityQuestion.SetText("Humidity : " + humidity.ToString());
-            RunningBackEnd.tilemap.SetValue(position,"humidity", humidity);
+            float isothermality = float.Parse(getIsothermality);
+            isothermalityQuestion.SetText("Isothermality : " + isothermality.ToString());
+            RunningBackEnd.tilemap.SetValue(position, "isothermality", isothermality);
         }
-        if (getSunlight != "")
+        if (getSummerTemperature != "")
         {
-            float sunlight = float.Parse(getSunlight);
-            sunlightQuestion.SetText("Sunlight : " + sunlight.ToString());
-            RunningBackEnd.tilemap.SetValue(position,"sunlight", sunlight);
+            float summerTemperature = float.Parse(getSummerTemperature);
+            summerTemperatureQuestion.SetText("Warmest quarter temperature : " + summerTemperature.ToString());
+            RunningBackEnd.tilemap.SetValue(position, "SummerTemperature", summerTemperature);
+        }
+        if (getRain != "")
+        {
+            float rain = float.Parse(getRain);
+            rainQuestion.SetText("Precipitation : " + rain.ToString());
+            RunningBackEnd.tilemap.SetValue(position, "rain", rain);
+        }
+        if (getRainVariation != "")
+        {
+            float rainVariation = float.Parse(getRainVariation);
+            rainVariationQuestion.SetText("Precipitation variation : " + rainVariation.ToString());
+            RunningBackEnd.tilemap.SetValue(position,"rainVariation", rainVariation);
+        }
+        if (getSummerRain != "")
+        {
+            float summerRain = float.Parse(getSummerRain);
+            summerRainQuestion.SetText("Warmest quarter precipitation: " + summerRain.ToString());
+            RunningBackEnd.tilemap.SetValue(position,"summerRain", summerRain);
         }
     }
 
