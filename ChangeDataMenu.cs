@@ -99,10 +99,10 @@ public class ChangeDataMenu : MonoBehaviour
         foxQuestion.SetText("Foxes : " + RunningBackEnd.tilemap.GetValue(position, "fox").ToString());
         temperatureQuestion.SetText("Temperature : " + RunningBackEnd.tilemap.GetValue(position, "temperature").ToString());
         isothermalityQuestion.SetText("Isothermality : " + RunningBackEnd.tilemap.GetValue(position, "isothermality").ToString());
-        summerTemperatureQuestion.SetText("Warmest quarter temperature : " + RunningBackEnd.tilemap.GetValue(position, "summerTemperature").ToString());
+        summerTemperatureQuestion.SetText("Summer temperature : " + RunningBackEnd.tilemap.GetValue(position, "summerTemperature").ToString());
         rainQuestion.SetText("Precipitation : " + RunningBackEnd.tilemap.GetValue(position, "rain").ToString());
         rainVariationQuestion.SetText("Precipitation variation : " + RunningBackEnd.tilemap.GetValue(position,"rainVariation").ToString());
-        summerRainQuestion.SetText("Warmest quarter precipitation : " + RunningBackEnd.tilemap.GetValue(position,"summerRain").ToString());
+        summerRainQuestion.SetText("Summer precipitation : " + RunningBackEnd.tilemap.GetValue(position,"summerRain").ToString());
     }
 
     public void CloseMenu()
@@ -163,8 +163,8 @@ public class ChangeDataMenu : MonoBehaviour
         if (getSummerTemperature != "")
         {
             float summerTemperature = float.Parse(getSummerTemperature);
-            summerTemperatureQuestion.SetText("Warmest quarter temperature : " + summerTemperature.ToString());
-            RunningBackEnd.tilemap.SetValue(position, "SummerTemperature", summerTemperature);
+            summerTemperatureQuestion.SetText("Summer temperature : " + summerTemperature.ToString());
+            RunningBackEnd.tilemap.SetValue(position, "summerTemperature", summerTemperature);
         }
         if (getRain != "")
         {
@@ -181,7 +181,7 @@ public class ChangeDataMenu : MonoBehaviour
         if (getSummerRain != "")
         {
             float summerRain = float.Parse(getSummerRain);
-            summerRainQuestion.SetText("Warmest quarter precipitation: " + summerRain.ToString());
+            summerRainQuestion.SetText("Summer precipitation: " + summerRain.ToString());
             RunningBackEnd.tilemap.SetValue(position,"summerRain", summerRain);
         }
     }

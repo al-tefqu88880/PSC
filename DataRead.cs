@@ -74,11 +74,15 @@ public class DataRead : MonoBehaviour
                 //Debug.Log(position[0]);
                 //Debug.Log(position[1]); 
                 RunningBackEnd.tilemap.SetTile(position, 2);
-                //RunningBackEnd.tilemap.SetValue(position, "humidity", float.Parse(line[3], CultureInfo.InvariantCulture));
-                //RunningBackEnd.tilemap.SetValue(position, "sunlight", float.Parse(line[4], CultureInfo.InvariantCulture));
                 RunningBackEnd.tilemap.SetValue(position, "rabbit", float.Parse(line[9], CultureInfo.InvariantCulture));
                 RunningBackEnd.tilemap.SetValue(position, "fox", float.Parse(line[10], CultureInfo.InvariantCulture));
                 RunningBackEnd.tilemap.SetValue(position, "lynx", float.Parse(line[11], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "temperature", float.Parse(line[3], CultureInfo.InvariantCulture)/10);
+                RunningBackEnd.tilemap.SetValue(position, "isothermality", float.Parse(line[4], CultureInfo.InvariantCulture)/10);
+                RunningBackEnd.tilemap.SetValue(position, "summerTemperature", float.Parse(line[5], CultureInfo.InvariantCulture)/10);
+                RunningBackEnd.tilemap.SetValue(position, "rain", float.Parse(line[6], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "rainVariation", float.Parse(line[7], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "summerRain", float.Parse(line[8], CultureInfo.InvariantCulture));
 
             }
         }
