@@ -15,16 +15,16 @@ public class DataRead : MonoBehaviour
     }
 
 
-    List<string[]> ReadDataClimate()
+    List<string[]> ReadData()
     {
         List<string[]> res = new();
-        var path = @"Assets\base_environnement.csv";
+        var path = @"Assets\Game_data.csv";
         using (TextFieldParser csvParser = new(path))
         {
-            csvParser.SetDelimiters(new string[] { "," });
+            csvParser.SetDelimiters(new string[] { ", " });
 
             // Skip the row with the column names
-            csvParser.ReadLine();
+            //csvParser.ReadLine();
 
             while (!csvParser.EndOfData)
             {
@@ -35,25 +35,7 @@ public class DataRead : MonoBehaviour
         return res;
     }
 
-    List<string[]> ReadDataRabbit()
-    {
-        List<string[]> res = new List<string[]>();
-        var path = @"Assets\occurrenceslapin reduit.csv";
-        using (TextFieldParser csvParser = new(path))
-        {
-            csvParser.SetDelimiters(new string[] { "	" });
-
-            // Skip the row with the column names
-            csvParser.ReadLine();
-
-            while (!csvParser.EndOfData)
-            {
-                string[] fields = csvParser.ReadFields();
-                res.Add(fields);
-            }
-        }
-        return res;
-    }
+ 
 
     Vector3Int ConvCoords(float x, float y)
     {
@@ -62,9 +44,9 @@ public class DataRead : MonoBehaviour
     }
 
 
-    void AttributeValues()
-    {
-        List<string[]> data = ReadDataClimate();
+/*     void AttributeValues()
+   {
+        List<string[]> data = ReadData();
         foreach (string[] line in data)
         {
             Vector3Int position = ConvCoords(float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[2], CultureInfo.InvariantCulture.NumberFormat));
@@ -78,17 +60,34 @@ public class DataRead : MonoBehaviour
             }
         }
 
-        data = ReadDataRabbit();
+        }
+    }*/
+
+    void AttributeValues()
+    {
+        List<string[]> data = ReadData();
         foreach (string[] line in data)
         {
-            //Debug.Log(line[0]);
-            Vector3Int position = ConvCoords(float.Parse(line[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(line[0], CultureInfo.InvariantCulture.NumberFormat));
-            //Debug.Log(position[0]);
-            //Debug.Log(position[1]);
-            RunningBackEnd.tilemap.SetValue(position,"rabbit", RunningBackEnd.tilemap.GetValue(position,"rabbit")+1); 
-            //RunningBackEnd.tilemap.SetTile(position, 1);
+            if (string.Equals(line[2], "1"))
+            {
+                Vector3Int position = new(int.Parse(line[0]), int.Parse(line[1]), 0);
+                //Debug.Log(position[0]);
+                //Debug.Log(position[1]); 
+                RunningBackEnd.tilemap.SetTile(position, 2);
+                RunningBackEnd.tilemap.SetValue(position, "rabbit", float.Parse(line[9], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "fox", float.Parse(line[10], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "lynx", float.Parse(line[11], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "temperature", float.Parse(line[3], CultureInfo.InvariantCulture)/10);
+                RunningBackEnd.tilemap.SetValue(position, "isothermality", float.Parse(line[4], CultureInfo.InvariantCulture)/10);
+                RunningBackEnd.tilemap.SetValue(position, "summerTemperature", float.Parse(line[5], CultureInfo.InvariantCulture)/10);
+                RunningBackEnd.tilemap.SetValue(position, "rain", float.Parse(line[6], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "rainVariation", float.Parse(line[7], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "summerRain", float.Parse(line[8], CultureInfo.InvariantCulture));
+
+            }
         }
     }
+
 
     [ContextMenu("Apply Data")]
 

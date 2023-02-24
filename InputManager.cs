@@ -30,6 +30,8 @@ public class InputManager : MonoBehaviour
                 case "cheater":
                     //add a condition of "not on a menu" to get a clean interface
                     Vector3Int position = GridCoordinates.MouseAtTile(mainCamera);
+                    //Debug.Log(position[0]);
+                    //Debug.Log(position[1]);
                     cdm.ToggleMenu(position);
                     context = "dataMenu";
                     break;

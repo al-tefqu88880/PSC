@@ -8,7 +8,7 @@ public class RunningBackEnd : MonoBehaviour
 {
     public static TilemapData tilemap;
     public EditorPainter ep;
-    public int width = 136;
+    public int width = 121;
     public int height = 121;
 
     public Tilemap terrain;

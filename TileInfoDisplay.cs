@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Common;
 using BackEnd;
+using System;
 
 public class TileInfoDisplay : MonoBehaviour
 {
@@ -55,12 +56,11 @@ public class TileInfoDisplay : MonoBehaviour
                 };
                 string rabbit = "Rabbits : " + RunningBackEnd.tilemap.GetValue(position,"rabbit");
                 string lynx = "Lynx : " + RunningBackEnd.tilemap.GetValue(position,"lynx");
-                string vole = "Voles : " + RunningBackEnd.tilemap.GetValue(position,"vole");
-                string biomass = "Biomass : " + RunningBackEnd.tilemap.GetValue(position,"biomass");
-                string humidity = "Humidity : " + RunningBackEnd.tilemap.GetValue(position,"humidity");
-                string sunlight = "Sunlight : " + RunningBackEnd.tilemap.GetValue(position,"sunlight");
+                string fox = "Foxes : " + RunningBackEnd.tilemap.GetValue(position,"fox");
+                string temperature = "Temperature : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "temperature"), 1); 
+                string rain = "Precipitation : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "rain"), 0); ;
                 string newLine = System.Environment.NewLine;
-                text.SetText(coord + newLine + tile + newLine + rabbit + newLine + lynx + newLine + vole + newLine + biomass + newLine + humidity + newLine + sunlight);
+                text.SetText(coord + newLine + tile + newLine + rabbit + newLine + lynx + newLine + fox + newLine + temperature + newLine + rain);
                 hoverPos.y = (float)(gridCoord.x * 0.75 + 0.35);
                 if (gridCoord.x % 2 == 1)
                 {
