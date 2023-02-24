@@ -107,6 +107,8 @@ public class ActionMenu : MonoBehaviour
     {
         weatherCanvas.enabled = false;
         overlayCanvas.enabled = false;
+        isOverlayPanel = false;
+        isWeatherPanel = false;
     }
 
     void Start()
