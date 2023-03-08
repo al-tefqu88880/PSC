@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BackEnd;
 using UnityEngine.Tilemaps;
-
+using Common;
 public class RunningBackEnd : MonoBehaviour
 {
     public static TilemapData tilemap;
@@ -63,6 +63,18 @@ public class RunningBackEnd : MonoBehaviour
                         rabbit.SetTile(invertedP, rabbit050);
                         break;
                 }
+            }
+        }
+    }
+
+    void UpdateTile(Vector3Int coords)
+    {
+        List<Vector3Int> tiles = GridCoordinates.Neibourghs(coords[0], coords[1], width, height);
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            if (tilemap.GetValue(tiles[i], "useful") > 0.5)
+            {
+
             }
         }
     }

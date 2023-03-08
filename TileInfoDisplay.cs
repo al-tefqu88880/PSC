@@ -54,11 +54,11 @@ public class TileInfoDisplay : MonoBehaviour
                     1 => "Desert",
                     _ => "Plain",
                 };
-                string rabbit = "Rabbits : " + RunningBackEnd.tilemap.GetValue(position,"rabbit");
-                string lynx = "Lynx : " + RunningBackEnd.tilemap.GetValue(position,"lynx");
-                string fox = "Foxes : " + RunningBackEnd.tilemap.GetValue(position,"fox");
+                string rabbit = "Rabbits : " + (int)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "rabbit"), 0);
+                string lynx = "Lynx : " + (int)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "lynx"), 0);
+                string fox = "Foxes : " + (int)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "fox"), 0);
                 string temperature = "Temperature : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "temperature"), 1); 
-                string rain = "Precipitation : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "rain"), 0); ;
+                string rain = "Precipitation : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "rain"), 0); 
                 string newLine = System.Environment.NewLine;
                 text.SetText(coord + newLine + tile + newLine + rabbit + newLine + lynx + newLine + fox + newLine + temperature + newLine + rain);
                 hoverPos.y = (float)(gridCoord.x * 0.75 + 0.35);
