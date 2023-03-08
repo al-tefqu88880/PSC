@@ -87,5 +87,23 @@ namespace Common
         {
             return ("(" + this.x.ToString() + "," + this.y.ToString() + ")");
         }
+
+        public static List<Vector3Int> Neibourghs(int i, int j, int maxI, int maxJ)
+        {
+            List<Vector3Int> res = new ();
+            if (i + 1 < maxI)
+                res.Add(new Vector3Int(i + 1, j, 0));
+            if (i - 1 >= 0)
+                res.Add(new Vector3Int(i - 1, j, 0));
+            if (j + 1 < maxJ)
+                res.Add(new Vector3Int(i, j + 1, 0));
+            if (j - 1 >= 0)
+                res.Add(new Vector3Int(i, j - 1, 0));
+            if (j + (i % 2) < maxJ && i + 1 < maxI)
+                res.Add(new Vector3Int(i + 1, j + (i % 2), 0));
+            if (j + (i % 2) < maxJ && i -1 >= 0)
+                res.Add(new Vector3Int(i - 1, j + (i % 2), 0));
+            return res;
+        }
     }
 }

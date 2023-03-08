@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using BackEnd;
 using UnityEngine.Tilemaps;
+using Common;
+using System;
 
 public class RunningBackEnd : MonoBehaviour
 {
@@ -69,6 +71,43 @@ public class RunningBackEnd : MonoBehaviour
             }
         }
     }
+    
+    void UpdateTile(int i, int j)
+    {
+        List<Vector3Int> neibourgh = GridCoordinates.Neibourghs(i, j, width, height);
+        for (int k = 0; k < neibourgh.Count; k++)
+        {
+            if (tilemap.GetValue(neibourgh[k], "useful") < 0.5)
+            {
+                neibourgh.RemoveAt(k);
+            }
+        }
+        //float coeff = 1;
+        for(int k = 0; k < neibourgh.Count; k++)
+        {
+            float rabbit = tilemap.GetValue(neibourgh[k], "rabbit");
+            float fox = tilemap.GetValue(neibourgh[k], "fox");
+            float lynx = tilemap.GetValue(neibourgh[k], "lynx");
+            rabbit = (float)Math.Max( Math.Round(rabbit + rabbit * (5000 - rabbit) /1000000), 0.0);
+            //fox = fox + fox * (5000 - fox) * Time.deltaTime;
+            //lynx = lynx +lynx * (5000 - lynx) * Time.deltaTime;
+            tilemap.SetValue(neibourgh[k], "rabbit", rabbit);
+            tilemap.SetValue(neibourgh[k], "fox", fox);
+            tilemap.SetValue(neibourgh[k], "lynx", lynx);
+        }
+    }
+
+    void UpdateMap()
+    {
+        for (int i=0; i<width; i++)
+        {
+            for (int j=0; j<height; j++)
+            {
+                if (tilemap.GetValue(new Vector3Int(i,j,0), "useful")>0.5)
+                UpdateTile(i, j);
+            }
+        }
+    }
 
     void Start()
     {
@@ -81,8 +120,8 @@ public class RunningBackEnd : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        // to be completed
+        UpdateMap();
     }
 }
