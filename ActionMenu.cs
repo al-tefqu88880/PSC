@@ -19,17 +19,26 @@ public class ActionMenu : MonoBehaviour
 
     public Button randomAction;
     public Button rabbitToggle;
+    public Button lynxToggle;
+    public Button foxToggle;
+    public Button biomassToggle;
 
     public Canvas weatherCanvas;
     public Canvas overlayCanvas;
 
     private bool isCheater = false;
     private bool isRabbit = false;
+    private bool isLynx = false;
+    private bool isFox = false;
+    private bool isBiomass = true;
     private bool isWeatherPanel = false;
     private bool isOverlayPanel = false;
     private Color buttonColor = new Color(0.56f, 0.93f, 0.56f, 0.5f);
 
     public TilemapRenderer rabbitRenderer;
+    public TilemapRenderer lynxRenderer;
+    public TilemapRenderer foxRenderer;
+    public TilemapRenderer biomassRenderer;
 
 
 
@@ -72,6 +81,54 @@ public class ActionMenu : MonoBehaviour
             isRabbit = true;
             rabbitToggle.GetComponent<Image>().color = buttonColor;
             rabbitRenderer.enabled = true;
+        }
+    }
+
+    void lynxButton()
+    {
+        if (isLynx)
+        {
+            isLynx = false;
+            lynxToggle.GetComponent<Image>().color = Color.white;
+            lynxRenderer.enabled = false;
+        }
+        else
+        {
+            isLynx = true;
+            lynxToggle.GetComponent<Image>().color = buttonColor;
+            lynxRenderer.enabled = true;
+        }
+    }
+
+    void foxButton()
+    {
+        if (isFox)
+        {
+            isFox = false;
+            foxToggle.GetComponent<Image>().color = Color.white;
+            foxRenderer.enabled = false;
+        }
+        else
+        {
+            isFox = true;
+            foxToggle.GetComponent<Image>().color = buttonColor;
+            foxRenderer.enabled = true;
+        }
+    }
+
+    void biomassButton()
+    {
+        if (isBiomass)
+        {
+            isBiomass = false;
+            biomassToggle.GetComponent<Image>().color = Color.white;
+            biomassRenderer.enabled = false;
+        }
+        else
+        {
+            isBiomass = true;
+            biomassToggle.GetComponent<Image>().color = buttonColor;
+            biomassRenderer.enabled = true;
         }
     }
 
@@ -118,6 +175,10 @@ public class ActionMenu : MonoBehaviour
         randomAction.onClick.AddListener(() => randomActionButton());
         cheaterToggle.onClick.AddListener(() => cheaterButton());
         rabbitToggle.onClick.AddListener(() => rabbitButton());
+        lynxToggle.onClick.AddListener(() => lynxButton());
+        foxToggle.onClick.AddListener(() => foxButton());
+        biomassToggle.onClick.AddListener(() => biomassButton());
+        biomassToggle.GetComponent<Image>().color = buttonColor;
     }
 
     // Update is called once per frame

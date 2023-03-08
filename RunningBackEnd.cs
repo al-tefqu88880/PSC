@@ -13,13 +13,16 @@ public class RunningBackEnd : MonoBehaviour
 
     public Tilemap terrain;
     public Tilemap rabbit;
+    public Tilemap lynx;
+    public Tilemap fox;
+    public Tilemap biomass;
 
-    public Tile rabbit100;
-    public Tile rabbit090;
-    public Tile rabbit080;
-    public Tile rabbit070;
-    public Tile rabbit060;
-    public Tile rabbit050;
+    public Tile species100;
+    public Tile species090;
+    public Tile species080;
+    public Tile species070;
+    public Tile species060;
+    public Tile species050;
 
 
     public static TilemapData GetTilemap()
@@ -31,7 +34,7 @@ public class RunningBackEnd : MonoBehaviour
 
     public void InitiateTilemap()
     {
-        tilemap = new TilemapData(height, width, terrain, rabbit);
+        tilemap = new TilemapData(height, width, terrain, rabbit, lynx, fox, biomass);
         //Debug.Log("Tilemap initiated");
     }
 
@@ -45,22 +48,22 @@ public class RunningBackEnd : MonoBehaviour
                 Vector3Int invertedP = new Vector3Int(y, x, 0);
                 switch (tilemap.GetValue(p, "rabbit")){
                     case float n when n > 1000:
-                        rabbit.SetTile(invertedP, rabbit100);
+                        rabbit.SetTile(invertedP, species100);
                         break;
                     case float n when n > 500:
-                        rabbit.SetTile(invertedP, rabbit090);
+                        rabbit.SetTile(invertedP, species090);
                         break;
                     case float n when n > 200:
-                        rabbit.SetTile(invertedP, rabbit080);
+                        rabbit.SetTile(invertedP, species080);
                         break;
                     case float n when n > 100:
-                        rabbit.SetTile(invertedP, rabbit070);
+                        rabbit.SetTile(invertedP, species070);
                         break;
                     case float n when n > 20:
-                        rabbit.SetTile(invertedP, rabbit060);
+                        rabbit.SetTile(invertedP, species060);
                         break;
                     case float n when n > 0:
-                        rabbit.SetTile(invertedP, rabbit050);
+                        rabbit.SetTile(invertedP, species050);
                         break;
                 }
             }
