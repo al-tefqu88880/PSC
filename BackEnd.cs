@@ -55,7 +55,7 @@ namespace BackEnd
         {
             this.tile = value;
         }
-        
+
         public void SetValue(string name, float value)      //set the "name" characteristics to value
         {
             this.characteristics[StringToIndex(name)] = value;
@@ -70,7 +70,7 @@ namespace BackEnd
         {
             return this.tile;
         }
-        
+
         public float GetValue(string name)
         {
             return this.characteristics[StringToIndex(name)];
@@ -113,7 +113,7 @@ namespace BackEnd
         private Tilemap lynx;
         private Tilemap biomass;
 
-        public TilemapData(int x_width,int y_width, Tilemap terrain, Tilemap rabbit, Tilemap lynx, Tilemap fox, Tilemap biomass)
+        public TilemapData(int x_width, int y_width, Tilemap terrain, Tilemap rabbit, Tilemap lynx, Tilemap fox, Tilemap biomass)
         {
             this.tileMatrix = new TileData[x_width, y_width];
             this.width = x_width;
@@ -123,9 +123,9 @@ namespace BackEnd
             this.lynx = lynx;
             this.fox = fox;
             this.biomass = biomass;
-            for (int x=0; x< x_width; x++)
+            for (int x = 0; x < x_width; x++)
             {
-                for (int y = 0; y< y_width; y++)
+                for (int y = 0; y < y_width; y++)
                 {
                     tileMatrix[x, y] = new TileData();
                 }
@@ -159,7 +159,7 @@ namespace BackEnd
 
         public void SetValue(Vector3Int position, string name, float value)
         {
-            tileMatrix[position.x,position.y].SetValue(name,value);
+            tileMatrix[position.x, position.y].SetValue(name, value);
             Vector3Int invertedP = new Vector3Int(position.y, position.x, 0);
             switch (name)
             {
@@ -342,11 +342,10 @@ namespace BackEnd
         {
             return tileMatrix[position.x, position.y].GetTile();
         }
-        
+
         public float GetValue(Vector3Int position, string name)
         {
             return tileMatrix[position.x, position.y].GetValue(name);
         }
     }
 }
-
