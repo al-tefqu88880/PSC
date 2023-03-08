@@ -72,6 +72,14 @@ public class RunningBackEnd : MonoBehaviour
         }
     }
     
+    private float SignCheck(float x)
+    {
+        if (x < 0)
+            return 0;
+        if (x > 5000)
+            return 10000;
+        return x;
+    }
     void UpdateTile(int i, int j)
     {
         List<Vector3Int> neibourgh = GridCoordinates.Neibourghs(i, j, width, height);
@@ -82,19 +90,16 @@ public class RunningBackEnd : MonoBehaviour
                 neibourgh.RemoveAt(k);
             }
         }
+        Vector3Int coords = new (i, j, 0);
+        float rabbit = tilemap.GetValue(coords, "rabbit");
+        float rabbit2 = SignCheck(rabbit + rabbit * (5000 - rabbit) / 5000 / 100);
         //float coeff = 1;
-        for(int k = 0; k < neibourgh.Count; k++)
+        for (int k = 0; k < neibourgh.Count; k++)
         {
-            float rabbit = tilemap.GetValue(neibourgh[k], "rabbit");
-            float fox = tilemap.GetValue(neibourgh[k], "fox");
-            float lynx = tilemap.GetValue(neibourgh[k], "lynx");
-            rabbit = (float)Math.Max( Math.Round(rabbit + rabbit * (5000 - rabbit) /1000000), 0.0);
-            //fox = fox + fox * (5000 - fox) * Time.deltaTime;
-            //lynx = lynx +lynx * (5000 - lynx) * Time.deltaTime;
-            tilemap.SetValue(neibourgh[k], "rabbit", rabbit);
-            tilemap.SetValue(neibourgh[k], "fox", fox);
-            tilemap.SetValue(neibourgh[k], "lynx", lynx);
+            float rabbitExte = tilemap.GetValue(neibourgh[k], "rabbit");
+            rabbit2 +=  rabbitExte*rabbitExte * (5000 - rabbit)/5000/5000 /100;
         }
+        tilemap.SetValue(coords, "rabbit", SignCheck(rabbit2));
     }
 
     void UpdateMap()

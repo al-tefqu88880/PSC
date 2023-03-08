@@ -54,7 +54,7 @@ public class TileInfoDisplay : MonoBehaviour
                     1 => "Desert",
                     _ => "Plain",
                 };
-                string rabbit = "Rabbits : " + (int)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "rabbit"), 0);
+                string rabbit = "Rabbits : " + (int)Math.Round(RunningBackEnd.tilemap.GetValue(position, "rabbit"), 0);
                 string lynx = "Lynx : " + (int)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "lynx"), 0);
                 string fox = "Foxes : " + (int)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "fox"), 0);
                 string temperature = "Temperature : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "temperature"), 1); 
