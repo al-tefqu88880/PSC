@@ -18,8 +18,42 @@ public class TileInfoDisplay : MonoBehaviour
     int height;
     bool firstUpdate = true;
 
+    private int hoverSize = 0;
+    private int maxHoverSize = 7;
+    private float[] hoverScaleX = { 1.2f, 3.0f, 5.0f, 7.1f, 9.1f, 11.1f, 13.2f, 15.2f };
+    private float[] hoverScaleY = { 1.2f, 4.0f, 6.7f, 9.3f, 12.0f, 14.7f, 17.3f, 20.0f };
+    private Quaternion rotated = Quaternion.Euler(0, 0, 90);
+    private Quaternion flat = Quaternion.Euler(0, 0, 0);
+    Vector3 hoverScale = new Vector3((float)1.2, (float)1.2, (float)1.2);
+
     public Transform hoverTile;
     Vector3 hoverPos = new Vector3();
+
+    public int GetHoverSize()
+    {
+        return hoverSize;
+    }
+
+    void HoverSizeUp()
+    {
+        hoverSize++;
+        hoverScale.x = hoverScaleX[hoverSize];
+        hoverScale.y = hoverScaleY[hoverSize];
+        hoverTile.localScale = hoverScale;
+        hoverTile.rotation = rotated;
+    }
+
+    void HoverSizeDown()
+    {
+        hoverSize--;
+        hoverScale.x = hoverScaleX[hoverSize];
+        hoverScale.y = hoverScaleY[hoverSize];
+        hoverTile.localScale = hoverScale;
+        if (hoverSize == 0)
+        {
+            hoverTile.rotation = flat;
+        }
+    }
 
     void Start()
     {
@@ -72,6 +106,13 @@ public class TileInfoDisplay : MonoBehaviour
                 }
                 hoverTile.position = hoverPos;
             }
+        }
+
+        if (Input.GetKey(KeyCode.LeftControl) & Input.mouseScrollDelta.y < 0 & hoverSize < maxHoverSize){
+            HoverSizeUp();
+        }
+        if (Input.GetKey(KeyCode.LeftControl) & Input.mouseScrollDelta.y > 0 & hoverSize > 0){
+            HoverSizeDown();
         }
     }
 }

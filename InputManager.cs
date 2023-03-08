@@ -55,10 +55,6 @@ public class InputManager : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1))
         {
-            Vector3 hoverScale = new Vector3((float)1.2, (float)1.2, (float)1.2);
-            hoverTile.localScale = hoverScale;
-            Quaternion rotation = Quaternion.Euler(0, 0, 0);
-            hoverTile.rotation = rotation;
             cdm.CloseMenu();
             am.closeAll();
             switch (context)

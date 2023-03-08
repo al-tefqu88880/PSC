@@ -122,6 +122,6 @@ public class RunningBackEnd : MonoBehaviour
 
     void FixedUpdate()
     {
-        UpdateMap();
+        //UpdateMap();
     }
 }

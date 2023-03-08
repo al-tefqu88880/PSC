@@ -45,14 +45,14 @@ public class CameraMovement : MonoBehaviour
             transform.Translate(0, (float)move, 0);
             y_move += move;
         }
-        if (Input.mouseScrollDelta.y > 0 & z_move > maxIn) 
+        if (Input.mouseScrollDelta.y > 0 & z_move > maxIn & !(Input.GetKey(KeyCode.LeftControl)))
         {
             z_move--;
             var new_pos = transform.position;
             new_pos.z = camera_position[z_move];
             transform.position=new_pos;
         }
-        if(Input.mouseScrollDelta.y < 0 & z_move < maxOut) 
+        if(Input.mouseScrollDelta.y < 0 & z_move < maxOut & !(Input.GetKey(KeyCode.LeftControl))) 
         {
             z_move++;
             var new_pos = transform.position;
