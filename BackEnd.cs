@@ -86,6 +86,19 @@ namespace BackEnd
         public static Tile species070 = (Tile)Resources.Load("species070");
         public static Tile species060 = (Tile)Resources.Load("species060");
         public static Tile species050 = (Tile)Resources.Load("species050");
+        public static Tile speciesBis100 = (Tile)Resources.Load("speciesBis100");
+        public static Tile speciesBis090 = (Tile)Resources.Load("speciesBis090");
+        public static Tile speciesBis080 = (Tile)Resources.Load("speciesBis080");
+        public static Tile speciesBis070 = (Tile)Resources.Load("speciesBis070");
+        public static Tile speciesBis060 = (Tile)Resources.Load("speciesBis060");
+        public static Tile speciesBis050 = (Tile)Resources.Load("speciesBis050");
+        public static Tile speciesTer100 = (Tile)Resources.Load("speciesTer100");
+        public static Tile speciesTer090 = (Tile)Resources.Load("speciesTer090");
+        public static Tile speciesTer080 = (Tile)Resources.Load("speciesTer080");
+        public static Tile speciesTer070 = (Tile)Resources.Load("speciesTer070");
+        public static Tile speciesTer060 = (Tile)Resources.Load("speciesTer060");
+        public static Tile speciesTer050 = (Tile)Resources.Load("speciesTer050");
+        public static Tile lynxTile = (Tile)Resources.Load("lynx");
 
 
         private TileData[,] tileMatrix;
@@ -176,23 +189,25 @@ namespace BackEnd
                 case "lynx":
                     switch (value)      //updates the lynx map display
                     {
-                        case float n when n > 1000:
-                            lynx.SetTile(invertedP, species100);
-                            break;
-                        case float n when n > 500:
-                            lynx.SetTile(invertedP, species090);
-                            break;
-                        case float n when n > 200:
-                            lynx.SetTile(invertedP, species080);
-                            break;
-                        case float n when n > 100:
-                            lynx.SetTile(invertedP, species070);
-                            break;
+                        /*
                         case float n when n > 20:
-                            lynx.SetTile(invertedP, species060);
+                            lynx.SetTile(invertedP, speciesTer100);
                             break;
+                        case float n when n > 15:
+                            lynx.SetTile(invertedP, speciesTer090);
+                            break;
+                        case float n when n > 10:
+                            lynx.SetTile(invertedP, speciesTer080);
+                            break;
+                        case float n when n > 5:
+                            lynx.SetTile(invertedP, speciesTer070);
+                            break;
+                        case float n when n > 2:
+                            lynx.SetTile(invertedP, speciesTer060);
+                            break;
+                        */
                         case float n when n > 0:
-                            lynx.SetTile(invertedP, species050);
+                            lynx.SetTile(invertedP, lynxTile);
                             break;
                         default:
                             lynx.SetTile(invertedP, null);
@@ -203,22 +218,22 @@ namespace BackEnd
                     switch (value)      //updates the fox map display
                     {
                         case float n when n > 1000:
-                            fox.SetTile(invertedP, species100);
+                            fox.SetTile(invertedP, speciesBis100);
                             break;
                         case float n when n > 500:
-                            fox.SetTile(invertedP, species090);
+                            fox.SetTile(invertedP, speciesBis090);
                             break;
                         case float n when n > 200:
-                            fox.SetTile(invertedP, species080);
+                            fox.SetTile(invertedP, speciesBis080);
                             break;
                         case float n when n > 100:
-                            fox.SetTile(invertedP, species070);
+                            fox.SetTile(invertedP, speciesBis070);
                             break;
                         case float n when n > 20:
-                            fox.SetTile(invertedP, species060);
+                            fox.SetTile(invertedP, speciesBis060);
                             break;
                         case float n when n > 0:
-                            fox.SetTile(invertedP, species050);
+                            fox.SetTile(invertedP, speciesBis050);
                             break;
                         default:
                             fox.SetTile(invertedP, null);
@@ -264,23 +279,25 @@ namespace BackEnd
                 case "lynx":
                     switch (tileMatrix[position.x, position.y].GetValue(name))      //updates the lynx map display
                     {
-                        case float n when n > 1000:
-                            lynx.SetTile(invertedP, species100);
-                            break;
-                        case float n when n > 500:
-                            lynx.SetTile(invertedP, species090);
-                            break;
-                        case float n when n > 200:
-                            lynx.SetTile(invertedP, species080);
-                            break;
-                        case float n when n > 100:
-                            lynx.SetTile(invertedP, species070);
-                            break;
+                        /*
                         case float n when n > 20:
-                            lynx.SetTile(invertedP, species060);
+                            lynx.SetTile(invertedP, speciesTer100);
                             break;
+                        case float n when n > 15:
+                            lynx.SetTile(invertedP, speciesTer090);
+                            break;
+                        case float n when n > 10:
+                            lynx.SetTile(invertedP, speciesTer080);
+                            break;
+                        case float n when n > 5:
+                            lynx.SetTile(invertedP, speciesTer070);
+                            break;
+                        case float n when n > 2:
+                            lynx.SetTile(invertedP, speciesTer060);
+                            break;
+                        */
                         case float n when n > 0:
-                            lynx.SetTile(invertedP, species050);
+                            lynx.SetTile(invertedP, lynxTile);
                             break;
                         default:
                             lynx.SetTile(invertedP, null);
@@ -291,22 +308,22 @@ namespace BackEnd
                     switch (tileMatrix[position.x, position.y].GetValue(name))      //updates the fox map display
                     {
                         case float n when n > 1000:
-                            fox.SetTile(invertedP, species100);
+                            fox.SetTile(invertedP, speciesBis100);
                             break;
                         case float n when n > 500:
-                            fox.SetTile(invertedP, species090);
+                            fox.SetTile(invertedP, speciesBis090);
                             break;
                         case float n when n > 200:
-                            fox.SetTile(invertedP, species080);
+                            fox.SetTile(invertedP, speciesBis080);
                             break;
                         case float n when n > 100:
-                            fox.SetTile(invertedP, species070);
+                            fox.SetTile(invertedP, speciesBis070);
                             break;
                         case float n when n > 20:
-                            fox.SetTile(invertedP, species060);
+                            fox.SetTile(invertedP, speciesBis060);
                             break;
                         case float n when n > 0:
-                            fox.SetTile(invertedP, species050);
+                            fox.SetTile(invertedP, speciesBis050);
                             break;
                         default:
                             fox.SetTile(invertedP, null);

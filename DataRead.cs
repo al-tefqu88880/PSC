@@ -73,7 +73,7 @@ public class DataRead : MonoBehaviour
                 Vector3Int position = new(int.Parse(line[0]), int.Parse(line[1]), 0);
                 //Debug.Log(position[0]);
                 //Debug.Log(position[1]); 
-                RunningBackEnd.tilemap.SetTile(position, 2);
+                RunningBackEnd.tilemap.SetTile(position, 3);
                 RunningBackEnd.tilemap.SetValue(position, "rabbit", float.Parse(line[9], CultureInfo.InvariantCulture));
                 RunningBackEnd.tilemap.SetValue(position, "fox", float.Parse(line[10], CultureInfo.InvariantCulture));
                 RunningBackEnd.tilemap.SetValue(position, "lynx", float.Parse(line[11], CultureInfo.InvariantCulture));

@@ -35,6 +35,10 @@ public class ActionMenu : MonoBehaviour
     private bool isOverlayPanel = false;
     private Color buttonColor = new Color(0.56f, 0.93f, 0.56f, 0.5f);
 
+    private int rabbitLayer = 2;
+    private int lynxLayer = 3;
+    private int foxLayer = 4;
+
     public TilemapRenderer rabbitRenderer;
     public TilemapRenderer lynxRenderer;
     public TilemapRenderer foxRenderer;
@@ -80,6 +84,22 @@ public class ActionMenu : MonoBehaviour
         {
             isRabbit = true;
             rabbitToggle.GetComponent<Image>().color = buttonColor;
+            rabbitRenderer.sortingOrder = 4;
+            rabbitLayer = 4;
+            if (foxLayer == 4)
+            {
+                foxLayer = 3;
+                foxRenderer.sortingOrder = 3;
+                lynxLayer = 2;
+                lynxRenderer.sortingOrder = 2;
+            }
+            if (lynxLayer == 4)
+            {
+                lynxLayer = 3;
+                lynxRenderer.sortingOrder = 3;
+                foxLayer = 2;
+                foxRenderer.sortingOrder = 2;
+            }
             rabbitRenderer.enabled = true;
         }
     }
@@ -96,6 +116,22 @@ public class ActionMenu : MonoBehaviour
         {
             isLynx = true;
             lynxToggle.GetComponent<Image>().color = buttonColor;
+            lynxRenderer.sortingOrder = 4;
+            lynxLayer = 4;
+            if (foxLayer == 4)
+            {
+                foxLayer = 3;
+                foxRenderer.sortingOrder = 3;
+                rabbitLayer = 2;
+                rabbitRenderer.sortingOrder = 2;
+            }
+            if (rabbitLayer == 4)
+            {
+                rabbitLayer = 3;
+                rabbitRenderer.sortingOrder = 3;
+                foxLayer = 2;
+                foxRenderer.sortingOrder = 2;
+            }
             lynxRenderer.enabled = true;
         }
     }
@@ -112,6 +148,22 @@ public class ActionMenu : MonoBehaviour
         {
             isFox = true;
             foxToggle.GetComponent<Image>().color = buttonColor;
+            foxRenderer.sortingOrder = 4;
+            foxLayer = 4;
+            if (rabbitLayer == 4)
+            {
+                rabbitLayer = 3;
+                rabbitRenderer.sortingOrder = 3;
+                lynxLayer = 2;
+                lynxRenderer.sortingOrder = 2;
+            }
+            if (lynxLayer == 4)
+            {
+                lynxLayer = 3;
+                lynxRenderer.sortingOrder = 3;
+                rabbitLayer = 2;
+                rabbitRenderer.sortingOrder = 2;
+            }
             foxRenderer.enabled = true;
         }
     }
