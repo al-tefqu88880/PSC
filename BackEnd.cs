@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 
 
 //in TilemapData, need to implement the initialization from a .csv file
@@ -271,7 +272,7 @@ namespace BackEnd
                         case float n when n > 20:
                             rabbit.SetTile(invertedP, species060);
                             break;
-                        case float n when n > 0:
+                        case float n when Math.Round(n) > 0:
                             rabbit.SetTile(invertedP, species050);
                             break;
                         default:

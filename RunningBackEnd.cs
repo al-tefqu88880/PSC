@@ -40,7 +40,7 @@ public class RunningBackEnd : MonoBehaviour
         //Debug.Log("Tilemap initiated");
     }
 
-    public void SetRabbitColor()
+    /*public void SetRabbitColor()
     {
         for (int x = 0; x < tilemap.GetWidth(); x++)
         {
@@ -70,7 +70,7 @@ public class RunningBackEnd : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
     
     private float SignCheck(float x)
     {
