@@ -68,12 +68,13 @@ public class DataRead : MonoBehaviour
         List<string[]> data = ReadData();
         foreach (string[] line in data)
         {
-            Vector3Int position = new(int.Parse(line[0]), int.Parse(line[1]), 0);
-            RunningBackEnd.tilemap.SetValue(position, "useful", float.Parse(line[2], CultureInfo.InvariantCulture));
+            
             if (string.Equals(line[2], "1"))
             {
+                Vector3Int position = new(int.Parse(line[0]), int.Parse(line[1]), 0);
                 //Debug.Log(position[0]);
                 //Debug.Log(position[1]); 
+                RunningBackEnd.tilemap.SetValue(position, "useful", 1);
                 RunningBackEnd.tilemap.SetTile(position, 2);
                 RunningBackEnd.tilemap.SetValue(position, "rabbit", float.Parse(line[9], CultureInfo.InvariantCulture));
                 RunningBackEnd.tilemap.SetValue(position, "fox", float.Parse(line[10], CultureInfo.InvariantCulture));
