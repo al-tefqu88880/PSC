@@ -182,7 +182,7 @@ namespace BackEnd
                         case float n when n > 20:
                             rabbit.SetTile(invertedP, species060);
                             break;
-                        case float n when n > 0:
+                        case float n when Math.Round(n) > 0:
                             rabbit.SetTile(invertedP, species050);
                             break;
                         default:
@@ -210,7 +210,7 @@ namespace BackEnd
                             lynx.SetTile(invertedP, speciesTer060);
                             break;
                         */
-                        case float n when n > 0:
+                        case float n when Math.Round(n) > 0:
                             lynx.SetTile(invertedP, lynxTile);
                             break;
                         default:
@@ -236,7 +236,7 @@ namespace BackEnd
                         case float n when n > 20:
                             fox.SetTile(invertedP, speciesBis060);
                             break;
-                        case float n when n > 0:
+                        case float n when Math.Round(n) > 0:
                             fox.SetTile(invertedP, speciesBis050);
                             break;
                         default:
@@ -300,7 +300,7 @@ namespace BackEnd
                             lynx.SetTile(invertedP, speciesTer060);
                             break;
                         */
-                        case float n when n > 0:
+                        case float n when Math.Round(n) > 0:
                             lynx.SetTile(invertedP, lynxTile);
                             break;
                         default:
@@ -326,7 +326,7 @@ namespace BackEnd
                         case float n when n > 20:
                             fox.SetTile(invertedP, speciesBis060);
                             break;
-                        case float n when n > 0:
+                        case float n when Math.Round(n) > 0:
                             fox.SetTile(invertedP, speciesBis050);
                             break;
                         default:

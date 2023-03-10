@@ -93,13 +93,18 @@ public class RunningBackEnd : MonoBehaviour
         Vector3Int coords = new (i, j, 0);
         float rabbit = tilemap.GetValue(coords, "rabbit");
         float rabbit2 = SignCheck(rabbit + rabbit * (5000 - rabbit) / 5000 / 100);
+        float lynx = tilemap.GetValue(coords, "lynx");
+        float lynx2 = SignCheck(lynx + lynx * (5000 - lynx) / 5000 / 10);
         //float coeff = 1;
         for (int k = 0; k < neibourgh.Count; k++)
         {
             float rabbitExte = tilemap.GetValue(neibourgh[k], "rabbit");
-            rabbit2 +=  rabbitExte*rabbitExte * (5000 - rabbit)/5000/5000 /100;
+            rabbit2 += rabbitExte * rabbitExte * (5000 - rabbit) / 5000 / 5000 / 100;
+            float lynxExte = tilemap.GetValue(neibourgh[k], "lynx");
+            lynx2 += lynxExte * lynxExte * (5000 - lynx) / 5000 / 5000 / 100;
         }
         tilemap.SetValue(coords, "rabbit", SignCheck(rabbit2));
+        tilemap.SetValue(coords, "lynx", SignCheck(lynx2));
     }
 
     void UpdateMap()
@@ -127,6 +132,6 @@ public class RunningBackEnd : MonoBehaviour
 
     void FixedUpdate()
     {
-        //UpdateMap();
+        UpdateMap();
     }
 }
