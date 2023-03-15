@@ -3,35 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using TMPro;
+
 
 public class ActionMenu : MonoBehaviour
 {
     public InputManager inputManager;
     public ChangeDataMenu cdm;
-    public Brushes brushes;
 
     public Transform hoverTile;
     Vector3 hoverScale = new Vector3((float)1.2, (float)1.2, (float)1.2);
 
-    public Button weatherToggle;
+    public Button brushToggle;
     public Button overlayToggle;
     public Button cheaterToggle;
 
-    public Button randomAction;
+    public Button brushActionToggle;
     public Button rabbitToggle;
     public Button lynxToggle;
     public Button foxToggle;
     public Button biomassToggle;
 
-    public Canvas weatherCanvas;
+    public Canvas brushCanvas;
     public Canvas overlayCanvas;
 
     private bool isCheater = false;
+    private bool isBrushAction = false;
     private bool isRabbit = false;
     private bool isLynx = false;
     private bool isFox = false;
     private bool isBiomass = true;
-    private bool isWeatherPanel = false;
+    private bool isBrushPanel = false;
     private bool isOverlayPanel = false;
     private Color buttonColor = new Color(0.56f, 0.93f, 0.56f, 0.5f);
 
@@ -44,16 +46,43 @@ public class ActionMenu : MonoBehaviour
     public TilemapRenderer foxRenderer;
     public TilemapRenderer biomassRenderer;
 
+    public TMP_Text valueQuestion;
+    public TMP_InputField valueAnswer;
+    public TMP_Text brushOn;
 
+    private float value;
 
-    void randomActionButton()
+    public float GetValue()
     {
-        hoverScale.x = (float)3.2;
-        hoverScale.y = (float)4;
-        Quaternion rotation = Quaternion.Euler(0, 0, 90);
-        hoverTile.localScale = hoverScale;
-        hoverTile.rotation = rotation;
-        
+        return value;
+    }
+
+    void brushActionButton()
+    {
+        if (isBrushAction)
+        {
+            inputManager.SetContext("map");
+            isBrushAction = false;
+            brushOn.text = "Brush Off";
+            brushActionToggle.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            inputManager.SetContext("brush");
+            isBrushAction = true;
+            brushOn.text = "Brush On";
+            brushActionToggle.GetComponent<Image>().color = buttonColor;
+        }
+    }
+
+    public void SubmitAnswers()
+    {
+        if (valueAnswer.text != "")
+        {
+            value = int.Parse(valueAnswer.text);
+            valueAnswer.text = "";
+            valueQuestion.SetText("Value : " + value.ToString());
+        }
     }
 
     void cheaterButton()
@@ -184,17 +213,18 @@ public class ActionMenu : MonoBehaviour
         }
     }
 
-    void weatherToggleButton()
+    void brushToggleButton()
     {
-        if (isWeatherPanel)
+        if (isBrushPanel)
         {
-            isWeatherPanel= false;
-            weatherCanvas.enabled = false;
+            isBrushPanel = false;
+            brushCanvas.enabled = false;
         }
         else
         {
-            isWeatherPanel= true;
-            weatherCanvas.enabled = true;
+            isBrushPanel = true;
+            valueQuestion.SetText("Value : " + value.ToString());
+            brushCanvas.enabled = true;
         }
     }
 
@@ -214,23 +244,26 @@ public class ActionMenu : MonoBehaviour
 
     public void closeAll()
     {
-        weatherCanvas.enabled = false;
+        brushCanvas.enabled = false;
         overlayCanvas.enabled = false;
         isOverlayPanel = false;
-        isWeatherPanel = false;
+        isBrushPanel = false;
+        isBrushAction = false;
+        brushActionToggle.GetComponent<Image>().color = Color.white;
     }
 
     void Start()
     {
         overlayToggle.onClick.AddListener(()=> overlayToggleButton());
-        weatherToggle.onClick.AddListener(() => weatherToggleButton());
-        randomAction.onClick.AddListener(() => randomActionButton());
+        brushToggle.onClick.AddListener(() => brushToggleButton());
+        brushActionToggle.onClick.AddListener(() => brushActionButton());
         cheaterToggle.onClick.AddListener(() => cheaterButton());
         rabbitToggle.onClick.AddListener(() => rabbitButton());
         lynxToggle.onClick.AddListener(() => lynxButton());
         foxToggle.onClick.AddListener(() => foxButton());
         biomassToggle.onClick.AddListener(() => biomassButton());
         biomassToggle.GetComponent<Image>().color = buttonColor;
+        value = 0.0f;
     }
 
     // Update is called once per frame

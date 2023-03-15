@@ -8,7 +8,7 @@ using System;
 public class Brushes : MonoBehaviour
 {
 
-    bool IsInMap(Vector3Int position)
+    public static bool IsInMap(Vector3Int position)
     {
         if (position.x<0 | position.x >= RunningBackEnd.tilemap.GetWidth() | position.y<0 | position.y >= RunningBackEnd.tilemap.GetHeight())
         {
@@ -20,7 +20,7 @@ public class Brushes : MonoBehaviour
         }
     }
 
-    List<Vector3Int> GetArea(Vector3Int center, int radius)
+    public static List<Vector3Int> GetArea(Vector3Int center, int radius)
     {
         List<Vector3Int> result = new List<Vector3Int>();
         for (int i=center.x-radius; i < center.x + radius + 1; i++)
@@ -45,7 +45,7 @@ public class Brushes : MonoBehaviour
         return result;
     }
 
-    public void ChangeBrush(Vector3Int position, int radius, string name, float change)
+    public static void ChangeBrush(Vector3Int position, int radius, string name, float change)
     {
         foreach (Vector3Int pos in GetArea(position, radius))
         {
@@ -53,7 +53,7 @@ public class Brushes : MonoBehaviour
         }
     }
 
-    public void SetBrush(Vector3Int position, int radius, string name, float change)
+    public static void SetBrush(Vector3Int position, int radius, string name, float change)
     {
         foreach (Vector3Int pos in GetArea(position, radius))
         {
@@ -61,7 +61,7 @@ public class Brushes : MonoBehaviour
         }
     }
 
-    public float GetAverageBrush(Vector3Int position, int radius, string name)
+    public static float GetAverageBrush(Vector3Int position, int radius, string name)
     {
         float result = 0;
         int count = 0;
@@ -73,7 +73,7 @@ public class Brushes : MonoBehaviour
         return result / count;
     }
 
-    public float GetTotalBrush(Vector3Int position, int radius, string name)
+    public static float GetTotalBrush(Vector3Int position, int radius, string name)
     {
         float result = 0;
         foreach (Vector3Int pos in GetArea(position, radius))
