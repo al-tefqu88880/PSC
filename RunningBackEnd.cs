@@ -94,7 +94,9 @@ public class RunningBackEnd : MonoBehaviour
         float rabbit = tilemap.GetValue(coords, "rabbit");
         float rabbit2 = SignCheck(rabbit + rabbit * (5000 - rabbit) / 5000 / 100);
         float lynx = tilemap.GetValue(coords, "lynx");
-        float lynx2 = SignCheck(lynx + lynx * (5000 - lynx) / 5000 / 10);
+        float lynx2 = SignCheck(lynx + lynx * (5000 - lynx) / 5000 / 100);
+        float fox = tilemap.GetValue(coords, "fox");
+        float fox2 = SignCheck(fox + fox * (5000-fox) / 5000 /100);
         //float coeff = 1;
         for (int k = 0; k < neibourgh.Count; k++)
         {
@@ -102,9 +104,12 @@ public class RunningBackEnd : MonoBehaviour
             rabbit2 += rabbitExte * rabbitExte * (5000 - rabbit) / 5000 / 5000 / 100;
             float lynxExte = tilemap.GetValue(neibourgh[k], "lynx");
             lynx2 += lynxExte * lynxExte * (5000 - lynx) / 5000 / 5000 / 100;
+            float foxExte = tilemap.GetValue(neibourgh[k], "fox");
+            fox2 += foxExte * foxExte * (5000 - fox) / 5000 / 5000 / 100;
         }
         tilemap.SetValue(coords, "rabbit", SignCheck(rabbit2));
         tilemap.SetValue(coords, "lynx", SignCheck(lynx2));
+        tilemap.SetValue(coords, "fox", SignCheck(fox2));
     }
 
     void UpdateMap()
