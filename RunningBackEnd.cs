@@ -80,31 +80,40 @@ public class RunningBackEnd : MonoBehaviour
             return 10000;
         return x;
     }
-    void UpdateTile(int i, int j)
+    void UpdateTile(Vector3Int coords)
     {
-        List<Vector3Int> neibourgh = GridCoordinates.Neibourghs(i, j, width, height);
-        for (int k = 0; k < neibourgh.Count; k++)
+        List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(coords[0], coords[1], width-1, height-1);
+        int k = 0;
+        while (k < neibourgh.Count)
         {
+            //Vector3Int tmp = neibourgh[k];
+            //Debug.Log(tmp[0] + " " + tmp[1]);
             if (tilemap.GetValue(neibourgh[k], "useful") < 0.5)
             {
                 neibourgh.RemoveAt(k);
             }
+            else
+                k++;
         }
-        Vector3Int coords = new (i, j, 0);
         float rabbit = tilemap.GetValue(coords, "rabbit");
         float rabbit2 = SignCheck(rabbit + rabbit * (5000 - rabbit) / 5000 / 100);
         float lynx = tilemap.GetValue(coords, "lynx");
         float lynx2 = SignCheck(lynx + lynx * (5000 - lynx) / 5000 / 10);
+        float fox = tilemap.GetValue(coords, "fox");
+        float fox2 = SignCheck(fox + fox * (5000-fox) / 5000 /100);
         //float coeff = 1;
-        for (int k = 0; k < neibourgh.Count; k++)
+        for (int l = 0; l < neibourgh.Count; l++)
         {
-            float rabbitExte = tilemap.GetValue(neibourgh[k], "rabbit");
+            float rabbitExte = tilemap.GetValue(neibourgh[l], "rabbit");
             rabbit2 += rabbitExte * rabbitExte * (5000 - rabbit) / 5000 / 5000 / 100;
-            float lynxExte = tilemap.GetValue(neibourgh[k], "lynx");
+            float lynxExte = tilemap.GetValue(neibourgh[l], "lynx");
             lynx2 += lynxExte * lynxExte * (5000 - lynx) / 5000 / 5000 / 100;
+            float foxExte = tilemap.GetValue(neibourgh[l], "fox");
+            fox2 += foxExte * foxExte * (5000 - fox) / 5000 / 5000 / 100;
         }
         tilemap.SetValue(coords, "rabbit", SignCheck(rabbit2));
         tilemap.SetValue(coords, "lynx", SignCheck(lynx2));
+        tilemap.SetValue(coords, "fox", SignCheck(fox2));
     }
 
     void UpdateMap()
@@ -114,7 +123,7 @@ public class RunningBackEnd : MonoBehaviour
             for (int j=0; j<height; j++)
             {
                 if (tilemap.GetValue(new Vector3Int(i,j,0), "useful")>0.5)
-                UpdateTile(i, j);
+                UpdateTile(new Vector3Int(i, j, 0));
             }
         }
     }

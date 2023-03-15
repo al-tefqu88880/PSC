@@ -346,6 +346,7 @@ namespace BackEnd
 
         public float GetValue(Vector3Int position, string name)
         {
+            //Debug.Log(position.x + " "+ position.y);
             return tileMatrix[position.x, position.y].GetValue(name);
         }
     }

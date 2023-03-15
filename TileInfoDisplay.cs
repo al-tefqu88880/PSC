@@ -82,19 +82,19 @@ public class TileInfoDisplay : MonoBehaviour
             {
                 Vector3Int position = gridCoord.V3I();
                 string coord = "Location : " + gridCoord.ToString();
-                string tile = "Tile : " + RunningBackEnd.tilemap.GetTile(position) switch
+                /*string tile = "Tile : " + RunningBackEnd.tilemap.GetTile(position) switch
                 {
                     0 => "Water",
                     1 => "Desert",
                     _ => "Plain",
-                };
+                };*/
                 string rabbit = "Rabbits : " + (int)Math.Round(RunningBackEnd.tilemap.GetValue(position, "rabbit"), 0);
                 string lynx = "Lynx : " + (int)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "lynx"), 0);
                 string fox = "Foxes : " + (int)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "fox"), 0);
                 string temperature = "Temperature : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "temperature"), 1); 
                 string rain = "Precipitation : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "rain"), 0); 
                 string newLine = System.Environment.NewLine;
-                text.SetText(coord + newLine + tile + newLine + rabbit + newLine + lynx + newLine + fox + newLine + temperature + newLine + rain);
+                text.SetText(coord + newLine + rabbit + newLine + lynx + newLine + fox + newLine + temperature + newLine + rain);
                 hoverPos.y = (float)(gridCoord.x * 0.75 + 0.35);
                 if (gridCoord.x % 2 == 1)
                 {
