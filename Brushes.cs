@@ -8,7 +8,7 @@ using System;
 public class Brushes : MonoBehaviour
 {
 
-    bool IsInMap(Vector3Int position)
+    public static bool IsInMap(Vector3Int position)
     {
         if (position.x<0 | position.x >= RunningBackEnd.tilemap.GetWidth() | position.y<0 | position.y >= RunningBackEnd.tilemap.GetHeight())
         {
