@@ -82,7 +82,7 @@ public class RunningBackEnd : MonoBehaviour
     }
     void UpdateTile(Vector3Int coords)
     {
-        List<Vector3Int> neibourgh = GridCoordinates.GetNeibourghs(coords);
+        List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(coords[0], coords[1], width-1, height-1);
         int k = 0;
         while (k < neibourgh.Count)
         {
