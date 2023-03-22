@@ -39,7 +39,7 @@ namespace BackEnd
                     return 8;
                 case "useful":
                     return 9;
-                case "tree";
+                case "tree":
                     return 10;
                 default:
                     Debug.Log("Invalid characteristic name");
