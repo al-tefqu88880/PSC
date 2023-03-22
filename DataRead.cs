@@ -84,7 +84,7 @@ public class DataRead : MonoBehaviour
                 RunningBackEnd.tilemap.SetValue(position, "rain", float.Parse(line[6], CultureInfo.InvariantCulture));
                 RunningBackEnd.tilemap.SetValue(position, "rainVariation", float.Parse(line[7], CultureInfo.InvariantCulture));
                 RunningBackEnd.tilemap.SetValue(position, "summerRain", float.Parse(line[8], CultureInfo.InvariantCulture));
-                RunningBackEnd.tilemap.SetValue(position, "Tree", float.Parse(line[12], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "tree", float.Parse(line[12], CultureInfo.InvariantCulture));
             }
             if (string.Equals(line[2], "2"))
             {

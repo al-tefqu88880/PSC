@@ -82,7 +82,7 @@ namespace BackEnd
     }
     public class TilemapData
     {
-        public static Tile error = (Tile)Resources.Load("error");
+        public static Tile error = (Tile)Resources.Load("BlankTile");
         public static Tile water = (Tile)Resources.Load("water");
         public static Tile desert = (Tile)Resources.Load("desert");
         public static Tile plain = (Tile)Resources.Load("plain");
@@ -150,7 +150,7 @@ namespace BackEnd
             Tile displayTile = tile switch
             {
                 0 => water,
-                1 => desert,
+                1 => error,         //edit debug
                 2 => plain,
                 _ => error,
             };
@@ -249,6 +249,7 @@ namespace BackEnd
                 default:
                     break;
             }
+            rabbit.SetTile(invertedP, error);       //debug
         }
         public void ChangeValue(Vector3Int position, string name, float change)
         {

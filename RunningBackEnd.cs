@@ -76,7 +76,7 @@ public class RunningBackEnd : MonoBehaviour
     {
         if (x < 0)
             return 0;
-        if (x > 5000)
+        if (x > 10000)
             return 10000;
         return x;
     }
@@ -116,6 +116,24 @@ public class RunningBackEnd : MonoBehaviour
         tilemap.SetValue(coords, "fox", SignCheck(fox2));
     }
 
+    void UpdateMapGraphics()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector3Int p = new Vector3Int(i, j, 0);
+                Vector3Int invertedP = new Vector3Int(j, i, 0);
+                if (tilemap.GetValue(invertedP, "useful") > 0.5)
+                {
+                    Color rabbitColor = new Color(0.96f, 0.87f, 0.87f, tilemap.GetValue(invertedP, "rabbit")/10000.0f);
+                    rabbit.SetColor(p, rabbitColor);
+                }
+                    
+            }
+        }
+    }
+
     void UpdateMap()
     {
         for (int i=0; i<width; i++)
@@ -135,12 +153,24 @@ public class RunningBackEnd : MonoBehaviour
         ep.ClearAll();
         ep.PaintWater();
         dr.ApplyData();
-        //SetRabbitColor();
+        for (int x=0; x< width; x++)
+        {
+            for (int y=0; y<height; y++)
+            {
+                Vector3Int p = new Vector3Int(x, y, 0);
+                terrain.SetTileFlags(p, TileFlags.None);
+                fox.SetTileFlags(p, TileFlags.None);
+                rabbit.SetTileFlags(p, TileFlags.None);
+                biomass.SetTileFlags(p, TileFlags.None);
+                lynx.SetTileFlags(p, TileFlags.None);
+            }
+        }
 
     }
 
     void FixedUpdate()
     {
         UpdateMap();
+        //UpdateMapGraphics();
     }
 }
