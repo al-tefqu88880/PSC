@@ -25,7 +25,8 @@ public class RunningBackEnd : MonoBehaviour
     public Tile species070;
     public Tile species060;
     public Tile species050;
-
+    public Tile blankTile;
+    Color emptyColor = new Color(0, 0, 0, 0);
 
     public static TilemapData GetTilemap()
     {
@@ -126,8 +127,34 @@ public class RunningBackEnd : MonoBehaviour
                 Vector3Int invertedP = new Vector3Int(j, i, 0);
                 if (tilemap.GetValue(invertedP, "useful") > 0.5)
                 {
-                    Color rabbitColor = new Color(0.96f, 0.87f, 0.87f, tilemap.GetValue(invertedP, "rabbit")/10000.0f);
-                    rabbit.SetColor(p, rabbitColor);
+                    if (tilemap.GetValue(invertedP, "rabbit") > 1)
+                    {
+                        Color rabbitColor = new Color(1, 0, 0, 0.1f+ tilemap.GetValue(invertedP, "rabbit") / 5000.0f);
+                        rabbit.SetColor(p, rabbitColor);
+                    }
+                    else
+                    {
+                        rabbit.SetColor(p, emptyColor);
+                    }
+                    if (tilemap.GetValue(invertedP, "fox") > 1)
+                    {
+                        Color foxColor = new Color(0, 0, 1, 0.1f + tilemap.GetValue(invertedP, "fox") / 5000.0f);
+                        fox.SetColor(p, foxColor);
+                    }
+                    else
+                    {
+                        fox.SetColor(p, emptyColor);
+                    }
+                    if (tilemap.GetValue(invertedP, "lynx") > 1)
+                    {
+                        Color lynxColor = new Color(1, 0, 1, 0.1f + tilemap.GetValue(invertedP, "lynx") / 5000.0f);
+                        lynx.SetColor(p, lynxColor);
+                    }
+                    else
+                    {
+                        lynx.SetColor(p, emptyColor);
+                    }
+
                 }
                     
             }
@@ -158,11 +185,18 @@ public class RunningBackEnd : MonoBehaviour
             for (int y=0; y<height; y++)
             {
                 Vector3Int p = new Vector3Int(x, y, 0);
-                terrain.SetTileFlags(p, TileFlags.None);
-                fox.SetTileFlags(p, TileFlags.None);
-                rabbit.SetTileFlags(p, TileFlags.None);
-                biomass.SetTileFlags(p, TileFlags.None);
-                lynx.SetTileFlags(p, TileFlags.None);
+                Vector3Int invertedP = new Vector3Int(y, x, 0);
+                if (tilemap.GetValue(invertedP, "useful") > 0.5)
+                {
+                    rabbit.SetTile(p, blankTile);
+                    fox.SetTile(p, blankTile);
+                    lynx.SetTile(p, blankTile);
+                    terrain.SetTileFlags(p, TileFlags.None);
+                    fox.SetTileFlags(p, TileFlags.None);
+                    rabbit.SetTileFlags(p, TileFlags.None);
+                    biomass.SetTileFlags(p, TileFlags.None);
+                    lynx.SetTileFlags(p, TileFlags.None);
+                }
             }
         }
 
@@ -171,6 +205,6 @@ public class RunningBackEnd : MonoBehaviour
     void FixedUpdate()
     {
         UpdateMap();
-        //UpdateMapGraphics();
+        UpdateMapGraphics();
     }
 }

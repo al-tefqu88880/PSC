@@ -150,7 +150,7 @@ namespace BackEnd
             Tile displayTile = tile switch
             {
                 0 => water,
-                1 => error,         //edit debug
+                1 => desert,
                 2 => plain,
                 _ => error,
             };
@@ -164,6 +164,7 @@ namespace BackEnd
         {
             tileMatrix[position.x, position.y].SetValue(name, value);
             Vector3Int invertedP = new Vector3Int(position.y, position.x, 0);
+            /*
             switch (name)
             {
                 case "rabbit":
@@ -195,7 +196,6 @@ namespace BackEnd
                 case "lynx":
                     switch (value)      //updates the lynx map display
                     {
-                        /*
                         case float n when n > 20:
                             lynx.SetTile(invertedP, speciesTer100);
                             break;
@@ -211,7 +211,6 @@ namespace BackEnd
                         case float n when n > 2:
                             lynx.SetTile(invertedP, speciesTer060);
                             break;
-                        */
                         case float n when Math.Round(n) > 0:
                             lynx.SetTile(invertedP, lynxTile);
                             break;
@@ -249,12 +248,13 @@ namespace BackEnd
                 default:
                     break;
             }
-            rabbit.SetTile(invertedP, error);       //debug
+            */
         }
         public void ChangeValue(Vector3Int position, string name, float change)
         {
             tileMatrix[position.x, position.y].ChangeValue(name, change);
             Vector3Int invertedP = new Vector3Int(position.y, position.x, 0);
+            /*
             switch (name)
             {
                 case "rabbit":
@@ -286,7 +286,6 @@ namespace BackEnd
                 case "lynx":
                     switch (tileMatrix[position.x, position.y].GetValue(name))      //updates the lynx map display
                     {
-                        /*
                         case float n when n > 20:
                             lynx.SetTile(invertedP, speciesTer100);
                             break;
@@ -302,7 +301,6 @@ namespace BackEnd
                         case float n when n > 2:
                             lynx.SetTile(invertedP, speciesTer060);
                             break;
-                        */
                         case float n when Math.Round(n) > 0:
                             lynx.SetTile(invertedP, lynxTile);
                             break;
@@ -340,6 +338,7 @@ namespace BackEnd
                 default:
                     break;
             }
+            */
         }
 
         public int GetTile(Vector3Int position)
@@ -349,7 +348,6 @@ namespace BackEnd
 
         public float GetValue(Vector3Int position, string name)
         {
-            //Debug.Log(position.x + " "+ position.y);
             return tileMatrix[position.x, position.y].GetValue(name);
         }
     }
