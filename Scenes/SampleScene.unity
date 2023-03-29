@@ -11022,6 +11022,15 @@ MonoBehaviour:
   lynxRenderer: {fileID: 640537957}
   foxRenderer: {fileID: 920615174}
   biomassRenderer: {fileID: 983296510}
+  rabbitTilemap: {fileID: 2096795551}
+  lynxTilemap: {fileID: 640537958}
+  foxTilemap: {fileID: 920615175}
+  blankFull: {fileID: 11400000, guid: ed75a02e75213a94aa596c65d7c79654, type: 2}
+  blankLeft: {fileID: 11400000, guid: 4c18d4ffc1dc3ec4a9f33e9957f573a1, type: 2}
+  blankRight: {fileID: 11400000, guid: 37d3027b849083d4a8149292914f2fe7, type: 2}
+  blankTopLeft: {fileID: 11400000, guid: 897c4d7b9a6271249b630c60ad971642, type: 2}
+  blankTopRight: {fileID: 11400000, guid: f61bac338ea01fb40be2a9bcf7fd6069, type: 2}
+  blankBottom: {fileID: 11400000, guid: c592fb884fbd9e84796f17a082863991, type: 2}
   valueQuestion: {fileID: 1677777292}
   valueAnswer: {fileID: 1765830590}
   brushOn: {fileID: 1032343685}

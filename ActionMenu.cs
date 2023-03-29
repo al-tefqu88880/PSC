@@ -285,8 +285,113 @@ public class ActionMenu : MonoBehaviour
                             if (RunningBackEnd.tilemap.GetValue(new Vector3Int(j, i, 0), "useful") > 0.5)
                             {
                                 rabbitTilemap.SetTile(new Vector3Int(i, j, 0), blankTopLeft);
+                                rabbitTilemap.SetTileFlags(new Vector3Int(i,j,0), TileFlags.None);
                                 foxTilemap.SetTile(new Vector3Int(i,j,0), blankTopRight);
+                                foxTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
                                 lynxTilemap.SetTile(new Vector3Int(i, j, 0), blankBottom);
+                                lynxTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 121; i++)
+                    {
+                        for (int j = 0; j < 121; j++)
+                        {
+                            if (RunningBackEnd.tilemap.GetValue(new Vector3Int(j, i, 0), "useful") > 0.5)
+                            {
+                                rabbitTilemap.SetTile(new Vector3Int(i, j, 0), blankLeft);
+                                rabbitTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
+                                lynxTilemap.SetTile(new Vector3Int(i, j, 0), blankRight);
+                                lynxTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (isFox)
+                {
+                    for (int i = 0; i < 121; i++)
+                    {
+                        for (int j = 0; j < 121; j++)
+                        {
+                            if (RunningBackEnd.tilemap.GetValue(new Vector3Int(j, i, 0), "useful") > 0.5)
+                            {
+                                rabbitTilemap.SetTile(new Vector3Int(i, j, 0), blankLeft);
+                                rabbitTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
+                                foxTilemap.SetTile(new Vector3Int(i, j, 0), blankRight);
+                                foxTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 121; i++)
+                    {
+                        for (int j = 0; j < 121; j++)
+                        {
+                            if (RunningBackEnd.tilemap.GetValue(new Vector3Int(j, i, 0), "useful") > 0.5)
+                            {
+                                rabbitTilemap.SetTile(new Vector3Int(i, j, 0), blankFull);
+                                rabbitTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (isLynx)
+            {
+                if (isFox)
+                {
+                    for (int i = 0; i < 121; i++)
+                    {
+                        for (int j = 0; j < 121; j++)
+                        {
+                            if (RunningBackEnd.tilemap.GetValue(new Vector3Int(j, i, 0), "useful") > 0.5)
+                            {
+                                foxTilemap.SetTile(new Vector3Int(i, j, 0), blankLeft);
+                                foxTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
+                                lynxTilemap.SetTile(new Vector3Int(i, j, 0), blankRight);
+                                lynxTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 121; i++)
+                    {
+                        for (int j = 0; j < 121; j++)
+                        {
+                            if (RunningBackEnd.tilemap.GetValue(new Vector3Int(j, i, 0), "useful") > 0.5)
+                            {
+                                lynxTilemap.SetTile(new Vector3Int(i, j, 0), blankFull);
+                                lynxTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (isFox)
+                {
+                    for (int i = 0; i < 121; i++)
+                    {
+                        for (int j = 0; j < 121; j++)
+                        {
+                            if (RunningBackEnd.tilemap.GetValue(new Vector3Int(j, i, 0), "useful") > 0.5)
+                            {
+                                foxTilemap.SetTile(new Vector3Int(i, j, 0), blankFull);
+                                foxTilemap.SetTileFlags(new Vector3Int(i, j, 0), TileFlags.None);
                             }
                         }
                     }
