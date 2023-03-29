@@ -167,8 +167,6 @@ public class RunningBackEnd : MonoBehaviour
             }
         }
     }
-
-    void UpdateMap()
     void ApplyChanges()
     {
         for (int i = 0; i < width; i++)
