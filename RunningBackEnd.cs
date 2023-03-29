@@ -28,6 +28,10 @@ public class RunningBackEnd : MonoBehaviour
     public Tile blankTile;
     Color emptyColor = new Color(0, 0, 0, 0);
 
+    private int UpdateCounter;
+    private float[,,] NextValues = new float[121, 121, 3];
+
+
     public static TilemapData GetTilemap()
     {
         return tilemap;
@@ -72,7 +76,7 @@ public class RunningBackEnd : MonoBehaviour
             }
         }
     }*/
-    
+
     private float SignCheck(float x)
     {
         if (x < 0)
@@ -83,7 +87,7 @@ public class RunningBackEnd : MonoBehaviour
     }
     void UpdateTile(Vector3Int coords)
     {
-        List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(coords[0], coords[1], width-1, height-1);
+        List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(coords[0], coords[1], width - 1, height - 1);
         int k = 0;
         while (k < neibourgh.Count)
         {
@@ -101,7 +105,7 @@ public class RunningBackEnd : MonoBehaviour
         float lynx = tilemap.GetValue(coords, "lynx");
         float lynx2 = SignCheck(lynx + lynx * (5000 - lynx) / 5000 / 10);
         float fox = tilemap.GetValue(coords, "fox");
-        float fox2 = SignCheck(fox + fox * (5000-fox) / 5000 /100);
+        float fox2 = SignCheck(fox + fox * (5000 - fox) / 5000 / 100);
         //float coeff = 1;
         for (int l = 0; l < neibourgh.Count; l++)
         {
@@ -112,9 +116,12 @@ public class RunningBackEnd : MonoBehaviour
             float foxExte = tilemap.GetValue(neibourgh[l], "fox");
             fox2 += foxExte * foxExte * (5000 - fox) / 5000 / 5000 / 100;
         }
-        tilemap.SetValue(coords, "rabbit", SignCheck(rabbit2));
+        /*tilemap.SetValue(coords, "rabbit", SignCheck(rabbit2));
         tilemap.SetValue(coords, "lynx", SignCheck(lynx2));
-        tilemap.SetValue(coords, "fox", SignCheck(fox2));
+        tilemap.SetValue(coords, "fox", SignCheck(fox2));*/
+        NextValues[coords[0], coords[1], 0] = SignCheck(rabbit2);
+        NextValues[coords[0], coords[1], 1] = SignCheck(fox2);
+        NextValues[coords[0], coords[1], 2] = SignCheck(lynx2);
     }
 
     void UpdateMapGraphics()
@@ -129,7 +136,7 @@ public class RunningBackEnd : MonoBehaviour
                 {
                     if (tilemap.GetValue(invertedP, "rabbit") > 1)
                     {
-                        Color rabbitColor = new Color(1, 0, 0, 0.1f+ tilemap.GetValue(invertedP, "rabbit") / 5000.0f);
+                        Color rabbitColor = new Color(1, 0, 0, 0.1f + tilemap.GetValue(invertedP, "rabbit") / 5000.0f);
                         rabbit.SetColor(p, rabbitColor);
                     }
                     else
@@ -156,20 +163,54 @@ public class RunningBackEnd : MonoBehaviour
                     }
 
                 }
-                    
+
+            }
+        }
+    }
+
+    void UpdateMap()
+    void ApplyChanges()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector3Int coords = new Vector3Int(i, j, 0);
+                tilemap.SetValue(coords, "rabbit", NextValues[i, j, 0]);
+                tilemap.SetValue(coords, "fox", NextValues[i, j, 1]);
+                tilemap.SetValue(coords, "lynx", NextValues[i, j, 2]);
             }
         }
     }
 
     void UpdateMap()
     {
-        for (int i=0; i<width; i++)
+        /*for (int i=0; i<width; i++)
         {
             for (int j=0; j<height; j++)
             {
                 if (tilemap.GetValue(new Vector3Int(i,j,0), "useful")>0.5)
                 UpdateTile(new Vector3Int(i, j, 0));
             }
+        }*/
+        if (UpdateCounter == 11)
+        {
+            ApplyChanges();
+            UpdateCounter = 0;
+            Debug.Log("cycle");
+        }
+        else
+        {
+            Debug.Log(UpdateCounter);
+            for (int i = UpdateCounter * (width / 11); i < (UpdateCounter + 1) * (width / 11); i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    if (tilemap.GetValue(new Vector3Int(i, j, 0), "useful") > 0.5)
+                        UpdateTile(new Vector3Int(i, j, 0));
+                }
+            }
+            UpdateCounter++;
         }
     }
 
@@ -180,9 +221,9 @@ public class RunningBackEnd : MonoBehaviour
         ep.ClearAll();
         ep.PaintWater();
         dr.ApplyData();
-        for (int x=0; x< width; x++)
+        for (int x = 0; x < width; x++)
         {
-            for (int y=0; y<height; y++)
+            for (int y = 0; y < height; y++)
             {
                 Vector3Int p = new Vector3Int(x, y, 0);
                 Vector3Int invertedP = new Vector3Int(y, x, 0);
@@ -208,3 +249,4 @@ public class RunningBackEnd : MonoBehaviour
         UpdateMapGraphics();
     }
 }
+
