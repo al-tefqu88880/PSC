@@ -37,33 +37,33 @@ public class ActionMenu : MonoBehaviour
     private bool isOverlayPanel = false;
     private Color buttonColor = new Color(0.56f, 0.93f, 0.56f, 0.5f);
 
-    /*
+    
     private int rabbitLayer = 2;
     private int lynxLayer = 3;
     private int foxLayer = 4;
-    */
-
+    
+    
     public TilemapRenderer rabbitRenderer;
     public TilemapRenderer lynxRenderer;
     public TilemapRenderer foxRenderer;
     public TilemapRenderer biomassRenderer;
-
+    /*
     public Tilemap rabbitTilemap;
     public Tilemap lynxTilemap;
     public Tilemap foxTilemap;
-
+    
     public Tile blankFull;
     public Tile blankLeft;
     public Tile blankRight;
     public Tile blankTopLeft;
     public Tile blankTopRight;
     public Tile blankBottom;
-
+    */
     public TMP_Text valueQuestion;
     public TMP_InputField valueAnswer;
     public TMP_Text brushOn;
 
-    private TilemapData tilemap;
+    //private TilemapData tilemap;
 
     private float value;
 
@@ -116,7 +116,7 @@ public class ActionMenu : MonoBehaviour
             cheaterToggle.GetComponent<Image>().color = buttonColor;
         }
     }
-    /*      Previous definition of overlays, with overlappling
+   //     Previous definition of overlays, with overlappling
     void rabbitButton()
     {
         if (isRabbit)
@@ -212,7 +212,7 @@ public class ActionMenu : MonoBehaviour
             foxRenderer.enabled = true;
         }
     }
-    */
+    /*
 
     void rabbitButton()
     {
@@ -398,7 +398,7 @@ public class ActionMenu : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     void biomassButton()
     {
