@@ -124,9 +124,9 @@ public class RunningBackEnd : MonoBehaviour
         NextValues[coords[0], coords[1], 2] = SignCheck(lynx2);
     }
 
-    void UpdateMapGraphics()
+    void UpdateMapGraphics(int MinI, int MaxI)
     {
-        for (int i = 0; i < width; i++)
+        for (int i = MinI; i < MaxI; i++)
         {
             for (int j = 0; j < height; j++)
             {
@@ -168,7 +168,20 @@ public class RunningBackEnd : MonoBehaviour
         }
     }
 
-    void UpdateMap()
+
+    void UpdateMapData(int MinI, int MaxI)
+    {
+        for (int i = MinI; i < MaxI; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (tilemap.GetValue(new Vector3Int(i, j, 0), "useful") > 0.5)
+                    UpdateTile(new Vector3Int(i, j, 0));
+            }
+        }
+    }
+
+
     void ApplyChanges()
     {
         for (int i = 0; i < width; i++)
@@ -182,6 +195,8 @@ public class RunningBackEnd : MonoBehaviour
             }
         }
     }
+
+   
 
     void UpdateMap()
     {
@@ -197,19 +212,14 @@ public class RunningBackEnd : MonoBehaviour
         {
             ApplyChanges();
             UpdateCounter = 0;
+            //UpdateMapGraphics();
             Debug.Log("cycle");
         }
         else
         {
             Debug.Log(UpdateCounter);
-            for (int i = UpdateCounter * (width / 11); i < (UpdateCounter + 1) * (width / 11); i++)
-            {
-                for (int j = 0; j < height; j++)
-                {
-                    if (tilemap.GetValue(new Vector3Int(i, j, 0), "useful") > 0.5)
-                        UpdateTile(new Vector3Int(i, j, 0));
-                }
-            }
+            //for (int i = UpdateCounter * (width / 11); i < (UpdateCounter + 1) * (width / 11); i++)
+            UpdateMapData(width, height);
             UpdateCounter++;
         }
     }
@@ -246,7 +256,7 @@ public class RunningBackEnd : MonoBehaviour
     void FixedUpdate()
     {
         UpdateMap();
-        UpdateMapGraphics();
+        
     }
 }
 
