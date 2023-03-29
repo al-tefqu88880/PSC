@@ -161,7 +161,7 @@ public class RunningBackEnd : MonoBehaviour
                     {
                         lynx.SetColor(p, emptyColor);
                     }
-
+                                       
                 }
 
             }
@@ -236,6 +236,8 @@ public class RunningBackEnd : MonoBehaviour
                     rabbit.SetTileFlags(p, TileFlags.None);
                     biomass.SetTileFlags(p, TileFlags.None);
                     lynx.SetTileFlags(p, TileFlags.None);
+                    Color biomassColor = new Color(0.2f, 0.8f, 0, tilemap.GetValue(invertedP, "tree") / 8.0f);
+                    biomass.SetColor(p, biomassColor);
                 }
             }
         }
