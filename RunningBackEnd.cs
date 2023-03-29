@@ -230,13 +230,14 @@ public class RunningBackEnd : MonoBehaviour
                     rabbit.SetTile(p, blankTile);
                     fox.SetTile(p, blankTile);
                     lynx.SetTile(p, blankTile);
+                    biomass.SetTile(p, blankTile);
                     terrain.SetTileFlags(p, TileFlags.None);
                     fox.SetTileFlags(p, TileFlags.None);
                     rabbit.SetTileFlags(p, TileFlags.None);
                     biomass.SetTileFlags(p, TileFlags.None);
                     lynx.SetTileFlags(p, TileFlags.None);
                     Color biomassColor = new Color(0.2f, 0.8f, 0, tilemap.GetValue(invertedP, "tree") / 8.0f);
-                    biomass.SetColor(p, biomassColor);
+                    biomass.SetColor(p, biomassColor); 
                 }
             }
         }
