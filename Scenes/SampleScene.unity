@@ -1098,6 +1098,7 @@ MonoBehaviour:
   species070: {fileID: 11400000, guid: 8c3e4fe1d66f5934ca6d7a30945dd4b2, type: 2}
   species060: {fileID: 11400000, guid: eefb0aee0fb080445a8bc34c943b8cc2, type: 2}
   species050: {fileID: 11400000, guid: 012b1427ecacd294194fb55da20dc97c, type: 2}
+  blankTile: {fileID: 11400000, guid: ed75a02e75213a94aa596c65d7c79654, type: 2}
 --- !u!114 &222144902
 MonoBehaviour:
   m_ObjectHideFlags: 0
