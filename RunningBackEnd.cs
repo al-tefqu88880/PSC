@@ -124,15 +124,10 @@ public class RunningBackEnd : MonoBehaviour
         NextValues[coords[0], coords[1], 2] = SignCheck(lynx2);
     }
 
-<<<<<<< HEAD
+
     void UpdateMapGraphics(int MinI, int MaxI)
     {
         for (int i = MinI; i < MaxI; i++)
-=======
-    void UpdateMapGraphics()
-    {
-        for (int i = 0; i < width; i++)
->>>>>>> f656d1b3de2c1369b41577a231e7f6a850cfa004
         {
             for (int j = 0; j < height; j++)
             {
@@ -167,17 +162,12 @@ public class RunningBackEnd : MonoBehaviour
                     {
                         lynx.SetColor(p, emptyColor);
                     }
-<<<<<<< HEAD
-
-=======
-                                       
->>>>>>> f656d1b3de2c1369b41577a231e7f6a850cfa004
                 }
 
             }
         }
     }
-<<<<<<< HEAD
+
 
 
     void UpdateMapData(int MinI, int MaxI)
@@ -193,8 +183,6 @@ public class RunningBackEnd : MonoBehaviour
     }
 
 
-=======
->>>>>>> f656d1b3de2c1369b41577a231e7f6a850cfa004
     void ApplyChanges()
     {
         for (int i = 0; i < width; i++)
@@ -209,11 +197,7 @@ public class RunningBackEnd : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-   
 
-=======
->>>>>>> f656d1b3de2c1369b41577a231e7f6a850cfa004
     void UpdateMap()
     {
         /*for (int i=0; i<width; i++)
@@ -227,29 +211,15 @@ public class RunningBackEnd : MonoBehaviour
         if (UpdateCounter == 11)
         {
             ApplyChanges();
+            UpdateMapGraphics(width, height);
             UpdateCounter = 0;
-<<<<<<< HEAD
-            //UpdateMapGraphics();
-=======
->>>>>>> f656d1b3de2c1369b41577a231e7f6a850cfa004
-            Debug.Log("cycle");
+            //Debug.Log("cycle");
         }
         else
         {
-            Debug.Log(UpdateCounter);
-<<<<<<< HEAD
+            //Debug.Log(UpdateCounter);
             //for (int i = UpdateCounter * (width / 11); i < (UpdateCounter + 1) * (width / 11); i++)
             UpdateMapData(width, height);
-=======
-            for (int i = UpdateCounter * (width / 11); i < (UpdateCounter + 1) * (width / 11); i++)
-            {
-                for (int j = 0; j < height; j++)
-                {
-                    if (tilemap.GetValue(new Vector3Int(i, j, 0), "useful") > 0.5)
-                        UpdateTile(new Vector3Int(i, j, 0));
-                }
-            }
->>>>>>> f656d1b3de2c1369b41577a231e7f6a850cfa004
             UpdateCounter++;
         }
     }
@@ -272,20 +242,15 @@ public class RunningBackEnd : MonoBehaviour
                     rabbit.SetTile(p, blankTile);
                     fox.SetTile(p, blankTile);
                     lynx.SetTile(p, blankTile);
-<<<<<<< HEAD
-=======
                     biomass.SetTile(p, blankTile);
->>>>>>> f656d1b3de2c1369b41577a231e7f6a850cfa004
                     terrain.SetTileFlags(p, TileFlags.None);
                     fox.SetTileFlags(p, TileFlags.None);
                     rabbit.SetTileFlags(p, TileFlags.None);
                     biomass.SetTileFlags(p, TileFlags.None);
                     lynx.SetTileFlags(p, TileFlags.None);
-<<<<<<< HEAD
-=======
                     Color biomassColor = new Color(0.2f, 0.8f, 0, tilemap.GetValue(invertedP, "tree") / 8.0f);
                     biomass.SetColor(p, biomassColor); 
->>>>>>> f656d1b3de2c1369b41577a231e7f6a850cfa004
+
                 }
             }
         }
@@ -295,11 +260,6 @@ public class RunningBackEnd : MonoBehaviour
     void FixedUpdate()
     {
         UpdateMap();
-<<<<<<< HEAD
-        
-=======
-        UpdateMapGraphics();
->>>>>>> f656d1b3de2c1369b41577a231e7f6a850cfa004
     }
 }
 
