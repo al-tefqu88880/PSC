@@ -208,10 +208,11 @@ public class RunningBackEnd : MonoBehaviour
                 UpdateTile(new Vector3Int(i, j, 0));
             }
         }*/
+        
         if (UpdateCounter == 11)
         {
             ApplyChanges();
-            UpdateMapGraphics(width, height);
+            
             UpdateCounter = 0;
             //Debug.Log("cycle");
         }
@@ -259,7 +260,8 @@ public class RunningBackEnd : MonoBehaviour
 
     void FixedUpdate()
     {
-        UpdateMap();
+        //UpdateMap();
+        UpdateMapGraphics(0, height);
     }
 }
 
