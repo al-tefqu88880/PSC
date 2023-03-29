@@ -230,7 +230,6 @@ public class RunningBackEnd : MonoBehaviour
                     rabbit.SetTile(p, blankTile);
                     fox.SetTile(p, blankTile);
                     lynx.SetTile(p, blankTile);
-                    biomass.SetTile(p, blankTile);
                     terrain.SetTileFlags(p, TileFlags.None);
                     fox.SetTileFlags(p, TileFlags.None);
                     rabbit.SetTileFlags(p, TileFlags.None);
