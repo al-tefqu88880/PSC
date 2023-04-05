@@ -59,6 +59,8 @@ namespace BackEnd
                     return 18;
                 case "varSummerRain":
                     return 19;
+                case "altitude":
+                    return 20;
                 default:
                     Debug.Log("Invalid characteristic name");
                     return -1;
@@ -68,7 +70,7 @@ namespace BackEnd
         public TileData()
         {
             this.tile = 0;
-            this.characteristics = new float[11];
+            this.characteristics = new float[21];
             this.characteristics[9] = 0;
         }
 
