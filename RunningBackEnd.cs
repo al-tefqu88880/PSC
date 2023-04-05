@@ -260,7 +260,7 @@ public class RunningBackEnd : MonoBehaviour
 
     void FixedUpdate()
     {
-        //UpdateMap();
+        UpdateMap();
         UpdateMapGraphics(0, height);
     }
 }
