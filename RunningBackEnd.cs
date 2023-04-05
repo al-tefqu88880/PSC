@@ -5,13 +5,14 @@ using BackEnd;
 using UnityEngine.Tilemaps;
 using Common;
 using System;
+using Unity.VisualScripting;
 
 public class RunningBackEnd : MonoBehaviour
 {
     public static TilemapData tilemap;
     public EditorPainter ep;
-    public int width = 121;
-    public int height = 121;
+    public static int width = 121;
+    public static int height = 121;
 
     public Tilemap terrain;
     public Tilemap rabbit;
@@ -85,14 +86,13 @@ public class RunningBackEnd : MonoBehaviour
             return 10000;
         return x;
     }
+
     void UpdateTile(Vector3Int coords)
     {
         List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(coords[0], coords[1], width - 1, height - 1);
         int k = 0;
         while (k < neibourgh.Count)
         {
-            //Vector3Int tmp = neibourgh[k];
-            //Debug.Log(tmp[0] + " " + tmp[1]);
             if (tilemap.GetValue(neibourgh[k], "useful") < 0.5)
             {
                 neibourgh.RemoveAt(k);
@@ -125,7 +125,9 @@ public class RunningBackEnd : MonoBehaviour
     }
 
 
-    void UpdateMapGraphics(int MinI, int MaxI)
+
+
+    public void UpdateMapGraphics(int MinI, int MaxI)
     {
         for (int i = MinI; i < MaxI; i++)
         {
@@ -170,6 +172,7 @@ public class RunningBackEnd : MonoBehaviour
 
 
 
+
     void UpdateMapData(int MinI, int MaxI)
     {
         for (int i = MinI; i < MaxI; i++)
@@ -183,9 +186,9 @@ public class RunningBackEnd : MonoBehaviour
     }
 
 
-    void ApplyChanges()
+    void ApplyChanges(int MinI, int MaxI)
     {
-        for (int i = 0; i < width; i++)
+        for (int i = MinI; i < MaxI; i++)
         {
             for (int j = 0; j < height; j++)
             {
@@ -208,21 +211,27 @@ public class RunningBackEnd : MonoBehaviour
                 UpdateTile(new Vector3Int(i, j, 0));
             }
         }*/
-        
-        if (UpdateCounter == 11)
+
+        if (UpdateCounter == 0)
         {
-            ApplyChanges();
-            
-            UpdateCounter = 0;
-            //Debug.Log("cycle");
-        }
-        else
-        {
-            //Debug.Log(UpdateCounter);
+
             //for (int i = UpdateCounter * (width / 11); i < (UpdateCounter + 1) * (width / 11); i++)
-            UpdateMapData(width, height);
+            UpdateMapData(0, height);
             UpdateCounter++;
+            //Debug.Log(NextValues[74, 53, 0]);
+            //Debug.Log(tilemap.GetValue(new Vector3Int(74, 53, 0), "rabbit"));
+
+
         }
+        else 
+        {
+            ApplyChanges((UpdateCounter-1) * (width / 11), UpdateCounter * (width / 11));
+            UpdateMapGraphics((UpdateCounter - 1) * (width / 11), UpdateCounter * (width / 11));
+            UpdateCounter++;
+            if (UpdateCounter == 12)
+                UpdateCounter = 0;
+        }
+        
     }
 
     void Start()
@@ -251,7 +260,6 @@ public class RunningBackEnd : MonoBehaviour
                     lynx.SetTileFlags(p, TileFlags.None);
                     Color biomassColor = new Color(0.2f, 0.8f, 0, tilemap.GetValue(invertedP, "tree") / 8.0f);
                     biomass.SetColor(p, biomassColor); 
-
                 }
             }
         }
@@ -260,8 +268,8 @@ public class RunningBackEnd : MonoBehaviour
 
     void FixedUpdate()
     {
-        //UpdateMap();
-        UpdateMapGraphics(0, height);
+        UpdateMap();
+        
     }
 }
 

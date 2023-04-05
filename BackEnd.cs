@@ -41,6 +41,24 @@ namespace BackEnd
                     return 9;
                 case "tree":
                     return 10;
+                case "rabbitAffiity":
+                    return 11;
+                case "foxAffinity":
+                    return 12;
+                case "lynxAffinity":
+                    return 13;
+                case "varTemperature":
+                    return 14;
+                case "varIsothermality":
+                    return 15;
+                case "varSummerTemperature":
+                    return 16;
+                case "varRain":
+                    return 17;
+                case "varRainVariation":
+                    return 18;
+                case "varSummerRain":
+                    return 19;
                 default:
                     Debug.Log("Invalid characteristic name");
                     return -1;
