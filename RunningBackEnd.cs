@@ -38,10 +38,10 @@ public class RunningBackEnd : MonoBehaviour
     private static float pFox = 4e-5f;
     private static float pLynx = 8e-4f;
     private static float dRabbit = .3f;
-    private static float dFox = .11f;
     private static float cFox = 4e-5f;
     private static float dLynx = .55f;
     private static float cLynx = 2e-4f;
+    private static float dFox = dLynx * cFox / cLynx;
 
 
 
@@ -121,7 +121,7 @@ public class RunningBackEnd : MonoBehaviour
         float fox2 = SignCheck(fox + fox * (5000 - fox) / 5000 / 100);*/
 
         float rabbit2 = rabbit + tickToYear*(cRabbit*rabbit*(1-rabbit/k) - pFox*rabbit*fox-pLynx*lynx*rabbit-dRabbit*rabbit);
-        float fox2 = fox - tickToYear*(dFox * cFox / cLynx * fox + cFox * rabbit * fox);
+        float fox2 = fox + tickToYear*(- dFox * fox + cFox * rabbit * fox);
         float lynx2 = lynx - tickToYear*(dLynx * lynx + cLynx * lynx * rabbit);
 
         /*for (int l = 0; l < neibourgh.Count; l++)
@@ -139,7 +139,7 @@ public class RunningBackEnd : MonoBehaviour
         NextValues[coords[0], coords[1], 2] = SignCheck(lynx2);
     }
 
-
+        
 
 
     public void UpdateMapGraphics(int MinI, int MaxI)
@@ -211,6 +211,9 @@ public class RunningBackEnd : MonoBehaviour
                 tilemap.SetValue(coords, "rabbit", NextValues[i, j, 0]);
                 tilemap.SetValue(coords, "fox", NextValues[i, j, 1]);
                 tilemap.SetValue(coords, "lynx", NextValues[i, j, 2]);
+                NextValues[i, j, 0] = 0;
+                NextValues[i, j, 1] = 0;
+                NextValues[i, j, 2] = 0;  
             }
         }
     }
