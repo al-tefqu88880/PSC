@@ -32,8 +32,8 @@ public class RunningBackEnd : MonoBehaviour
     private int UpdateCounter;
     private float[,,] NextValues = new float[121, 121, 3];
 
-    private static float tickToYear = 0.0462962962f;
-    private static float cRabbit = 3f;//(float)Math.Pow(3f, tickToYear);
+    private static float tickToYear = 0.00462962962f;
+    private static float cRabbit = 3f;
     private static float k = 5000f;
     private static float pFox = 4e-5f;
     private static float pLynx = 8e-4f;
@@ -103,15 +103,15 @@ public class RunningBackEnd : MonoBehaviour
     void UpdateTile(Vector3Int coords)
     {
         List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(coords[0], coords[1], width - 1, height - 1);
-        int k = 0;
-        while (k < neibourgh.Count)
+        int l = 0;
+        while (l < neibourgh.Count)
         {
-            if (tilemap.GetValue(neibourgh[k], "useful") < 0.5)
+            if (tilemap.GetValue(neibourgh[l], "useful") < 0.5)
             {
-                neibourgh.RemoveAt(k);
+                neibourgh.RemoveAt(l);
             }
             else
-                k++;
+                l++;
         }
         float rabbit = tilemap.GetValue(coords, "rabbit");
         float fox = tilemap.GetValue(coords, "fox");
@@ -283,6 +283,7 @@ public class RunningBackEnd : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Debug.Log(1);
         UpdateMap();
 <<<<<<< HEAD
         UpdateMapGraphics(0, height);
