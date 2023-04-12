@@ -7,7 +7,7 @@ public class Energy : MonoBehaviour
 {
 
     public TextMeshProUGUI text;
-    public static int value = 0;
+    public static int value = 100;
     public static void Add(int n)
     {
         value+= n;
@@ -30,7 +30,7 @@ public class Energy : MonoBehaviour
 
     private void Update()
     {
-        text.SetText("Energy :" + value.ToString());
+        text.SetText("Energy : " + value.ToString());
 
     }
 }
