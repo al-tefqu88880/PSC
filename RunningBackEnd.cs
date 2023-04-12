@@ -288,11 +288,8 @@ public class RunningBackEnd : MonoBehaviour
     {
         //Debug.Log(1);
         UpdateMap();
-<<<<<<< HEAD
         UpdateMapGraphics(0, height);
-=======
-        
->>>>>>> 0110f47ea3a4ab2bc79b2ba6e0265a582b6b708c
+
     }
 }
 
