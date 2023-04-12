@@ -38,12 +38,22 @@ public class RunningBackEnd : MonoBehaviour
     private static float pFox = 4e-5f;
     private static float pLynx = 8e-4f;
     private static float dRabbit = .3f;
-    private static float cFox = 4e-5f;
+    private static float cFox = 15e-5f;
     private static float dLynx = .55f;
     private static float cLynx = 2e-4f;
     private static float dFox = dLynx * cFox / cLynx;
-
-
+    private static float[] moyTemperature = { 94.5f, 89.8f, 177f };
+    private static float[] moyIsothermality = { 354f, 34.4f, 37f };
+    private static float[] moySummerTemperature = { 164f, 165f, 243f };
+    private static float[] moyRain = { 745f, 755f, 509f };
+    private static float[] moyRainVariation = { 12f, 10f, 64f };
+    private static float[] moySummerRain = { 190f, 196f, 23f };
+    private static float[] sigmaTemperature = { 9f, 11.5f, 23f };
+    private static float[] sigmaIsothermality = { 3.3f, 4.2f, 0.9f };
+    private static float[] sigmaSummerTemperature = { 15f, 14f, 10f };
+    private static float[] sigmaRain = { 80f, 90f, 30f };
+    private static float[] sigmaRainVariation = { 7.3f, 11f, 14.5f };
+    private static float[] sigmaSummerRain = { 25.7f, 33f, 12f };
 
 
     public static TilemapData GetTilemap()
@@ -91,6 +101,41 @@ public class RunningBackEnd : MonoBehaviour
         }
     }*/
 
+    float gaussian(float x, float m, float sigma)
+    {
+        return (float)Math.Exp((x - m) * (x - m) / (2 * sigma * sigma));
+    }
+
+
+    Vector3 affinity(Vector3Int coords)
+    {
+
+        float rabbitAffinity = gaussian(tilemap.GetValue(coords, "temperature"), moyTemperature[0], sigmaTemperature[0]);
+        rabbitAffinity +=  2* gaussian(tilemap.GetValue(coords, "isothermality"), moyIsothermality[0], sigmaIsothermality[0]);
+        rabbitAffinity += 1.43f * gaussian(tilemap.GetValue(coords, "summerTemperature"), moySummerTemperature[0], sigmaSummerTemperature[0]);
+        rabbitAffinity += gaussian(tilemap.GetValue(coords, "rain"), moyRain[0], sigmaRain[0]);
+        rabbitAffinity += 0.3f*gaussian(tilemap.GetValue(coords, "rainVariation"), moyRainVariation[0], sigmaRainVariation[0]);
+        rabbitAffinity += 0.9f*gaussian(tilemap.GetValue(coords, "summerRain"), moySummerRain[0], sigmaSummerRain[0]);
+        rabbitAffinity = rabbitAffinity / 6.63f;
+        float foxAffinity = gaussian(tilemap.GetValue(coords, "temperature"), moyTemperature[1], sigmaTemperature[1]);
+        foxAffinity += 2.19f * gaussian(tilemap.GetValue(coords, "isothermality"), moyIsothermality[1], sigmaIsothermality[1]);
+        foxAffinity += 1.86f * gaussian(tilemap.GetValue(coords, "summerTemperature"), moySummerTemperature[1], sigmaSummerTemperature[1]);
+        foxAffinity += gaussian(tilemap.GetValue(coords, "rain"), moyRain[1], sigmaRain[1]);
+        foxAffinity += 0.59f * gaussian(tilemap.GetValue(coords, "rainVariation"), moyRainVariation[1], sigmaRainVariation[1]);
+        foxAffinity += 0.86f * gaussian(tilemap.GetValue(coords, "summerRain"), moySummerRain[1], sigmaSummerRain[1]);
+        foxAffinity = foxAffinity / 7.5f;
+        float lynxAffinity = gaussian(tilemap.GetValue(coords, "temperature"), moyTemperature[2], sigmaTemperature[2]);
+        lynxAffinity += 2f * gaussian(tilemap.GetValue(coords, "isothermality"), moyIsothermality[2], sigmaIsothermality[2]);
+        lynxAffinity += 1.43f * gaussian(tilemap.GetValue(coords, "summerTemperature"), moySummerTemperature[2], sigmaSummerTemperature[2]);
+        lynxAffinity += gaussian(tilemap.GetValue(coords, "rain"), moyRain[2], sigmaRain[2]);
+        lynxAffinity += 0.3f * gaussian(tilemap.GetValue(coords, "rainVariation"), moyRainVariation[2], sigmaRainVariation[2]);
+        lynxAffinity += 0.9f * gaussian(tilemap.GetValue(coords, "summerRain"), moySummerRain[2], sigmaSummerRain[2]);
+        lynxAffinity = lynxAffinity / 6.63f;
+        return new Vector3(rabbitAffinity, foxAffinity, lynxAffinity) ;
+    }
+
+
+
     private float SignCheck(float x)
     {
         if (x < 0)
@@ -134,9 +179,9 @@ public class RunningBackEnd : MonoBehaviour
             fox2 += foxExte * foxExte * (5000 - fox) / 5000 / 5000 / 100;
         }*/
 
-        NextValues[coords[0], coords[1], 0] = SignCheck(rabbit2);
-        NextValues[coords[0], coords[1], 1] = SignCheck(fox2);
-        NextValues[coords[0], coords[1], 2] = SignCheck(lynx2);
+        NextValues[coords[0], coords[1], 0] += SignCheck(rabbit2);
+        NextValues[coords[0], coords[1], 1] += SignCheck(fox2);
+        NextValues[coords[0], coords[1], 2] += SignCheck(lynx2);
     }
 
         
@@ -184,7 +229,6 @@ public class RunningBackEnd : MonoBehaviour
             }
         }
     }
-
 
 
 
