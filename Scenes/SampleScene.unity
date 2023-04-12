@@ -1086,8 +1086,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ep: {fileID: 471626534}
-  width: 121
-  height: 121
   terrain: {fileID: 1725120416}
   rabbit: {fileID: 2096795551}
   lynx: {fileID: 640537958}
@@ -11668,6 +11666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 222144904}
   cdm: {fileID: 2126902539}
+  rb: {fileID: 222144901}
   hoverTile: {fileID: 702693479}
   brushToggle: {fileID: 1634194045}
   overlayToggle: {fileID: 1769560171}

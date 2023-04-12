@@ -10,6 +10,7 @@ public class ActionMenu : MonoBehaviour
 {
     public InputManager inputManager;
     public ChangeDataMenu cdm;
+    public RunningBackEnd rb;
 
     public Transform hoverTile;
     Vector3 hoverScale = new Vector3((float)1.2, (float)1.2, (float)1.2);
@@ -398,6 +399,7 @@ public class ActionMenu : MonoBehaviour
                 }
             }
         }
+        rb.UpdateMapGraphics(0, RunningBackEnd.width);
     }
 
     void biomassButton()

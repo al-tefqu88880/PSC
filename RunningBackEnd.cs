@@ -5,13 +5,14 @@ using BackEnd;
 using UnityEngine.Tilemaps;
 using Common;
 using System;
+using Unity.VisualScripting;
 
 public class RunningBackEnd : MonoBehaviour
 {
     public static TilemapData tilemap;
     public EditorPainter ep;
-    public int width = 121;
-    public int height = 121;
+    public static int width = 121;
+    public static int height = 121;
 
     public Tilemap terrain;
     public Tilemap rabbit;
@@ -30,6 +31,19 @@ public class RunningBackEnd : MonoBehaviour
 
     private int UpdateCounter;
     private float[,,] NextValues = new float[121, 121, 3];
+
+    private static float tickToYear = 0.0462962962f;
+    private static float cRabbit = 3f;//(float)Math.Pow(3f, tickToYear);
+    private static float k = 5000f;
+    private static float pFox = 4e-5f;
+    private static float pLynx = 8e-4f;
+    private static float dRabbit = .3f;
+    private static float dFox = .11f;
+    private static float cFox = 4e-5f;
+    private static float dLynx = .55f;
+    private static float cLynx = 2e-4f;
+
+
 
 
     public static TilemapData GetTilemap()
@@ -85,14 +99,13 @@ public class RunningBackEnd : MonoBehaviour
             return 10000;
         return x;
     }
+
     void UpdateTile(Vector3Int coords)
     {
         List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(coords[0], coords[1], width - 1, height - 1);
         int k = 0;
         while (k < neibourgh.Count)
         {
-            //Vector3Int tmp = neibourgh[k];
-            //Debug.Log(tmp[0] + " " + tmp[1]);
             if (tilemap.GetValue(neibourgh[k], "useful") < 0.5)
             {
                 neibourgh.RemoveAt(k);
@@ -101,13 +114,17 @@ public class RunningBackEnd : MonoBehaviour
                 k++;
         }
         float rabbit = tilemap.GetValue(coords, "rabbit");
-        float rabbit2 = SignCheck(rabbit + rabbit * (5000 - rabbit) / 5000 / 100);
-        float lynx = tilemap.GetValue(coords, "lynx");
-        float lynx2 = SignCheck(lynx + lynx * (5000 - lynx) / 5000 / 10);
         float fox = tilemap.GetValue(coords, "fox");
-        float fox2 = SignCheck(fox + fox * (5000 - fox) / 5000 / 100);
-        //float coeff = 1;
-        for (int l = 0; l < neibourgh.Count; l++)
+        float lynx = tilemap.GetValue(coords, "lynx");
+        /*float rabbit2 = SignCheck(rabbit + rabbit * (5000 - rabbit) / 5000 / 100);
+        float lynx2 = SignCheck(lynx + lynx * (5000 - lynx) / 5000 / 10);
+        float fox2 = SignCheck(fox + fox * (5000 - fox) / 5000 / 100);*/
+
+        float rabbit2 = rabbit + tickToYear*(cRabbit*rabbit*(1-rabbit/k) - pFox*rabbit*fox-pLynx*lynx*rabbit-dRabbit*rabbit);
+        float fox2 = fox - tickToYear*(dFox * cFox / cLynx * fox + cFox * rabbit * fox);
+        float lynx2 = lynx - tickToYear*(dLynx * lynx + cLynx * lynx * rabbit);
+
+        /*for (int l = 0; l < neibourgh.Count; l++)
         {
             float rabbitExte = tilemap.GetValue(neibourgh[l], "rabbit");
             rabbit2 += rabbitExte * rabbitExte * (5000 - rabbit) / 5000 / 5000 / 100;
@@ -115,17 +132,17 @@ public class RunningBackEnd : MonoBehaviour
             lynx2 += lynxExte * lynxExte * (5000 - lynx) / 5000 / 5000 / 100;
             float foxExte = tilemap.GetValue(neibourgh[l], "fox");
             fox2 += foxExte * foxExte * (5000 - fox) / 5000 / 5000 / 100;
-        }
-        /*tilemap.SetValue(coords, "rabbit", SignCheck(rabbit2));
-        tilemap.SetValue(coords, "lynx", SignCheck(lynx2));
-        tilemap.SetValue(coords, "fox", SignCheck(fox2));*/
+        }*/
+
         NextValues[coords[0], coords[1], 0] = SignCheck(rabbit2);
         NextValues[coords[0], coords[1], 1] = SignCheck(fox2);
         NextValues[coords[0], coords[1], 2] = SignCheck(lynx2);
     }
 
 
-    void UpdateMapGraphics(int MinI, int MaxI)
+
+
+    public void UpdateMapGraphics(int MinI, int MaxI)
     {
         for (int i = MinI; i < MaxI; i++)
         {
@@ -170,6 +187,7 @@ public class RunningBackEnd : MonoBehaviour
 
 
 
+
     void UpdateMapData(int MinI, int MaxI)
     {
         for (int i = MinI; i < MaxI; i++)
@@ -183,9 +201,9 @@ public class RunningBackEnd : MonoBehaviour
     }
 
 
-    void ApplyChanges()
+    void ApplyChanges(int MinI, int MaxI)
     {
-        for (int i = 0; i < width; i++)
+        for (int i = MinI; i < MaxI; i++)
         {
             for (int j = 0; j < height; j++)
             {
@@ -208,21 +226,27 @@ public class RunningBackEnd : MonoBehaviour
                 UpdateTile(new Vector3Int(i, j, 0));
             }
         }*/
-        
-        if (UpdateCounter == 11)
+
+        if (UpdateCounter == 0)
         {
-            ApplyChanges();
-            
-            UpdateCounter = 0;
-            //Debug.Log("cycle");
-        }
-        else
-        {
-            //Debug.Log(UpdateCounter);
+
             //for (int i = UpdateCounter * (width / 11); i < (UpdateCounter + 1) * (width / 11); i++)
-            UpdateMapData(width, height);
+            UpdateMapData(0, height);
             UpdateCounter++;
+            //Debug.Log(NextValues[74, 53, 0]);
+            //Debug.Log(tilemap.GetValue(new Vector3Int(74, 53, 0), "rabbit"));
+
+
         }
+        else 
+        {
+            ApplyChanges((UpdateCounter-1) * (width / 11), UpdateCounter * (width / 11));
+            UpdateMapGraphics((UpdateCounter - 1) * (width / 11), UpdateCounter * (width / 11));
+            UpdateCounter++;
+            if (UpdateCounter == 12)
+                UpdateCounter = 0;
+        }
+        
     }
 
     void Start()
@@ -251,7 +275,6 @@ public class RunningBackEnd : MonoBehaviour
                     lynx.SetTileFlags(p, TileFlags.None);
                     Color biomassColor = new Color(0.2f, 0.8f, 0, tilemap.GetValue(invertedP, "tree") / 8.0f);
                     biomass.SetColor(p, biomassColor); 
-
                 }
             }
         }
@@ -261,7 +284,11 @@ public class RunningBackEnd : MonoBehaviour
     void FixedUpdate()
     {
         UpdateMap();
+<<<<<<< HEAD
         UpdateMapGraphics(0, height);
+=======
+        
+>>>>>>> 0110f47ea3a4ab2bc79b2ba6e0265a582b6b708c
     }
 }
 
