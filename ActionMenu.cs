@@ -24,6 +24,7 @@ public class ActionMenu : MonoBehaviour
     public Button lynxToggle;
     public Button foxToggle;
     public Button biomassToggle;
+    public Button mountainToggle;
 
     public Canvas brushCanvas;
     public Canvas overlayCanvas;
@@ -34,6 +35,7 @@ public class ActionMenu : MonoBehaviour
     private bool isLynx = false;
     private bool isFox = false;
     private bool isBiomass = true;
+    private bool isMountain = true;
     private bool isBrushPanel = false;
     private bool isOverlayPanel = false;
     private Color buttonColor = new Color(0.56f, 0.93f, 0.56f, 0.5f);
@@ -48,10 +50,12 @@ public class ActionMenu : MonoBehaviour
     public TilemapRenderer lynxRenderer;
     public TilemapRenderer foxRenderer;
     public TilemapRenderer biomassRenderer;
+    public TilemapRenderer mountainRenderer;
     
     public Tilemap rabbitTilemap;
     public Tilemap lynxTilemap;
     public Tilemap foxTilemap;
+   
     
     public Tile blankFull;
     public Tile blankLeft;
@@ -418,6 +422,22 @@ public class ActionMenu : MonoBehaviour
         }
     }
 
+    void mountainButton()
+    {
+        if (isMountain)
+        {
+            isMountain = false;
+            mountainToggle.GetComponent<Image>().color = Color.white;
+            mountainRenderer.enabled = false;
+        }
+        else
+        {
+            isMountain = true;
+            mountainToggle.GetComponent<Image>().color = buttonColor;
+            mountainRenderer.enabled = true;
+        }
+    }
+
     void brushToggleButton()
     {
         if (isBrushPanel)
@@ -467,7 +487,9 @@ public class ActionMenu : MonoBehaviour
         lynxToggle.onClick.AddListener(() => lynxButton());
         foxToggle.onClick.AddListener(() => foxButton());
         biomassToggle.onClick.AddListener(() => biomassButton());
+        mountainToggle.onClick.AddListener(() => mountainButton());
         biomassToggle.GetComponent<Image>().color = buttonColor;
+        mountainToggle.GetComponent<Image>().color = buttonColor;
         value = 0.0f;
     }
 
