@@ -43,7 +43,7 @@ namespace BackEnd
                     return 10;
                 case "altitude":
                     return 11;
-                case "rabbitCliamteAffiity":
+                case "rabbitClimateAffinity":
                     return 12;
                 case "foxClimateAffinity":
                     return 13;
@@ -86,7 +86,7 @@ namespace BackEnd
                 case "SummerRain2080":
                     return 26;
                 default:
-                    Debug.Log("Invalid characteristic name");
+                    Debug.Log("Invalid characteristic name : "+name);
                     return -1;
             }
         }

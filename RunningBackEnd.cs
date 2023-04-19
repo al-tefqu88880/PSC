@@ -109,7 +109,7 @@ public class RunningBackEnd : MonoBehaviour
 
     float sigmoid(float x)
     {
-        return (float)1 / (1 + Math.Exp(20 * (x - 0.45)));
+        return (float)1 / (1 + (float)Math.Exp(20 * (x - 0.45)));
     }
 
 
@@ -176,11 +176,11 @@ public class RunningBackEnd : MonoBehaviour
         float lynx2 = SignCheck(lynx + lynx * (5000 - lynx) / 5000 / 10);
         float fox2 = SignCheck(fox + fox * (5000 - fox) / 5000 / 100);*/
 
-        float rabbit2 += rabbit + tickToYear*(cRabbit*rabbit*(1-rabbit/k) - pFox*rabbit*fox-pLynx*lynx*rabbit);
-        float fox2 += fox + tickToYear*(- dFox * fox + cFox * rabbit * fox);
-        float lynx2 += lynx - tickToYear*(dLynx * lynx + cLynx * lynx * rabbit);
+        float rabbit2 = rabbit + tickToYear*(cRabbit*rabbit*(1-rabbit/k) - pFox*rabbit*fox-pLynx*lynx*rabbit);
+        float fox2 = fox + tickToYear*(- dFox * fox + cFox * rabbit * fox);
+        float lynx2 = lynx - tickToYear*(dLynx * lynx + cLynx * lynx * rabbit);
 
-        for (int l = 0; l < neibourgh.Count; l++)
+        for (int j = 0; j < neibourgh.Count; j++)
         {
             
         }
