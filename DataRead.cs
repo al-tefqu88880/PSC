@@ -89,21 +89,21 @@ public class DataRead : MonoBehaviour
                 RunningBackEnd.tilemap.SetValue(position, "Temperature2040", float.Parse(line[14], CultureInfo.InvariantCulture) / 10);
                 RunningBackEnd.tilemap.SetValue(position, "Isothermality2040", float.Parse(line[15], CultureInfo.InvariantCulture) / 10);
                 RunningBackEnd.tilemap.SetValue(position, "SummerTemperature2040", float.Parse(line[16], CultureInfo.InvariantCulture) / 10);
-                RunningBackEnd.tilemap.SetValue(position, "varRain2040", float.Parse(line[17], CultureInfo.InvariantCulture));
-                RunningBackEnd.tilemap.SetValue(position, "varRainVariation2040", float.Parse(line[18], CultureInfo.InvariantCulture));
-                RunningBackEnd.tilemap.SetValue(position, "varSummerRain2040", float.Parse(line[19], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "Rain2040", float.Parse(line[17], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "RainVariation2040", float.Parse(line[18], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "SummerRain2040", float.Parse(line[19], CultureInfo.InvariantCulture));
                 RunningBackEnd.tilemap.SetValue(position, "Temperature2060", float.Parse(line[20], CultureInfo.InvariantCulture) / 10);
                 RunningBackEnd.tilemap.SetValue(position, "Isothermality2060", float.Parse(line[21], CultureInfo.InvariantCulture) / 10);
                 RunningBackEnd.tilemap.SetValue(position, "SummerTemperature2060", float.Parse(line[22], CultureInfo.InvariantCulture) / 10);
-                RunningBackEnd.tilemap.SetValue(position, "varRain2060", float.Parse(line[23], CultureInfo.InvariantCulture));
-                RunningBackEnd.tilemap.SetValue(position, "varRainVariation2060", float.Parse(line[24], CultureInfo.InvariantCulture));
-                RunningBackEnd.tilemap.SetValue(position, "varSummerRain2060", float.Parse(line[25], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "Rain2060", float.Parse(line[23], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "RainVariation2060", float.Parse(line[24], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "SummerRain2060", float.Parse(line[25], CultureInfo.InvariantCulture));
                 RunningBackEnd.tilemap.SetValue(position, "Temperature2080", float.Parse(line[26], CultureInfo.InvariantCulture) / 10);
                 RunningBackEnd.tilemap.SetValue(position, "Isothermality2080", float.Parse(line[27], CultureInfo.InvariantCulture) / 10);
                 RunningBackEnd.tilemap.SetValue(position, "SummerTemperature2080", float.Parse(line[28], CultureInfo.InvariantCulture) / 10);
-                RunningBackEnd.tilemap.SetValue(position, "varRain2080", float.Parse(line[29], CultureInfo.InvariantCulture));
-                RunningBackEnd.tilemap.SetValue(position, "varRainVariation2080", float.Parse(line[30], CultureInfo.InvariantCulture));
-                RunningBackEnd.tilemap.SetValue(position, "varSummerRain2080", float.Parse(line[31], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "Rain2080", float.Parse(line[29], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "RainVariation2080", float.Parse(line[30], CultureInfo.InvariantCulture));
+                RunningBackEnd.tilemap.SetValue(position, "SummerRain2080", float.Parse(line[31], CultureInfo.InvariantCulture));
             }
             if (string.Equals(line[2], "2"))
             {
