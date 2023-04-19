@@ -41,26 +41,50 @@ namespace BackEnd
                     return 9;
                 case "tree":
                     return 10;
-                case "rabbitAffiity":
-                    return 11;
-                case "foxAffinity":
-                    return 12;
-                case "lynxAffinity":
-                    return 13;
-                case "varTemperature":
-                    return 14;
-                case "varIsothermality":
-                    return 15;
-                case "varSummerTemperature":
-                    return 16;
-                case "varRain":
-                    return 17;
-                case "varRainVariation":
-                    return 18;
-                case "varSummerRain":
-                    return 19;
                 case "altitude":
+                    return 11;
+                case "rabbitCliamteAffiity":
+                    return 12;
+                case "foxClimateAffinity":
+                    return 13;
+                case "lynxClimateAffinity":
+                    return 14;
+                case "Temperature2040":
+                    return 15;
+                case "Isothermality2040":
+                    return 16;
+                case "SummerTemperature2040":
+                    return 17;
+                case "Rain2040":
+                    return 18;
+                case "RainVariation2040":
+                    return 19;
+                case "SummerRain2040":
                     return 20;
+                case "Temperature2060":
+                    return 21;
+                case "Isothermality2060":
+                    return 22;
+                case "SummerTemperature2060":
+                    return 23;
+                case "Rain2060":
+                    return 24;
+                case "RainVariation2060":
+                    return 25;
+                case "SummerRain2060":
+                    return 26;
+                case "Temperature2080":
+                    return 21;
+                case "Isothermality2080":
+                    return 22;
+                case "SummerTemperature2080":
+                    return 23;
+                case "Rain2080":
+                    return 24;
+                case "RainVariation2080":
+                    return 25;
+                case "SummerRain2080":
+                    return 26;
                 default:
                     Debug.Log("Invalid characteristic name");
                     return -1;
