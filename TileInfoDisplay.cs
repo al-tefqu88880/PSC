@@ -94,9 +94,8 @@ public class TileInfoDisplay : MonoBehaviour
                 string temperature = "Temperature : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "temperature"), 1); 
                 string rain = "Precipitation : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "rain"), 0);
                 string tree = "Trees : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "tree"), 3);
-                string altitude = "Altitude : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "altitude"), 0);
                 string newLine = System.Environment.NewLine;
-                text.SetText(coord + newLine + rabbit + newLine + lynx + newLine + fox + newLine + temperature + newLine + rain + newLine + tree + newLine + altitude);
+                text.SetText(coord + newLine + rabbit + newLine + lynx + newLine + fox + newLine + temperature + newLine + rain + newLine + tree);
                 hoverPos.y = (float)(gridCoord.x * 0.75 + 0.35);
                 if (gridCoord.x % 2 == 1)
                 {
