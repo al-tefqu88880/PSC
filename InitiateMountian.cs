@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 
 public class InitiateMountian : MonoBehaviour
 {
@@ -24,12 +25,18 @@ public class InitiateMountian : MonoBehaviour
                     {
                         terrain.SetTile(p, moutainTile);
                         terrain.SetTileFlags(p, TileFlags.None);
-                        float altitudeNormalized = altitude / 4000.0f;
-                        terrain.SetColor(p, new Color(altitudeNormalized, altitudeNormalized, altitudeNormalized, 1));
+                        float altitudeNormalized = Math.Min(altitude / 24000.0f,1.0f);
+                        terrain.SetColor(p, new Color(1-altitudeNormalized, 1-altitudeNormalized, 1 - altitudeNormalized, 1));
 
                     }
                 }
             }
         }
     }
+
+    void Start()
+    {
+        InitiateMountain();
+    }
 }
+

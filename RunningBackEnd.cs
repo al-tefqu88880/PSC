@@ -163,7 +163,7 @@ public class RunningBackEnd : MonoBehaviour
                     }
                     if (tilemap.GetValue(invertedP, "fox") > 1)
                     {
-                        Color foxColor = new Color(0, 0, 1, 0.1f + tilemap.GetValue(invertedP, "fox") / 5000.0f);
+                        Color foxColor = new Color(0, 0, 1, 0.1f + tilemap.GetValue(invertedP, "fox") / 1500.0f);
                         fox.SetColor(p, foxColor);
                     }
                     else
@@ -172,7 +172,7 @@ public class RunningBackEnd : MonoBehaviour
                     }
                     if (tilemap.GetValue(invertedP, "lynx") > 1)
                     {
-                        Color lynxColor = new Color(1, 0, 1, 0.1f + tilemap.GetValue(invertedP, "lynx") / 5000.0f);
+                        Color lynxColor = new Color(1, 0, 1, 0.1f + tilemap.GetValue(invertedP, "lynx") / 15.0f);
                         lynx.SetColor(p, lynxColor);
                     }
                     else
