@@ -94,7 +94,7 @@ namespace BackEnd
         public TileData()
         {
             this.tile = 0;
-            this.characteristics = new float[21];
+            this.characteristics = new float[27];
             this.characteristics[9] = 0;
         }
 
