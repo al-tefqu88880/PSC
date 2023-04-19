@@ -37,7 +37,7 @@ public class RunningBackEnd : MonoBehaviour
     private static float k = 5000f;
     private static float pFox = 4e-5f;
     private static float pLynx = 8e-4f;
-    private static float dRabbit = .3f;
+    //private static float dRabbit = .3f;
     private static float cFox = 15e-5f;
     private static float dLynx = .55f;
     private static float cLynx = 2e-4f;
@@ -107,6 +107,12 @@ public class RunningBackEnd : MonoBehaviour
     }
 
 
+    float sigmoid(float x)
+    {
+        return (float)1 / (1 + Math.Exp(20 * (x - 0.45)));
+    }
+
+
     Vector3 affinity(Vector3Int coords)
     {
 
@@ -135,7 +141,6 @@ public class RunningBackEnd : MonoBehaviour
     }
 
 
-
     private float SignCheck(float x)
     {
         if (x < 0)
@@ -144,6 +149,7 @@ public class RunningBackEnd : MonoBehaviour
             return 10000;
         return x;
     }
+
 
     void UpdateTile(Vector3Int coords)
     {
@@ -161,23 +167,26 @@ public class RunningBackEnd : MonoBehaviour
         float rabbit = tilemap.GetValue(coords, "rabbit");
         float fox = tilemap.GetValue(coords, "fox");
         float lynx = tilemap.GetValue(coords, "lynx");
+        float rabbitClimateAffinity = tilemap.GetValue(coords, "rabbitClimateAffinity");
+        float foxClimateAffinity = tilemap.GetValue(coords, "foxClimateAffinity");
+        float lynxClimateAffinity = tilemap.GetValue(coords, "lynxClimateAffinity");
+
+
         /*float rabbit2 = SignCheck(rabbit + rabbit * (5000 - rabbit) / 5000 / 100);
         float lynx2 = SignCheck(lynx + lynx * (5000 - lynx) / 5000 / 10);
         float fox2 = SignCheck(fox + fox * (5000 - fox) / 5000 / 100);*/
 
-        float rabbit2 = rabbit + tickToYear*(cRabbit*rabbit*(1-rabbit/k) - pFox*rabbit*fox-pLynx*lynx*rabbit-dRabbit*rabbit);
-        float fox2 = fox + tickToYear*(- dFox * fox + cFox * rabbit * fox);
-        float lynx2 = lynx - tickToYear*(dLynx * lynx + cLynx * lynx * rabbit);
+        float rabbit2 += rabbit + tickToYear*(cRabbit*rabbit*(1-rabbit/k) - pFox*rabbit*fox-pLynx*lynx*rabbit);
+        float fox2 += fox + tickToYear*(- dFox * fox + cFox * rabbit * fox);
+        float lynx2 += lynx - tickToYear*(dLynx * lynx + cLynx * lynx * rabbit);
 
-        /*for (int l = 0; l < neibourgh.Count; l++)
+        for (int l = 0; l < neibourgh.Count; l++)
         {
-            float rabbitExte = tilemap.GetValue(neibourgh[l], "rabbit");
-            rabbit2 += rabbitExte * rabbitExte * (5000 - rabbit) / 5000 / 5000 / 100;
-            float lynxExte = tilemap.GetValue(neibourgh[l], "lynx");
-            lynx2 += lynxExte * lynxExte * (5000 - lynx) / 5000 / 5000 / 100;
-            float foxExte = tilemap.GetValue(neibourgh[l], "fox");
-            fox2 += foxExte * foxExte * (5000 - fox) / 5000 / 5000 / 100;
-        }*/
+            
+        }
+
+
+
 
         NextValues[coords[0], coords[1], 0] += SignCheck(rabbit2);
         NextValues[coords[0], coords[1], 1] += SignCheck(fox2);
@@ -185,7 +194,6 @@ public class RunningBackEnd : MonoBehaviour
     }
 
         
-
 
     public void UpdateMapGraphics(int MinI, int MaxI)
     {
@@ -229,7 +237,6 @@ public class RunningBackEnd : MonoBehaviour
             }
         }
     }
-
 
 
     void UpdateMapData(int MinI, int MaxI)
