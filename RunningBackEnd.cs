@@ -103,22 +103,27 @@ public class RunningBackEnd : MonoBehaviour
 
     float gaussian(float x, float m, float sigma)
     {
-        return (float)Math.Exp((x - m) * (x - m) / (2 * sigma * sigma));
+        float res = (float)Math.Exp(-(x - m) * (x - m) / (2 * sigma * sigma));
+        //if (res > 999)
+            //Debug.Log("aled " + res);
+        return res;
     }
 
 
-    float sigmoid(float x)
+    float Sigmoid(float x)
     {
         return (float)1 / (1 + (float)Math.Exp(20 * (x - 0.45)));
     }
 
 
-    float[] affinity(Vector3Int coords)
+    float[] ClimateAffinity(Vector3Int coords)
     {
 
         float rabbitAffinity = gaussian(tilemap.GetValue(coords, "temperature"), moyTemperature[0], sigmaTemperature[0]);
         rabbitAffinity +=  2* gaussian(tilemap.GetValue(coords, "isothermality"), moyIsothermality[0], sigmaIsothermality[0]);
         rabbitAffinity += 1.43f * gaussian(tilemap.GetValue(coords, "summerTemperature"), moySummerTemperature[0], sigmaSummerTemperature[0]);
+        /*if (rabbitAffinity > 999)
+            Debug.Log("Aff : " + rabbitAffinity);*/
         rabbitAffinity += gaussian(tilemap.GetValue(coords, "rain"), moyRain[0], sigmaRain[0]);
         rabbitAffinity += 0.3f*gaussian(tilemap.GetValue(coords, "rainVariation"), moyRainVariation[0], sigmaRainVariation[0]);
         rabbitAffinity += 0.9f*gaussian(tilemap.GetValue(coords, "summerRain"), moySummerRain[0], sigmaSummerRain[0]);
@@ -137,17 +142,41 @@ public class RunningBackEnd : MonoBehaviour
         lynxAffinity += 0.3f * gaussian(tilemap.GetValue(coords, "rainVariation"), moyRainVariation[2], sigmaRainVariation[2]);
         lynxAffinity += 0.9f * gaussian(tilemap.GetValue(coords, "summerRain"), moySummerRain[2], sigmaSummerRain[2]);
         lynxAffinity = lynxAffinity / 6.63f;
-        float rabbit = tilemap.GetValue(coords, "rabbit");
-        float fox = tilemap.GetValue(coords, "fox");
-        float lynx = tilemap.GetValue(coords, "lynx");
-        float preyAffinity = (rabbit - .3f * fox - .15f * lynx) / (.3f * fox + .15f * lynx);
-        float [] res = new float[4];
+        float [] res = new float[3];
         res[0] = rabbitAffinity;
         res[1] = foxAffinity;
         res[2] = lynxAffinity;
-        res[3] = preyAffinity;
         return  res ;
     }
+
+
+    void UpdateClimateAffinity(Vector3Int coords)
+    {
+        float[] tab = ClimateAffinity(coords);
+        tilemap.SetValue(coords, "rabbitClimateAffinity", tab[0]);
+        tilemap.SetValue(coords, "foxClimateAffinity", tab[1]);
+        tilemap.SetValue(coords, "lynxClimateAffinity", tab[2]);
+    }
+
+    
+    float PreyAffinity(Vector3Int coords)
+    {
+        float rabbit = tilemap.GetValue(coords, "rabbit");
+        float fox = tilemap.GetValue(coords, "fox");
+        float lynx = tilemap.GetValue(coords, "lynx");
+        if ((.3f * fox + .15f * lynx) == 0 & rabbit > 0)
+            return 1;
+        if ((.3f * fox + .15f * lynx) == 0)
+            return 0;
+        float res = (rabbit - .3f * fox - .15f * lynx) / (.3f * fox + .15f * lynx);
+        if (res > 1)
+            res = 1;
+        if (res < 0)
+            res = 0;
+        //if (System.Single.IsNaN(res))
+        //Debug.Log(rabbit + "" + fox + lynx + "             " + res + " " + coords);
+        return res;
+    } 
 
 
     private float SignCheck(float x)
@@ -183,17 +212,18 @@ public class RunningBackEnd : MonoBehaviour
         float preyAffinity = tilemap.GetValue(coords, "preyAffinity");
 
 
-        /*float rabbit2 = SignCheck(rabbit + rabbit * (5000 - rabbit) / 5000 / 100);
-        float lynx2 = SignCheck(lynx + lynx * (5000 - lynx) / 5000 / 10);
-        float fox2 = SignCheck(fox + fox * (5000 - fox) / 5000 / 100);*/
+        float rabbit2 = rabbit + tickToYear * (cRabbit * rabbit * (1 - rabbit / k) - pFox * rabbit * fox - pLynx * lynx * rabbit);
+        float fox2 = fox - tickToYear * (dFox * fox + cFox * rabbit * fox);
+        float lynx2 = lynx - tickToYear * (dLynx * lynx + cLynx * lynx * rabbit);
 
-        float rabbit2 = rabbit + tickToYear*(cRabbit*rabbit*(1-rabbit/k) - pFox*rabbit*fox-pLynx*lynx*rabbit);
-        float fox2 = fox - tickToYear*(dFox * fox + cFox * rabbit * fox);
-        float lynx2 = lynx - tickToYear*(dLynx * lynx + cLynx * lynx * rabbit);        
+        //if (coords[0] == 19 & coords[1] == 103) { 
+        //    Debug.Log("rabbit : " + rabbit + " fox : " + fox + " lynx : " + lynx);
+        //    Debug.Log("rabbit : " + rabbit2 + " fox : " + fox2 + " lynx : " + lynx2); 
+        //}
 
-        float fleeingRabbit = rabbit * sigmoid(rabbitClimateAffinity) * tickToYear;
-        float fleeingFox = fox * sigmoid(foxClimateAffinity * 0.75f + preyAffinity * 0.25f) * tickToYear;
-        float fleeingLynx = lynx * sigmoid(lynxClimateAffinity * 0.75f + preyAffinity * 0.25f) * tickToYear;
+        float fleeingRabbit = rabbit * Sigmoid(rabbitClimateAffinity) * tickToYear;
+        float fleeingFox = fox * Sigmoid(foxClimateAffinity * 0.75f + preyAffinity * 0.25f) * tickToYear;
+        float fleeingLynx = lynx * Sigmoid(lynxClimateAffinity * 0.75f + preyAffinity * 0.25f) * tickToYear;
 
         float lynxHospitality = 0;
         float foxHospitality = 0;
@@ -206,7 +236,7 @@ public class RunningBackEnd : MonoBehaviour
             float altitude = tilemap.GetValue(neibourgh[j], "altitude");
             if (altitude < 1000)
             {
-                lynxHospitality += 0.75f * tilemap.GetValue(neibourgh[j], "lynxClimateAffinity") + 0.25f * prey;
+                lynxHospitality += (0.75f * tilemap.GetValue(neibourgh[j], "lynxClimateAffinity") + 0.25f * prey);
                 if (altitude < 500)
                 {
                     rabbitHospitality += tilemap.GetValue(neibourgh[j], "rabbitClimateAffinity");
@@ -215,10 +245,35 @@ public class RunningBackEnd : MonoBehaviour
                 }
             }
         }
-        
 
+        lynxHospitality *= 2;
+        foxHospitality *= 2;
+        rabbitHospitality *= 2;
 
-
+        for (int j = 0; j < neibourgh.Count; j++)
+        {
+            float prey = tilemap.GetValue(neibourgh[j], "preyAffinity");
+            float altitude = tilemap.GetValue(neibourgh[j], "altitude");
+            if (altitude < 1000)
+            {
+                if (lynxHospitality > 0)
+                    NextValues[neibourgh[j][0], neibourgh[j][1], 2] += SignCheck(fleeingLynx*(0.75f * tilemap.GetValue(neibourgh[j], "lynxClimateAffinity") + 0.25f * prey)/lynxHospitality);
+                //if (neibourgh[j][0] == 19 & neibourgh[j][1] == 103)
+                    //Debug.Log("lynx : " + tilemap.GetValue(neibourgh[j], "lynxClimateAffinity") + " " + lynxHospitality +" "+ prey);
+                if (altitude < 500)
+                {
+                    //if (neibourgh[j][0] == 19 & neibourgh[j][1] == 103)
+                    //    Debug.Log("rabbit : " + tilemap.GetValue(neibourgh[j], "rabbitClimateAffinity") + " " + rabbitHospitality);
+                    if (rabbitHospitality >0)
+                        NextValues[neibourgh[j][0], neibourgh[j][1], 0] += SignCheck(fleeingRabbit*(tilemap.GetValue(neibourgh[j], "rabbitClimateAffinity") / rabbitHospitality));
+                    if (altitude < 400 & foxHospitality>0) { 
+                    NextValues[neibourgh[j][0], neibourgh[j][1], 1] += SignCheck(fleeingFox*(0.75f * tilemap.GetValue(neibourgh[j], "foxClimateAffinity") + 0.25f * prey) / foxHospitality);
+                        //if (neibourgh[j][0] == 19 & neibourgh[j][1] == 103)
+                        //    Debug.Log("fox : " + tilemap.GetValue(neibourgh[j], "foxClimateAffinity") + " " + foxHospitality + " " + prey);
+                    }
+                }
+            }
+        }
 
         NextValues[coords[0], coords[1], 0] += SignCheck(rabbit2-fleeingRabbit);
         NextValues[coords[0], coords[1], 1] += SignCheck(fox2-fleeingFox);
@@ -247,7 +302,7 @@ public class RunningBackEnd : MonoBehaviour
                     }
                     if (tilemap.GetValue(invertedP, "fox") > 1)
                     {
-                        Color foxColor = new Color(0, 0, 1, 0.1f + tilemap.GetValue(invertedP, "fox") / 5000.0f);
+                        Color foxColor = new Color(0, 0, 1, 0.1f + tilemap.GetValue(invertedP, "fox") / 2000.0f);
                         fox.SetColor(p, foxColor);
                     }
                     else
@@ -256,7 +311,7 @@ public class RunningBackEnd : MonoBehaviour
                     }
                     if (tilemap.GetValue(invertedP, "lynx") > 1)
                     {
-                        Color lynxColor = new Color(1, 0, 1, 0.1f + tilemap.GetValue(invertedP, "lynx") / 5000.0f);
+                        Color lynxColor = new Color(1, 0, 1, 0.1f + tilemap.GetValue(invertedP, "lynx") / 100.0f);
                         lynx.SetColor(p, lynxColor);
                     }
                     else
@@ -290,12 +345,14 @@ public class RunningBackEnd : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 Vector3Int coords = new Vector3Int(i, j, 0);
-                tilemap.SetValue(coords, "rabbit", NextValues[i, j, 0]);
-                tilemap.SetValue(coords, "fox", NextValues[i, j, 1]);
-                tilemap.SetValue(coords, "lynx", NextValues[i, j, 2]);
+                tilemap.SetValue(coords, "rabbit", SignCheck(NextValues[i, j, 0]));
+                tilemap.SetValue(coords, "fox", SignCheck(NextValues[i, j, 1]));
+                tilemap.SetValue(coords, "lynx", SignCheck(NextValues[i, j, 2]));
+                tilemap.SetValue(coords, "preyAffinity", PreyAffinity(coords));
                 NextValues[i, j, 0] = 0;
                 NextValues[i, j, 1] = 0;
                 NextValues[i, j, 2] = 0;  
+
             }
         }
     }
@@ -355,7 +412,9 @@ public class RunningBackEnd : MonoBehaviour
                     biomass.SetTileFlags(p, TileFlags.None);
                     lynx.SetTileFlags(p, TileFlags.None);
                     Color biomassColor = new Color(0.2f, 0.8f, 0, tilemap.GetValue(invertedP, "tree") / 8.0f);
-                    biomass.SetColor(p, biomassColor); 
+                    biomass.SetColor(p, biomassColor);
+                    tilemap.SetValue(p, "preyAffinity", PreyAffinity(p));
+                    UpdateClimateAffinity(p);
                 }
             }
         }
@@ -367,7 +426,8 @@ public class RunningBackEnd : MonoBehaviour
     {
         //Debug.Log(1);
         UpdateMap();
-        UpdateMapGraphics(0, height);
+        //UpdateMapGraphics(0, height);
+        //Debug.Log(tilemap.GetValue(new Vector3Int(60, 60, 0), "rabbit"));
 
     }
 }
