@@ -20,6 +20,7 @@ public class TileInfoDisplay : MonoBehaviour
 
     private int hoverSize = 0;
     private int maxHoverSize = 7;
+    private bool hoverChange = false;
     private float[] hoverScaleX = { 1.2f, 3.0f, 5.0f, 7.1f, 9.1f, 11.1f, 13.2f, 15.2f };
     private float[] hoverScaleY = { 1.2f, 4.0f, 6.7f, 9.3f, 12.0f, 14.7f, 17.3f, 20.0f };
     private Quaternion rotated = Quaternion.Euler(0, 0, 90);
@@ -41,6 +42,7 @@ public class TileInfoDisplay : MonoBehaviour
         hoverScale.y = hoverScaleY[hoverSize];
         hoverTile.localScale = hoverScale;
         hoverTile.rotation = rotated;
+        hoverChange = true;
     }
 
     void HoverSizeDown()
@@ -53,6 +55,7 @@ public class TileInfoDisplay : MonoBehaviour
         {
             hoverTile.rotation = flat;
         }
+        hoverChange = true;
     }
 
     void Start()
@@ -71,8 +74,9 @@ public class TileInfoDisplay : MonoBehaviour
         Vector3 mouseCoordinates = Camera.main.ScreenToWorldPoint(screenPoint);
         GridCoordinates gridCoord = GridCoordinates.WorldToHexa(mouseCoordinates);  //(x,y) values of the targeted tile
 
-        if (gridCoord != previousCoord)
+        if (gridCoord != previousCoord || hoverChange)
         {
+            hoverChange= false;
             previousCoord = gridCoord;
             if (gridCoord.x < 0 | gridCoord.x >= width | gridCoord.y < 0 | gridCoord.y >= height)
             {
@@ -88,13 +92,13 @@ public class TileInfoDisplay : MonoBehaviour
                     1 => "Desert",
                     _ => "Plain",
                 };*/
-                string rabbit = "Rabbits : " + (int)Math.Round(RunningBackEnd.tilemap.GetValue(position, "rabbit"), 0);
-                string lynx = "Lynx : " + (int)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "lynx"), 0);
-                string fox = "Foxes : " + (int)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "fox"), 0);
-                string temperature = "Temperature : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "temperature"), 1); 
-                string rain = "Precipitation : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "rain"), 0);
-                string tree = "Trees : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "tree"), 3);
-                string altitude = "Altitude : " + (float)Math.Round((Decimal)RunningBackEnd.tilemap.GetValue(position, "altitude"), 0);
+                string rabbit = "Rabbits : " + (int)Math.Round(Brushes.GetTotalBrush(position, hoverSize, "rabbit"), 0);
+                string lynx = "Lynx : " + (int)Math.Round((Decimal)Brushes.GetTotalBrush(position, hoverSize, "lynx"), 0);
+                string fox = "Foxes : " + (int)Math.Round((Decimal)Brushes.GetTotalBrush(position, hoverSize, "fox"), 0);
+                string temperature = "Temperature : " + (float)Math.Round((Decimal)Brushes.GetAverageBrush(position, hoverSize, "temperature"), 1); 
+                string rain = "Precipitation : " + (float)Math.Round((Decimal)Brushes.GetAverageBrush(position, hoverSize, "rain"), 0);
+                string tree = "Trees : " + (float)Math.Round((Decimal)Brushes.GetAverageBrush(position, hoverSize, "tree"), 3);
+                string altitude = "Altitude : " + (float)Math.Round((Decimal)Brushes.GetAverageBrush(position, hoverSize, "altitude"), 0);
                 string newLine = System.Environment.NewLine;
                 text.SetText(coord + newLine + rabbit + newLine + lynx + newLine + fox + newLine + temperature + newLine + rain + newLine + tree + newLine + altitude);
                 hoverPos.y = (float)(gridCoord.x * 0.75 + 0.35);
