@@ -85,6 +85,8 @@ namespace BackEnd
                     return 25;
                 case "SummerRain2080":
                     return 26;
+                case "preyAffinity":
+                    return 27;
                 default:
                     Debug.Log("Invalid characteristic name : "+name);
                     return -1;
@@ -94,7 +96,7 @@ namespace BackEnd
         public TileData()
         {
             this.tile = 0;
-            this.characteristics = new float[27];
+            this.characteristics = new float[28];
             this.characteristics[9] = 0;
         }
 
