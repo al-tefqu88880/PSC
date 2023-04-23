@@ -29,10 +29,13 @@ public class RunningBackEnd : MonoBehaviour
     public Tile blankTile;
     Color emptyColor = new Color(0, 0, 0, 0);
 
-    private int UpdateCounter;
+    private int UpdateCounter ;
+    private int timeCounter;
     private float[,,] NextValues = new float[121, 121, 3];
 
-    private static float tickToYear = 0.00462962962f;
+    private static float baseTickToYear = 0.00462962962f;
+    public int gameSpeed = 1;
+    private float tickToYear = baseTickToYear*10;
     private static float cRabbit = 3f;
     private static float k = 5000f;
     private static float pFox = 4e-5f;
@@ -164,11 +167,11 @@ public class RunningBackEnd : MonoBehaviour
         float rabbit = tilemap.GetValue(coords, "rabbit");
         float fox = tilemap.GetValue(coords, "fox");
         float lynx = tilemap.GetValue(coords, "lynx");
-        if ((.3f * fox + .15f * lynx) == 0 & rabbit > 0)
-            return 1;
-        if ((.3f * fox + .15f * lynx) == 0)
+        if ( rabbit == 0)
             return 0;
-        float res = (rabbit - .3f * fox - .15f * lynx) / (.3f * fox + .15f * lynx);
+        if ((.3f * fox + .15f * lynx) == 0)
+            return 1;
+        float res = rabbit / (5*(.3f * fox + .15f * lynx));
         if (res > 1)
             res = 1;
         if (res < 0)
@@ -179,7 +182,7 @@ public class RunningBackEnd : MonoBehaviour
     } 
 
 
-    private float SignCheck(float x)
+    float SignCheck(float x)
     {
         if (x < 0)
             return 0;
@@ -190,6 +193,12 @@ public class RunningBackEnd : MonoBehaviour
 
 
     void UpdateTile(Vector3Int coords)
+    {
+        UpdateTileSpecies(coords);
+    }
+
+
+    void UpdateTileSpecies(Vector3Int coords)
     {
         List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(coords[0], coords[1], width - 1, height - 1);
         int l = 0;
@@ -212,9 +221,9 @@ public class RunningBackEnd : MonoBehaviour
         float preyAffinity = tilemap.GetValue(coords, "preyAffinity");
 
 
-        float rabbit2 = rabbit + tickToYear * (cRabbit * rabbit * (1 - rabbit / k) - pFox * rabbit * fox - pLynx * lynx * rabbit);
-        float fox2 = fox - tickToYear * (dFox * fox + cFox * rabbit * fox);
-        float lynx2 = lynx - tickToYear * (dLynx * lynx + cLynx * lynx * rabbit);
+        float rabbit2 = rabbit + tickToYear * rabbit*(cRabbit  * (1 - rabbit / k) - pFox * fox - pLynx * lynx - Sigmoid(rabbitClimateAffinity));
+        float fox2 = fox - tickToYear * fox * (dFox + cFox * rabbit - Sigmoid(foxClimateAffinity));
+        float lynx2 = lynx - tickToYear * lynx * (dLynx + cLynx * rabbit - Sigmoid(lynxClimateAffinity));
 
         //if (coords[0] == 19 & coords[1] == 103) { 
         //    Debug.Log("rabbit : " + rabbit + " fox : " + fox + " lynx : " + lynx);
@@ -246,10 +255,6 @@ public class RunningBackEnd : MonoBehaviour
             }
         }
 
-        lynxHospitality *= 2;
-        foxHospitality *= 2;
-        rabbitHospitality *= 2;
-
         for (int j = 0; j < neibourgh.Count; j++)
         {
             float prey = tilemap.GetValue(neibourgh[j], "preyAffinity");
@@ -279,6 +284,9 @@ public class RunningBackEnd : MonoBehaviour
         NextValues[coords[0], coords[1], 1] += SignCheck(fox2-fleeingFox);
         NextValues[coords[0], coords[1], 2] += SignCheck(lynx2-fleeingLynx);
     }
+
+
+    
 
 
     public void UpdateMapGraphics(int MinI, int MaxI)
@@ -428,6 +436,7 @@ public class RunningBackEnd : MonoBehaviour
         UpdateMap();
         //UpdateMapGraphics(0, height);
         //Debug.Log(tilemap.GetValue(new Vector3Int(60, 60, 0), "rabbit"));
+        timeCounter += gameSpeed;
 
     }
 }
