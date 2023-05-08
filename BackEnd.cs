@@ -49,44 +49,56 @@ namespace BackEnd
                     return 13;
                 case "lynxClimateAffinity":
                     return 14;
-                case "Temperature2040":
+                case "temperature2020":
                     return 15;
-                case "Isothermality2040":
+                case "isothermality2020":
                     return 16;
-                case "SummerTemperature2040":
+                case "summerTemperature2020":
                     return 17;
-                case "Rain2040":
+                case "rain2020":
                     return 18;
-                case "RainVariation2040":
+                case "rainVariation2020":
                     return 19;
-                case "SummerRain2040":
+                case "summerRain2020":
                     return 20;
-                case "Temperature2060":
+                case "temperature2040":
                     return 21;
-                case "Isothermality2060":
+                case "isothermality2040":
                     return 22;
-                case "SummerTemperature2060":
+                case "summerTemperature2040":
                     return 23;
-                case "Rain2060":
+                case "rain2040":
                     return 24;
-                case "RainVariation2060":
+                case "rainVariation2040":
                     return 25;
-                case "SummerRain2060":
+                case "summerRain2040":
                     return 26;
-                case "Temperature2080":
-                    return 21;
-                case "Isothermality2080":
-                    return 22;
-                case "SummerTemperature2080":
-                    return 23;
-                case "Rain2080":
-                    return 24;
-                case "RainVariation2080":
-                    return 25;
-                case "SummerRain2080":
-                    return 26;
-                case "preyAffinity":
+                case "temperature2060":
                     return 27;
+                case "isothermality2060":
+                    return 28;
+                case "summerTemperature2060":
+                    return 29;
+                case "rain2060":
+                    return 30;
+                case "rainVariation2060":
+                    return 31;
+                case "summerRain2060":
+                    return 32;
+                case "temperature2080":
+                    return 33;
+                case "isothermality2080":
+                    return 34;
+                case "summerTemperature2080":
+                    return 35;
+                case "rain2080":
+                    return 36;
+                case "rainVariation2080":
+                    return 37;
+                case "summerRain2080":
+                    return 38;
+                case "preyAffinity":
+                    return 39;
                 default:
                     Debug.Log("Invalid characteristic name : "+name);
                     return -1;
@@ -96,7 +108,7 @@ namespace BackEnd
         public TileData()
         {
             this.tile = 0;
-            this.characteristics = new float[28];
+            this.characteristics = new float[40];
             this.characteristics[9] = 0;
         }
 
