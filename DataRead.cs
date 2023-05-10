@@ -117,7 +117,7 @@ public class DataRead : MonoBehaviour
                 //Debug.Log(position[0]);
                 //Debug.Log(position[1]); 
                 //RunningBackEnd.tilemap.SetValue(position, "useful", 1);
-                RunningBackEnd.tilemap.SetTile(position, 3);
+                RunningBackEnd.tilemap.SetTile(position, 1);
             }
         }
     }
