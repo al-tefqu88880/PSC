@@ -99,10 +99,10 @@ namespace Common
                 res.Add(new Vector3Int(i, j + 1, 0));
             if (j - 1 >= 0)
                 res.Add(new Vector3Int(i, j - 1, 0));
-            if (i + 2 * (j % 2) - 1 < maxI && i + 2 * (j % 2) - 1 >=0 && j +1 < maxJ)
-                res.Add(new Vector3Int(i + 2 * (j % 2) - 1, j  + 1, 0));
-            if (i + 2 * (j % 2) - 1 < maxI && i + 2 * (j % 2) - 1 >=0 && j -1 >= 0)
-                res.Add(new Vector3Int(i + 2 * (j % 2)- 1, j  - 1, 0));
+            if (i + 2 * ((j+1) % 2) - 1 < maxI && i + 2 * ((j+1) % 2) - 1 >=0 && j +1 < maxJ)
+                res.Add(new Vector3Int(i + 2 * ((j+1) % 2) - 1, j  + 1, 0));
+            if (i + 2 * ((j+1) % 2) - 1 < maxI && i + 2 * ((j+1) % 2) - 1 >=0 && j -1 >= 0)
+                res.Add(new Vector3Int(i + 2 * ((j+1) % 2)- 1, j  - 1, 0));
             return res;
         }
     }
