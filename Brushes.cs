@@ -50,6 +50,7 @@ public class Brushes : MonoBehaviour
         foreach (Vector3Int pos in GetArea(position, radius))
         {
             RunningBackEnd.tilemap.ChangeValue(pos, name, change);
+            if (name=="rabbit") RunningBackEnd.NextValues[pos[0], pos[1],0] += change;
         }
     }
 
