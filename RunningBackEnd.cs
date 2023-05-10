@@ -37,11 +37,11 @@ public class RunningBackEnd : MonoBehaviour
     private float currentTickToYear = baseTickToYear*10;
     private float timeCounter = 0;
 
-    private static float cRabbit = (float)Math.Log(6);
+    private static float cRabbit = (float)Math.Log(3);
     private static float k = 5000f;
     private static float pFox = 4e-5f;
     private static float pLynx = 8e-4f;
-    //private static float dRabbit = .3f;
+    private static float dRabbit = .3f;
     private static float cFox = 4e-5f;
     private static float dLynx = .55f;
     private static float cLynx = 2e-4f;
@@ -58,6 +58,10 @@ public class RunningBackEnd : MonoBehaviour
     private static float[] sigmaRain = { 80f, 90f, 30f };
     private static float[] sigmaRainVariation = { 7.3f, 11f, 14.5f };
     private static float[] sigmaSummerRain = { 25.7f, 33f, 12f };
+
+    private float rabbitAffinityMultiplier = 1;
+    private float foxAffinityMultiplier = 1;
+    private float lynxAffinityMultiplier = 1;
 
 
     public static TilemapData GetTilemap()
@@ -111,9 +115,9 @@ public class RunningBackEnd : MonoBehaviour
     }
 
 
-    float Sigmoid(float x)
+    float LogSigmoid(float x)
     {
-        return (float)1 / (1 + (float)Math.Exp(20 * (x - 0.45)));
+        return (float) - Math.Log(1 - 0.1 / (1 + (float)Math.Exp(20 * (x - 0.45))));
     }
 
 
@@ -142,9 +146,9 @@ public class RunningBackEnd : MonoBehaviour
         lynxAffinity += 0.9f * gaussian(tilemap.GetValue(coords, "summerRain"), moySummerRain[2], sigmaSummerRain[2]);
         lynxAffinity = lynxAffinity / 6.63f;
         float [] res = new float[3];
-        res[0] = rabbitAffinity;
-        res[1] = foxAffinity;
-        res[2] = lynxAffinity;
+        res[0] = rabbitAffinity*rabbitAffinityMultiplier;
+        res[1] = foxAffinity*foxAffinityMultiplier;
+        res[2] = lynxAffinity*lynxAffinityMultiplier;
         return  res ;
     }
 
@@ -155,6 +159,31 @@ public class RunningBackEnd : MonoBehaviour
         tilemap.SetValue(coords, "rabbitClimateAffinity", tab[0]);
         tilemap.SetValue(coords, "foxClimateAffinity", tab[1]);
         tilemap.SetValue(coords, "lynxClimateAffinity", tab[2]);
+        //Debug.Log(coords + "   " + tab[0]);
+    }
+
+
+    void UpdateAffinityMultipliers()
+    {
+        float rabbitMax = 0;
+        float foxMax = 0;
+        float lynxMax = 0;
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                Vector3Int coords = new Vector3Int(x, y, 0);
+                if (tilemap.GetValue(coords, "rabbitClimateAffinity") > rabbitMax)
+                    rabbitMax = tilemap.GetValue(coords, "rabbitClimateAffinity");
+                if (tilemap.GetValue(coords, "foxClimateAffinity") > foxMax)
+                    foxMax = tilemap.GetValue(coords, "foxClimateAffinity"); 
+                if (tilemap.GetValue(coords, "lynxClimateAffinity") > lynxMax)
+                    lynxMax = tilemap.GetValue(coords, "lynxClimateAffinity");
+            }
+        }
+        rabbitAffinityMultiplier = rabbitAffinityMultiplier / rabbitMax;
+        foxAffinityMultiplier = foxAffinityMultiplier / foxMax;
+        lynxAffinityMultiplier = lynxAffinityMultiplier / lynxMax;
     }
 
     
@@ -179,7 +208,7 @@ public class RunningBackEnd : MonoBehaviour
     float SignCheck(float x)
     {
         if (x < 0) { 
-        Debug.Log("neg : " + x);
+        //Debug.Log("neg : " + x);
         return 0; }
         if (x > 10000)
             return 10000;
@@ -216,13 +245,15 @@ public class RunningBackEnd : MonoBehaviour
         float preyAffinity = tilemap.GetValue(coords, "preyAffinity");
 
 
-        float rabbit2 = rabbit + currentTickToYear * rabbit*(cRabbit  * (1 - rabbit / k) - pFox * fox - pLynx * lynx - Sigmoid(rabbitClimateAffinity));
-        float fox2 = fox + currentTickToYear * fox * (- dFox + cFox * rabbit - Sigmoid(foxClimateAffinity));
-        float lynx2 = lynx + currentTickToYear * lynx * (- dLynx + cLynx * rabbit - Sigmoid(lynxClimateAffinity));
+        float rabbit2 = rabbit + currentTickToYear * rabbit*(cRabbit  * (1 - rabbit / k) - pFox * fox - pLynx * lynx - LogSigmoid(rabbitClimateAffinity));
+        float fox2 = fox + currentTickToYear * fox * (- dFox + cFox * rabbit - LogSigmoid(foxClimateAffinity));
+        float lynx2 = lynx + currentTickToYear * lynx * (- dLynx + cLynx * rabbit - LogSigmoid(lynxClimateAffinity));
 
-        float fleeingRabbit = rabbit * Sigmoid(rabbitClimateAffinity) * currentTickToYear;
-        float fleeingFox = fox * Sigmoid(foxClimateAffinity * 0.75f + preyAffinity * 0.25f) * currentTickToYear;
-        float fleeingLynx = lynx * Sigmoid(lynxClimateAffinity * 0.75f + preyAffinity * 0.25f) * currentTickToYear;
+        float fleeingRabbit = rabbit * LogSigmoid(rabbitClimateAffinity) * currentTickToYear;
+        //if (coords[0] == 54 && coords[1] == 11) 
+        //    Debug.Log(fleeingRabbit + " rabbits " + rabbit + " pop " + LogSigmoid(rabbitClimateAffinity));
+        float fleeingFox = SignCheck(fox * LogSigmoid(foxClimateAffinity * 0.75f + preyAffinity * 0.25f) * currentTickToYear);
+        float fleeingLynx = SignCheck(lynx * LogSigmoid(lynxClimateAffinity * 0.75f + preyAffinity * 0.25f) * currentTickToYear);
 
         float lynxHospitality = 0;
         float foxHospitality = 0;
@@ -238,6 +269,10 @@ public class RunningBackEnd : MonoBehaviour
                 lynxHospitality += (0.75f * tilemap.GetValue(neibourgh[j], "lynxClimateAffinity") + 0.25f * prey);
                 if (altitude < 500)
                 {
+                    //if (coords[0] == 54 && coords[1] == 11)
+                    //{
+                    //    Debug.Log(neibourgh[j] + "         " + tilemap.GetValue(neibourgh[j], "rabbitClimateAffinity"));
+                    //}
                     rabbitHospitality += tilemap.GetValue(neibourgh[j], "rabbitClimateAffinity");
                     if (altitude <400)
                         foxHospitality += 0.75f * tilemap.GetValue(neibourgh[j], "foxClimateAffinity") + 0.25f * prey;
@@ -255,6 +290,10 @@ public class RunningBackEnd : MonoBehaviour
                     NextValues[neibourgh[j][0], neibourgh[j][1], 2] += SignCheck(fleeingLynx*(0.75f * tilemap.GetValue(neibourgh[j], "lynxClimateAffinity") + 0.25f * prey)/lynxHospitality);
                 if (altitude < 500)
                 {
+                    //if (coords[0] == 54 && coords[1] == 11)
+                    //{
+                    //    Debug.Log(rabbitHospitality + "  " + neibourgh[j] + "         " + (fleeingRabbit * (tilemap.GetValue(neibourgh[j], "rabbitClimateAffinity") / rabbitHospitality)));
+                    //}
                     if (rabbitHospitality >0)
                         NextValues[neibourgh[j][0], neibourgh[j][1], 0] += SignCheck(fleeingRabbit*(tilemap.GetValue(neibourgh[j], "rabbitClimateAffinity") / rabbitHospitality));
                     if (altitude < 400 & foxHospitality>0) { 
@@ -394,6 +433,18 @@ public class RunningBackEnd : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
+                Vector3Int invertedP = new Vector3Int(y, x, 0);
+                if (tilemap.GetValue(invertedP, "useful") > 0.5)
+                {
+                    UpdateClimateAffinity(invertedP);
+                }
+            }
+        }
+        UpdateAffinityMultipliers();
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
                 Vector3Int p = new Vector3Int(x, y, 0);
                 Vector3Int invertedP = new Vector3Int(y, x, 0);
                 if (tilemap.GetValue(invertedP, "useful") > 0.5)
@@ -409,12 +460,11 @@ public class RunningBackEnd : MonoBehaviour
                     lynx.SetTileFlags(p, TileFlags.None);
                     Color biomassColor = new Color(0.2f, 0.8f, 0, tilemap.GetValue(invertedP, "tree") / 8.0f);
                     biomass.SetColor(p, biomassColor);
-                    tilemap.SetValue(p, "preyAffinity", PreyAffinity(p));
-                    UpdateClimateAffinity(p);
+                    tilemap.SetValue(invertedP, "preyAffinity", PreyAffinity(invertedP));
+                    UpdateClimateAffinity(invertedP);
                 }
             }
         }
-
     }
 
 
