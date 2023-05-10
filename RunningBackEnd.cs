@@ -224,7 +224,7 @@ public class RunningBackEnd : MonoBehaviour
 
     void UpdateTileSpeciesData(Vector3Int coords)
     {
-        List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(coords[0], coords[1], width - 1, height - 1);
+        List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(coords[0], coords[1], width , height);
         int l = 0;
         while (l < neibourgh.Count)
         {
@@ -405,7 +405,7 @@ public class RunningBackEnd : MonoBehaviour
     {
         if (UpdateCounter == 0)
         {
-            Debug.Log(timeCounter);
+            //Debug.Log(timeCounter);
             UpdateMapData(0, width );
             UpdateCounter++;
             timeCounter += currentTickToYear;
@@ -424,7 +424,6 @@ public class RunningBackEnd : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("55, 56 : " + tilemap.getValue(new Vector3Int(55, 56, 0), "useful"))
         InitiateTilemap();
         DataRead dr = gameObject.AddComponent<DataRead>();
         ep.ClearAll();
@@ -466,6 +465,10 @@ public class RunningBackEnd : MonoBehaviour
                 }
             }
         }
+        Debug.Log("57, 56 : " + tilemap.GetValue(new Vector3Int(57, 56, 0), "useful"));
+        List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(57, 56, width, height);
+        for (int i = 0; i < neibourgh.Count; i++)
+            Debug.Log(neibourgh[i]);
     }
 
 
