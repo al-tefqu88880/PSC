@@ -41,7 +41,7 @@ public class RunningBackEnd : MonoBehaviour
     private static float k = 5000f;
     private static float pFox = 4e-5f;
     private static float pLynx = 8e-4f;
-    private static float dRabbit = .3f;
+    //private static float dRabbit = .3f;
     private static float cFox = 4e-5f;
     private static float dLynx = .55f;
     private static float cLynx = 2e-4f;
@@ -159,7 +159,7 @@ public class RunningBackEnd : MonoBehaviour
         tilemap.SetValue(coords, "rabbitClimateAffinity", tab[0]);
         tilemap.SetValue(coords, "foxClimateAffinity", tab[1]);
         tilemap.SetValue(coords, "lynxClimateAffinity", tab[2]);
-        //Debug.Log(coords + "   " + tab[0]);
+        //Debug.Log(coords + "   " + tab[0] + "   " + tab[1] + "   " + tab[2]);
     }
 
 
