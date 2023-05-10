@@ -473,8 +473,7 @@ public class ActionMenu : MonoBehaviour
         overlayCanvas.enabled = false;
         isOverlayPanel = false;
         isBrushPanel = false;
-        isBrushAction = false;
-        brushActionToggle.GetComponent<Image>().color = Color.white;
+        if (isBrushAction) brushActionButton();
     }
 
     void Start()

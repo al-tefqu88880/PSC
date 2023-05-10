@@ -79,7 +79,8 @@ public class Brushes : MonoBehaviour
                 count++;
             }
         }
-        return result / count;
+        if (count > 0) return result / count;
+        else return 0;
     }
 
     public static float GetTotalBrush(Vector3Int position, int radius, string name)
