@@ -424,6 +424,7 @@ public class RunningBackEnd : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("55, 56 : " + tilemap.getValue(new Vector3Int(55, 56, 0), "useful"))
         InitiateTilemap();
         DataRead dr = gameObject.AddComponent<DataRead>();
         ep.ClearAll();
