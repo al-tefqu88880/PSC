@@ -30,7 +30,7 @@ public class RunningBackEnd : MonoBehaviour
     Color emptyColor = new Color(0, 0, 0, 0);
 
     private int UpdateCounter ;
-    private float[,,] NextValues = new float[121, 121, 3];
+    public static float[,,] NextValues = new float[121, 121, 3];
 
     private static float baseTickToYear = 0.00462962962f;
     public int gameSpeed = 1;

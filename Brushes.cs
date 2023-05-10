@@ -51,6 +51,8 @@ public class Brushes : MonoBehaviour
         {
             RunningBackEnd.tilemap.ChangeValue(pos, name, change);
             if (name=="rabbit") RunningBackEnd.NextValues[pos[0], pos[1],0] += change;
+            if (name == "fox") RunningBackEnd.NextValues[pos[0], pos[1], 1] += change;
+            if (name == "lynx") RunningBackEnd.NextValues[pos[0], pos[1], 2] += change;
         }
     }
 
@@ -59,6 +61,9 @@ public class Brushes : MonoBehaviour
         foreach (Vector3Int pos in GetArea(position, radius))
         {
             RunningBackEnd.tilemap.SetValue(pos, name, change);
+            if (name == "rabbit") RunningBackEnd.NextValues[pos[0], pos[1], 0] = change;
+            if (name == "fox") RunningBackEnd.NextValues[pos[0], pos[1], 1] = change;
+            if (name == "lynx") RunningBackEnd.NextValues[pos[0], pos[1], 2] = change;
         }
     }
 
@@ -68,8 +73,11 @@ public class Brushes : MonoBehaviour
         int count = 0;
         foreach (Vector3Int pos in GetArea(position, radius))
         {
-            result += RunningBackEnd.tilemap.GetValue(pos, name);
-            count++;
+            if(RunningBackEnd.tilemap.GetValue(pos, "useful") > 0.5)
+            {
+                result += RunningBackEnd.tilemap.GetValue(pos, name);
+                count++;
+            }
         }
         return result / count;
     }
