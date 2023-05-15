@@ -1100,6 +1100,7 @@ MonoBehaviour:
   species060: {fileID: 11400000, guid: eefb0aee0fb080445a8bc34c943b8cc2, type: 2}
   species050: {fileID: 11400000, guid: 012b1427ecacd294194fb55da20dc97c, type: 2}
   blankTile: {fileID: 11400000, guid: ed75a02e75213a94aa596c65d7c79654, type: 2}
+  gameSpeed: 1
 --- !u!114 &222144902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3112,7 +3113,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &502209167
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11793,7 +11794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1852855203
 RectTransform:
   m_ObjectHideFlags: 0

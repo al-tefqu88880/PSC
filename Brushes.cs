@@ -54,6 +54,8 @@ public class Brushes : MonoBehaviour
             if (name == "fox") RunningBackEnd.NextValues[pos[0], pos[1], 1] += change;
             if (name == "lynx") RunningBackEnd.NextValues[pos[0], pos[1], 2] += change;
         }
+        RunningBackEnd.area=GetArea(position, radius);
+        RunningBackEnd.updateGraphicsNow= true;
     }
 
     public static void SetBrush(Vector3Int position, int radius, string name, float change)
@@ -65,6 +67,8 @@ public class Brushes : MonoBehaviour
             if (name == "fox") RunningBackEnd.NextValues[pos[0], pos[1], 1] = change;
             if (name == "lynx") RunningBackEnd.NextValues[pos[0], pos[1], 2] = change;
         }
+        RunningBackEnd.area = GetArea(position, radius);
+        RunningBackEnd.updateGraphicsNow = true;
     }
 
     public static float GetAverageBrush(Vector3Int position, int radius, string name)
