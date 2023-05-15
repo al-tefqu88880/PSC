@@ -124,23 +124,23 @@ public class RunningBackEnd : MonoBehaviour
     float[] ClimateAffinity(Vector3Int coords)
     {
 
-        float rabbitAffinity = gaussian(tilemap.GetValue(coords, "temperature"), moyTemperature[0], sigmaTemperature[0]);
-        rabbitAffinity +=  2* gaussian(tilemap.GetValue(coords, "isothermality"), moyIsothermality[0], sigmaIsothermality[0]);
-        rabbitAffinity += 1.43f * gaussian(tilemap.GetValue(coords, "summerTemperature"), moySummerTemperature[0], sigmaSummerTemperature[0]);
+        float rabbitAffinity = gaussian(tilemap.GetValue(coords, "temperature")*10, moyTemperature[0], sigmaTemperature[0]);
+        rabbitAffinity +=  2* gaussian(tilemap.GetValue(coords, "isothermality") * 10, moyIsothermality[0], sigmaIsothermality[0]);
+        rabbitAffinity += 1.43f * gaussian(tilemap.GetValue(coords, "summerTemperature") * 10, moySummerTemperature[0], sigmaSummerTemperature[0]);
         rabbitAffinity += gaussian(tilemap.GetValue(coords, "rain"), moyRain[0], sigmaRain[0]);
         rabbitAffinity += 0.3f*gaussian(tilemap.GetValue(coords, "rainVariation"), moyRainVariation[0], sigmaRainVariation[0]);
         rabbitAffinity += 0.9f*gaussian(tilemap.GetValue(coords, "summerRain"), moySummerRain[0], sigmaSummerRain[0]);
         rabbitAffinity = rabbitAffinity / 6.63f;
-        float foxAffinity = gaussian(tilemap.GetValue(coords, "temperature"), moyTemperature[1], sigmaTemperature[1]);
-        foxAffinity += 2.19f * gaussian(tilemap.GetValue(coords, "isothermality"), moyIsothermality[1], sigmaIsothermality[1]);
-        foxAffinity += 1.86f * gaussian(tilemap.GetValue(coords, "summerTemperature"), moySummerTemperature[1], sigmaSummerTemperature[1]);
+        float foxAffinity = gaussian(tilemap.GetValue(coords, "temperature") * 10, moyTemperature[1], sigmaTemperature[1]);
+        foxAffinity += 2.19f * gaussian(tilemap.GetValue(coords, "isothermality") * 10, moyIsothermality[1], sigmaIsothermality[1]);
+        foxAffinity += 1.86f * gaussian(tilemap.GetValue(coords, "summerTemperature") * 10, moySummerTemperature[1], sigmaSummerTemperature[1]);
         foxAffinity += gaussian(tilemap.GetValue(coords, "rain"), moyRain[1], sigmaRain[1]);
         foxAffinity += 0.59f * gaussian(tilemap.GetValue(coords, "rainVariation"), moyRainVariation[1], sigmaRainVariation[1]);
         foxAffinity += 0.86f * gaussian(tilemap.GetValue(coords, "summerRain"), moySummerRain[1], sigmaSummerRain[1]);
         foxAffinity = foxAffinity / 7.5f;
-        float lynxAffinity = gaussian(tilemap.GetValue(coords, "temperature"), moyTemperature[2], sigmaTemperature[2]);
-        lynxAffinity += 2f * gaussian(tilemap.GetValue(coords, "isothermality"), moyIsothermality[2], sigmaIsothermality[2]);
-        lynxAffinity += 1.43f * gaussian(tilemap.GetValue(coords, "summerTemperature"), moySummerTemperature[2], sigmaSummerTemperature[2]);
+        float lynxAffinity = gaussian(tilemap.GetValue(coords, "temperature") * 10, moyTemperature[2], sigmaTemperature[2]);
+        lynxAffinity += 2f * gaussian(tilemap.GetValue(coords, "isothermality") * 10, moyIsothermality[2], sigmaIsothermality[2]);
+        lynxAffinity += 1.43f * gaussian(tilemap.GetValue(coords, "summerTemperature") * 10, moySummerTemperature[2], sigmaSummerTemperature[2]);
         lynxAffinity += gaussian(tilemap.GetValue(coords, "rain"), moyRain[2], sigmaRain[2]);
         lynxAffinity += 0.3f * gaussian(tilemap.GetValue(coords, "rainVariation"), moyRainVariation[2], sigmaRainVariation[2]);
         lynxAffinity += 0.9f * gaussian(tilemap.GetValue(coords, "summerRain"), moySummerRain[2], sigmaSummerRain[2]);
@@ -159,7 +159,6 @@ public class RunningBackEnd : MonoBehaviour
         tilemap.SetValue(coords, "rabbitClimateAffinity", tab[0]);
         tilemap.SetValue(coords, "foxClimateAffinity", tab[1]);
         tilemap.SetValue(coords, "lynxClimateAffinity", tab[2]);
-        //Debug.Log(coords + "   " + tab[0] + "   " + tab[1] + "   " + tab[2]);
     }
 
 
@@ -208,7 +207,6 @@ public class RunningBackEnd : MonoBehaviour
     float SignCheck(float x)
     {
         if (x < 0) { 
-        //Debug.Log("neg : " + x);
         return 0; }
         if (x > 10000)
             return 10000;
@@ -395,7 +393,7 @@ public class RunningBackEnd : MonoBehaviour
                 NextValues[i, j, 0] = 0;
                 NextValues[i, j, 1] = 0;
                 NextValues[i, j, 2] = 0;
-                //UpdateTileClimateData(coords);
+                UpdateTileClimateData(coords);
             }
         }
     }
@@ -405,7 +403,7 @@ public class RunningBackEnd : MonoBehaviour
     {
         if (UpdateCounter == 0)
         {
-            //Debug.Log(timeCounter);
+            Debug.Log(timeCounter);
             UpdateMapData(0, width );
             UpdateCounter++;
             timeCounter += currentTickToYear;
@@ -465,10 +463,6 @@ public class RunningBackEnd : MonoBehaviour
                 }
             }
         }
-        Debug.Log("57, 56 : " + tilemap.GetValue(new Vector3Int(57, 56, 0), "useful"));
-        List<Vector3Int> neibourgh = GridCoordinates.GetNeighbours(57, 56, width, height);
-        for (int i = 0; i < neibourgh.Count; i++)
-            Debug.Log(neibourgh[i]);
     }
 
 
